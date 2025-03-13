@@ -80,11 +80,12 @@ class Translations:
         DIR = "TRANSLATIONS"
         self.translations = {}
         for locale in os.listdir(DIR):
-            if locale.endswith(".json"):
-                with open(f"{DIR}/{locale}", "r") as f:
-                    data = json.load(f)
-                    # TODO: validation checks
-                    self.translations[locale.removesuffix(".json")] = data
+            if not os.path.isdir(locale):
+                continue
+            with open(f"{DIR}/{locale}/translations.json", "r") as f:
+                data = json.load(f)
+                # TODO: validation checks
+                self.translations[locale] = data
 
     async def other_context_translate(
         self,

@@ -20,8 +20,7 @@
         "achievements": {
             "name": "achievements",
             "desc": "Afficher les succès d'un utilisateur.",
-            "describes": {
-            }
+            "describes": {}
         },
         "b30": {
             "name": "b30",
@@ -60,8 +59,7 @@
                 "predict": {
                     "name": "predict",
                     "desc": "Prédit les seuils pour l'événement en cours. (source: jiiku831)",
-                    "describes": {
-                    }
+                    "describes": {}
                 },
                 "schedule": {
                     "name": "schedule",
