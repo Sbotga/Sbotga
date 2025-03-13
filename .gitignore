@@ -18,6 +18,12 @@ game_api/
 game_api/game_files/*
 game_api/master_data/*
 
+# Top 100 api responses, just a lot of data
+top100.json
+
+# VSCode stuff
+.vsls.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
