@@ -1,0 +1,11 @@
+import twitchio
+from twitchio.ext import commands
+
+from main import TwitchBot
+
+class COGNAME(commands.Cog):
+    def __init__(self, bot: TwitchBot):
+        self.bot = bot
+
+def prepare(bot: TwitchBot):
+	bot.add_cog(COGNAME(bot))
