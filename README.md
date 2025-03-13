@@ -1,0 +1,2 @@
+# Sbotga
+sbotga discord bot
