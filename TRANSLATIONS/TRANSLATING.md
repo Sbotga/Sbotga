@@ -1,3 +1,5 @@
+DO NOT TRANSLATE HERE! I will start a crowdin eventually. DO NOT OPEN A PULL REQUEST TO TRANSLATE!
+
 # Translating
 1. Feel free to add local PJSK memes, etc into your translations! As long as they're appropriate (eg. "rankma" for "ranked")
 2. ENSURE YOUR TRANSLATIONS ARE ACCURATE.
