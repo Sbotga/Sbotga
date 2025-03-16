@@ -325,6 +325,14 @@ class GuessCog(commands.Cog):
                 await interaction.followup.send(embed=embed)
                 return False
             elif not (
+                await self.bot.user_data.discord.guessing_enabled(interaction.guild_id)
+            ):
+                embed = embeds.error_embed(
+                    f"You cannot use guessing in this server as it has been disabled.",
+                )
+                await interaction.followup.send(embed=embed)
+                return False
+            elif not (
                 interaction.guild
                 and interaction.channel.permissions_for(
                     interaction.guild.me
@@ -624,7 +632,7 @@ class GuessCog(commands.Cog):
         ):
             if (
                 hasattr(self.bot, "FORCE_TROLL_REACT") and self.bot.FORCE_TROLL_REACT
-            ) or random.randint(1, 300) == 3:
+            ) or random.randint(1, 700) == 3:
                 self.bot.FORCE_TROLL_REACT = False
                 reaction = (
                     "<:sbuga:1293557990397448285>"
@@ -1933,6 +1941,37 @@ class GuessCog(commands.Cog):
         ) as e:  # it errored and we don't want to permanently block this channel
             self.remove_guess(self.bot, interaction.channel.id)
             raise e
+
+    # endregion
+    """
+    TOGGLE GUESSING
+    """
+    # region TOGGLING
+
+    @guess.command(
+        auto_locale_strings=False,
+        name="toggle",
+        description="Turn on/off guessing in your server.",
+    )
+    @app_commands.describe(on="Whether guessing is on or off.")
+    @app_commands.guild_only()
+    async def jacket_guess(self, interaction: discord.Interaction, on: bool):
+        await interaction.response.defer()
+        if interaction.user.guild_permissions.manage_guild:
+            state = await self.bot.user_data.discord.toggle_guessing(
+                interaction.guild_id, on
+            )
+            return await interaction.followup.send(
+                embed=embeds.success_embed(
+                    f"Guessing is now **{'ON' if state else 'OFF'}**!"
+                )
+            )
+        else:
+            return await interaction.followup.send(
+                embed=embeds.error_embed(
+                    "You need the `Manage Server` permission to do this!"
+                )
+            )
 
     # endregion
     """

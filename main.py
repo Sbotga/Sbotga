@@ -700,6 +700,11 @@ CREATE TABLE song_aliases (
     id SERIAL PRIMARY KEY,
     aliases JSON
 );
+CREATE TABLE guilds (
+    id SERIAL PRIMARY KEY,
+    guild_id BIGINT NOT NULL UNIQUE,
+    guessing_enabled BOOLEAN DEFAULT true
+);
 """
 
     discord.utils.setup_logging()

@@ -594,6 +594,23 @@ class USER_DATA:
                         user_id,
                     )
 
+        async def verify_discord_guild(self, guild_id: int):
+            async with self.db.acquire() as conn:
+                row = await conn.fetchrow(
+                    "SELECT * FROM guilds WHERE guild_id = $1", guild_id
+                )
+                if row:
+                    pass
+                else:
+                    # If guild does not exist, insert a new guild
+                    await conn.execute(
+                        """
+                        INSERT INTO guilds (guild_id) 
+                        VALUES ($1)
+                        """,
+                        guild_id,
+                    )
+
         async def update_pjsk_id(self, user_id: int, pjsk_id: int, region: str):
             await self.verify_discord_user(user_id)
             async with self.db.acquire() as conn:
@@ -1239,6 +1256,31 @@ class USER_DATA:
             xp_into_level = experience - total_xp
             xp_for_next = USER_DATA._DISCORD.incremental_xp(level + 1)
             return level, xp_into_level, xp_for_next
+
+        async def toggle_guessing(self, guild_id: int, enabled: bool) -> int:
+            """Toggle guessing on/off in a Discord gulid"""
+            await self.verify_discord_guild(guild_id)
+            async with self.db.acquire() as conn:
+                result = await conn.fetchrow(
+                    """
+                    UPDATE guilds
+                    SET guessing_enabled = $1
+                    WHERE guild_id = $2
+                    RETURNING guessing_enabled;
+                    """,
+                    enabled,
+                    guild_id,
+                )
+                return result["guessing_enabled"] if result else True
+
+        async def guessing_enabled(self, guild_id: int) -> bool:
+            """Check if guessing is enabled for the given guild."""
+            await self.verify_discord_guild(guild_id)
+            async with self.db.acquire() as conn:
+                result = await conn.fetchrow(
+                    "SELECT guessing_enabled FROM guilds WHERE guild_id = $1", guild_id
+                )
+                return result["guessing_enabled"] if result else True
 
 
 user_data = USER_DATA()
