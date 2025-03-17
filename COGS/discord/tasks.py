@@ -66,7 +66,7 @@ class TasksAndUpdates(commands.Cog):
         diff = self.bot.constants_override.get(key)
         source = "Community Override (not 39s)"
         if not diff:
-            self.bot.constants.get(key)
+            diff = self.bot.constants.get(key)
             source = "39s"
         if not diff:
             if error_on_not_found:
