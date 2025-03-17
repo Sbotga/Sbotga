@@ -148,7 +148,9 @@ class CalculationService(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
             return
-        constant = await self.bot.get_constant(song.id, difficulty, ap=True)
+        constant = await self.bot.get_constant(
+            song.id, difficulty, ap=True, force_39s=True
+        )
         result = self.calculate_score(
             constant,
             score,

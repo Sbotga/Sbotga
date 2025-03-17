@@ -33,10 +33,6 @@ from DATA.user_data import user_data
 
 twitch_token = CONFIGS.tokens["twitch"]
 discord_token = CONFIGS.tokens["discord"]
-"""
-refresh: uh49p1qjiwmzba87zjmwy3k8qmip26wcj5a7er7uqfogdnqw1p
-client id: gp762nuuoqcoxypju8c569th9wz7q5
-"""
 
 
 class TwitchBot(twitch_commands.Bot):
@@ -309,6 +305,7 @@ class DiscordBot(discord_commands.Bot):
         ap: bool,
         error_on_not_found: bool = False,
         include_source: bool = False,
+        force_39s: bool = False,
     ):  # overwritten in tasks.py
         ...
 
@@ -352,6 +349,7 @@ class DiscordBot(discord_commands.Bot):
         ap: bool,
         error_on_not_found: bool = False,
         include_source: bool = False,
+        force_39s: bool = False,
     ):  # overwritten in tasks.py
         ...
 

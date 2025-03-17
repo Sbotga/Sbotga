@@ -46,12 +46,13 @@ class TasksAndUpdates(commands.Cog):
         ap: bool,
         error_on_not_found: bool = False,
         include_source: bool = False,
+        force_39s: bool = False,
     ) -> float | tuple:
         # Check if the constants were updated in the last 60 minutes
         if self.bot.constants_updated + 3600 < time.time():
             await self.update_constants()
         return self.get_constant_sync(
-            music_id, difficulty, ap, error_on_not_found, include_source
+            music_id, difficulty, ap, error_on_not_found, include_source, force_39s
         )
 
     def get_constant_sync(
@@ -61,11 +62,12 @@ class TasksAndUpdates(commands.Cog):
         ap: bool,
         error_on_not_found: bool = False,
         include_source: bool = False,
+        force_39s: bool = False,
     ) -> float | tuple:
         key = (music_id, difficulty)
         diff = self.bot.constants_override.get(key)
         source = "Community Override (not 39s)"
-        if not diff:
+        if force_39s or (not diff):
             diff = self.bot.constants.get(key)
             source = "39s"
         if not diff:
