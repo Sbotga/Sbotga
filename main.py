@@ -281,6 +281,7 @@ class DiscordBot(discord_commands.Bot):
         self.pjsk = pjsk
 
         self.constants = {}
+        self.constants_override = {}
         self.constants_updated = 0
 
         self.ban_cache = {}
@@ -302,7 +303,12 @@ class DiscordBot(discord_commands.Bot):
         self.cogs_folder = os.path.join("COGS/discord", "")
 
     async def get_constant(
-        self, music_id: int, difficulty: str, ap: bool, error_on_not_found: bool = False
+        self,
+        music_id: int,
+        difficulty: str,
+        ap: bool,
+        error_on_not_found: bool = False,
+        include_source: bool = False,
     ):  # overwritten in tasks.py
         ...
 
@@ -340,7 +346,12 @@ class DiscordBot(discord_commands.Bot):
         ...
 
     def get_constant_sync(
-        self, music_id: int, difficulty: str, ap: bool, error_on_not_found: bool = False
+        self,
+        music_id: int,
+        difficulty: str,
+        ap: bool,
+        error_on_not_found: bool = False,
+        include_source: bool = False,
     ):  # overwritten in tasks.py
         ...
 

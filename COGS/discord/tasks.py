@@ -40,34 +40,62 @@ class TasksAndUpdates(commands.Cog):
             await self.update_constants()
 
     async def get_constant(
-        self, music_id: int, difficulty: str, ap: bool, error_on_not_found: bool = False
-    ) -> float:
+        self,
+        music_id: int,
+        difficulty: str,
+        ap: bool,
+        error_on_not_found: bool = False,
+        include_source: bool = False,
+    ) -> float | tuple:
         # Check if the constants were updated in the last 60 minutes
         if self.bot.constants_updated + 3600 < time.time():
             await self.update_constants()
-        return self.get_constant_sync(music_id, difficulty, ap, error_on_not_found)
+        return self.get_constant_sync(
+            music_id, difficulty, ap, error_on_not_found, include_source
+        )
 
     def get_constant_sync(
-        self, music_id: int, difficulty: str, ap: bool, error_on_not_found: bool = False
-    ) -> float:
+        self,
+        music_id: int,
+        difficulty: str,
+        ap: bool,
+        error_on_not_found: bool = False,
+        include_source: bool = False,
+    ) -> float | tuple:
         key = (music_id, difficulty)
-        diff = self.bot.constants.get(key)
+        diff = self.bot.constants_override.get(key)
+        source = "Community Override (not 39s)"
+        if not diff:
+            self.bot.constants.get(key)
+            source = "39s"
         if not diff:
             if error_on_not_found:
                 raise IndexError()
             diff = methods.Tools.get_music_diff(music_id, difficulty)
-        return diff - 1 if diff and not ap else diff if diff and ap else diff
+            source = "Not Rated"
+        if include_source:
+            return (
+                diff - 1 if diff and not ap else diff if diff and ap else diff
+            ), source
+        else:
+            return diff - 1 if diff and not ap else diff if diff and ap else diff
 
     async def update_constants(self):
         url = "https://docs.google.com/spreadsheets/d/1B8tX9VL2PcSJKyuHFVd2UT_8kYlY4ZdwHwg9MfWOPug/export?format=csv&gid=610789839"
+        url2 = "https://docs.google.com/spreadsheets/d/1Yv3GXnCIgEIbHL72EuZ-d5q_l-auPgddWi4Efa14jq0/export?format=csv&gid=182216"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
                     csv_data = await response.read()
                     await self.parse_csv(csv_data)
                     self.bot.constants_updated = time.time()
+            async with session.get(url2) as response:
+                if response.status == 200:
+                    csv_data = await response.read()
+                    await self.parse_csv(csv_data, secondary=True)
+                    self.bot.constants_updated = time.time()
 
-    async def parse_csv(self, csv_data: bytes):
+    async def parse_csv(self, csv_data: bytes, secondary: bool = False):
         # Decode CSV data and load into a dictionary
         decoded_data = csv_data.decode("utf-8")
         csv_file = StringIO(decoded_data)
@@ -89,7 +117,10 @@ class TasksAndUpdates(commands.Cog):
                     "append",
                 ]
 
-                self.bot.constants[(music_id, difficulty)] = constant
+                if secondary:
+                    self.bot.constants_override[(music_id, difficulty)] = constant
+                else:
+                    self.bot.constants[(music_id, difficulty)] = constant
 
             except (ValueError, KeyError, AssertionError) as e:
                 pass
