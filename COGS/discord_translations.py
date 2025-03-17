@@ -80,7 +80,7 @@ class Translations:
         DIR = "TRANSLATIONS"
         self.translations = {}
         for locale in os.listdir(DIR):
-            if not os.path.isdir(locale):
+            if not os.path.isdir(f"{DIR}/{locale}"):
                 continue
             self.translations[locale.strip(" /\\")] = {}
             for file in os.listdir(f"{DIR}/{locale}"):
