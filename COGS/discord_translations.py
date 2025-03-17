@@ -83,7 +83,7 @@ class Translations:
             if not os.path.isdir(locale):
                 continue
             self.translations[locale.strip(" /\\")] = {}
-            for file in os.listdir(DIR):
+            for file in os.listdir(f"{DIR}/{locale}"):
                 with open(f"{DIR}/{locale}/{file}", "r") as f:
                     data = json.load(f)
                     # TODO: validation checks
