@@ -282,15 +282,15 @@ class RankedCog(commands.Cog):
 
     # Command Group
     ranked = app_commands.Group(
-        name=locale_str("cmds-ranked-name"),
-        description=locale_str("cmds.ranked.desc"),
+        name=locale_str("ranked", key="ranked.name", file="commands"),
+        description=locale_str("ranked.desc", file="commands"),
         allowed_installs=app_commands.AppInstallationType(guild=True, user=True),
     )
 
     @ranked.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-ranked-cmds-view-name"),
-        description=locale_str("cmds.ranked.cmds.view.desc"),
+        name=locale_str("view", key="ranked.cmds.view.name", file="commands"),
+        description=locale_str("ranked.cmds.view.desc", file="commands"),
     )
     @app_commands.describe(
         rank=locale_str("general.rank"),
@@ -364,8 +364,10 @@ class RankedCog(commands.Cog):
 
     @ranked.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-ranked-cmds-lb-name"),
-        description=locale_str("cmds.ranked.cmds.lb.desc"),
+        name=locale_str(
+            "leaderboard", key="ranked.cmds.leaderboard.name", file="commands"
+        ),
+        description=locale_str("ranked.cmds.leaderboard.desc", file="commands"),
     )
     @app_commands.describe(region=locale_str("general.region"))
     @app_commands.autocomplete(

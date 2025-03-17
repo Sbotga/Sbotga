@@ -82,10 +82,14 @@ class Translations:
         for locale in os.listdir(DIR):
             if not os.path.isdir(locale):
                 continue
-            with open(f"{DIR}/{locale}/translations.json", "r") as f:
-                data = json.load(f)
-                # TODO: validation checks
-                self.translations[locale] = data
+            self.translations[locale.strip(" /\\")] = {}
+            for file in os.listdir(DIR):
+                with open(f"{DIR}/{locale}/{file}", "r") as f:
+                    data = json.load(f)
+                    # TODO: validation checks
+                    self.translations[locale.strip(" /\\")][
+                        file.removesuffix(".json")
+                    ] = data
 
     async def other_context_translate(
         self,
@@ -146,7 +150,11 @@ class Translations:
         locale: str,
         context: app_commands.TranslationContext,
     ):
-        keys = re.split("\\.|\\-", keys)
+        if extras.get("key"):
+            keys: list = re.split("\\.|\\-", extras["key"])
+        else:
+            keys: list = re.split("\\.|\\-", keys)
+        keys.insert(0, extras.get("file", "translations"))
         replacements = extras.get("replacements", {})
         try:
             value = self.translations[locale]

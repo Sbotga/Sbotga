@@ -282,8 +282,8 @@ class GachaCog(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-gacha-name"),
-        description=locale_str("cmds.gacha.desc"),
+        name=locale_str("gacha", key="gacha.name", file="commands"),
+        description=locale_str("gacha.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.autocomplete(
@@ -291,7 +291,7 @@ class GachaCog(commands.Cog):
     )
     @app_commands.describe(
         region=locale_str("general.region"),
-        reverse_odds=locale_str("cmds.gacha.describes.reverse_odds"),
+        reverse_odds=locale_str("gacha.describes.reverse_odds", file="commands"),
     )
     async def gacha(
         self,

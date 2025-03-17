@@ -376,15 +376,15 @@ class EventsCog(commands.Cog):
 
     # Command Group
     event = app_commands.Group(
-        name=locale_str("cmds-events-name"),
-        description=locale_str("cmds.events.desc"),
+        name=locale_str("events", key="events.name", file="commands"),
+        description=locale_str("events.desc", file="commands"),
         allowed_installs=app_commands.AppInstallationType(guild=True, user=True),
     )
 
     @event.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-events-cmds-view-name"),
-        description=locale_str("cmds.events.cmds.view.desc"),
+        name=locale_str("view", key="events.cmds.view.name", file="commands"),
+        description=locale_str("events.cmds.view.desc", file="commands"),
     )
     @app_commands.describe(
         rank=locale_str("general.rank"),
@@ -496,8 +496,10 @@ class EventsCog(commands.Cog):
 
     @event.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-events-cmds-lb-name"),
-        description=locale_str("cmds.events.cmds.lb.desc"),
+        name=locale_str(
+            "leaderboard", key="events.cmds.leaderboard.name", file="commands"
+        ),
+        description=locale_str("events.cmds.leaderboard.desc", file="commands"),
     )
     @app_commands.describe(
         region=locale_str("general.region"),
@@ -676,8 +678,8 @@ class EventsCog(commands.Cog):
 
     @event.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-events-cmds-schedule-name"),
-        description=locale_str("cmds.events.cmds.schedule.desc"),
+        name=locale_str("schedule", key="events.cmds.schedule.name", file="commands"),
+        description=locale_str("events.cmds.schedule.desc", file="commands"),
     )
     @app_commands.describe(
         region=locale_str("general.region"),
@@ -707,8 +709,8 @@ class EventsCog(commands.Cog):
 
     @event.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-events-cmds-border-name"),
-        description=locale_str("cmds.events.cmds.border.desc"),
+        name=locale_str("border", key="events.cmds.border.name", file="commands"),
+        description=locale_str("events.cmds.border.desc", file="commands"),
     )
     @app_commands.describe(
         region=locale_str("general.region"),
@@ -783,8 +785,8 @@ class EventsCog(commands.Cog):
 
     @event.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-events-cmds-predict-name"),
-        description=locale_str("cmds.events.cmds.predict.desc"),
+        name=locale_str("predict", key="events.cmds.predict.name", file="commands"),
+        description=locale_str("events.cmds.predict.desc", file="commands"),
     )
     @app_commands.describe(
         tier=locale_str("general.rank"),

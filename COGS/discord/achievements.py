@@ -257,8 +257,8 @@ class Achievements(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-achievements-name"),
-        description=locale_str("cmds.achievements.desc"),
+        name=locale_str("achievements", key="achievements.name", file="commands"),
+        description=locale_str("achievements.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.describe(user=locale_str("general.discord_user"))

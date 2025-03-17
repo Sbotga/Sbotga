@@ -98,13 +98,13 @@ class CalculationService(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-calculate-name"),
-        description=locale_str("cmds.calculate.desc"),
+        name=locale_str("calculate", key="calculate.name", file="commands"),
+        description=locale_str("calculate.desc", file="commands"),
     )
     @app_commands.describe(
         song=locale_str("general.song_name"),
         difficulty=locale_str("general.difficulty"),
-        score=locale_str("cmds.calculate.describes.score"),
+        score=locale_str("calculate.describes.score", file="commands"),
     )
     @app_commands.autocomplete(
         song=autocompletes.autocompletes.pjsk_song,

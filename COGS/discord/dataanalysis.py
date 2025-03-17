@@ -1213,8 +1213,8 @@ class DataAnalysis(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-b30-name"),
-        description=locale_str("cmds.b30.desc"),
+        name=locale_str("b30", key="b30.name", file="commands"),
+        description=locale_str("b30.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.autocomplete(
@@ -1229,8 +1229,8 @@ class DataAnalysis(commands.Cog):
     @app_commands.describe(
         region=locale_str("general.region"),
         private=locale_str("general.pjsk_private"),
-        filter=locale_str("cmds.b30.describes.filter"),
-        count=locale_str("cmds.b30.describes.count"),
+        filter=locale_str("b30.describes.filter", file="commands"),
+        count=locale_str("b30.describes.count", file="commands"),
     )
     async def user_b30(
         self,
@@ -1376,8 +1376,8 @@ class DataAnalysis(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("cmds-progress-name"),
-        description=locale_str("cmds.progress.desc"),
+        name=locale_str("progress", key="progress.name", file="commands"),
+        description=locale_str("progress.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.autocomplete(

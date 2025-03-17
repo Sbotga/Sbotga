@@ -1,0 +1,88 @@
+{
+    "achievements": {
+        "name": "achievements",
+        "desc": "View a user's achievements.",
+        "describes": {
+        }
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "View your best 30 PJSK charts!",
+        "describes": {
+            "filter": "The b30 song status filter to use.",
+            "count": "Amount of songs to display in your best charts, instead of 30. Value between 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "calculate",
+        "desc": "Calculate score for chosen chart. 39s exclusive!",
+        "describes": {
+            "score": "Your score in P/G/G/B/M format (supports greats only and G/G/B/M as well)"
+        }
+    },
+    "comics": {
+        "name": "comics",
+        "desc": "View in-game comics, as seen in loading screens.",
+        "describes": {}
+    },
+    "events": {
+        "name": "events",
+        "desc": "Sbotga event related commands.",
+        "cmds": {
+            "border": {
+                "name": "border",
+                "desc": "Displays the current event border (highlight) rankings.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "leaderboard",
+                "desc": "View current event leaderboard.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "predict",
+                "desc": "Predict cutoffs for the current event. (sourced from jiiku831)",
+                "describes": {
+                }
+            },
+            "schedule": {
+                "name": "schedule",
+                "desc": "Displays the current and future event schedule.",
+                "describes": {}
+            },
+            "view": {
+                "name": "view",
+                "desc": "View details of a specific rank.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha",
+        "desc": "Simulate a PJSK gacha 10 pull.",
+        "describes": {
+            "reverse_odds": "Swap the odds for 2* and 4* cards."
+        }
+    },
+    "progress": {
+        "name": "progress",
+        "desc": "View your PJSK progress! Shows APs, FCs, and Clears for ALL song levels in a difficulty.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "ranked",
+        "desc": "Sbotga ranked (rankma) related commands.",
+        "cmds": {
+            "leaderboard": {
+                "name": "leaderboard",
+                "desc": "View current ranked leaderboard.",
+                "describes": {}
+            },
+            "view": {
+                "name": "view",
+                "desc": "View details of a specific player at this rank.",
+                "describes": {}
+            }
+        }
+    }
+}
