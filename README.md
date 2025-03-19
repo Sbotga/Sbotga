@@ -1,10 +1,5 @@
 # Sbotga DISCORD BOT
-Made December, 2024.
-
-Contributors:
-- @YangTheParrot
-- @auburnsummer
-- @YumYummity
+[![Crowdin](https://badges.crowdin.net/sbotga/localized.svg)](https://crowdin.com/project/sbotga)
 
 ### WHERE IS requirements.txt?
 This repository hides the requirements.txt, as well as all PJSK API-based code. This will not be made publicly available, due to the sensitive nature of the game's API.
