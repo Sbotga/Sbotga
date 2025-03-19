@@ -152,10 +152,12 @@ class Translations:
         context: app_commands.TranslationContext,
     ):
         if extras.get("key"):
-            keys: list = re.split("\\.|\\-", extras["key"])
+            keys: list = extras["key"].split(".")
         else:
-            keys: list = re.split("\\.|\\-", keys)
+            keys: list = keys.split(".")
         keys.insert(0, extras.get("file", "translations"))
+        if keys[0] == "commands" and keys[-1] == "name":
+            return None  # don't translate command names (for now)
         replacements = extras.get("replacements", {})
         try:
             value = self.translations[locale]
