@@ -22,16 +22,19 @@ class CharactersCog(commands.Cog):
         self.bot = bot
 
     char = app_commands.Group(
-        name="character", description="Commands related to PJSK characters."
+        name=locale_str("char", key="char.cmds.info.name", file="commands"),
+        description=locale_str("char.cmds.info.desc", file="commands"),
     )
 
     @char.command(
         auto_locale_strings=False,
-        name="info",
-        description="View character information.",
+        name=locale_str("info", key="char.cmds.info.name", file="commands"),
+        description=locale_str("char.cmds.info.desc", file="commands"),
     )
     @app_commands.autocomplete(character=autocompletes.autocompletes.pjsk_char)
-    @app_commands.describe(character="The character you want information on.")
+    @app_commands.describe(
+        character=locale_str("char.cmds.info.describes.character", file="commands")
+    )
     async def char_info(self, interaction: discord.Interaction, character: str):
         await interaction.response.defer(thinking=True)
         ochar = character
@@ -66,11 +69,16 @@ class CharactersCog(commands.Cog):
 
     @char.command(
         auto_locale_strings=False,
-        name="card",
-        description="View a card's info!",
+        name=locale_str("card", key="char.cmds.card.name", file="commands"),
+        description=locale_str("char.cmds.card.desc", file="commands"),
     )
     @app_commands.autocomplete(card=autocompletes.autocompletes.pjsk_card)
-    @app_commands.describe(card="The card you want to view.")
+    @app_commands.describe(
+        card=locale_str(
+            "char.cmds.card.describes.card",
+            file="commands",
+        )
+    )
     async def card(self, interaction: discord.Interaction, card: str):
         await interaction.response.defer(thinking=True)
         api = methods.pjsk_game_api_jp
@@ -80,7 +88,11 @@ class CharactersCog(commands.Cog):
         except:
             card = None
         if card is None:
-            embed = embeds.error_embed(f"Unknown card: `{ocard}`")
+            embed = embeds.error_embed(
+                await interaction.translate(
+                    locale_str("errors.unknown_card", replacements={"{card}": ocard})
+                )
+            )
             await interaction.followup.send(embed=embed)
             return
 

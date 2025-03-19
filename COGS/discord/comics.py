@@ -37,7 +37,15 @@ class ComicsCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         await interaction.response.defer(thinking=True)
         if region == "default":
@@ -119,7 +127,10 @@ class ComicSelect(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         if interaction.user.id != self.restriction:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("You cannot use this menu!"), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate("errors.cannot_select")
+                ),
+                ephemeral=True,
             )
         if self.values[0] == "previous":
             self.da_view.current_page -= 1

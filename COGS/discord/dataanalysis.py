@@ -1101,7 +1101,17 @@ class DataAnalysis(commands.Cog):
     ):
         try:
             if region not in ["en", "jp", "tw", "kr", "cn", "all"]:
-                return await ctx.reply("Unsupported region.", ephemeral=True)
+                return await ctx.reply(
+                    await translations.other_context_translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        ),
+                        ctx.message,
+                        "en-US",
+                        ctx.bot,
+                    )
+                )
             if isinstance(user_id, discord.User):
                 pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
                     user_id.id, region="en"
@@ -1161,7 +1171,17 @@ class DataAnalysis(commands.Cog):
     ):
         try:
             if region not in ["en", "jp", "tw", "kr", "cn", "all"]:
-                return await ctx.reply("Unsupported region.", ephemeral=True)
+                return await ctx.reply(
+                    await translations.other_context_translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        ),
+                        ctx.message,
+                        "en-US",
+                        ctx.bot,
+                    )
+                )
             if isinstance(user_id, discord.User):
                 pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
                     user_id.id, region="en"
@@ -1244,7 +1264,15 @@ class DataAnalysis(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "all"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         if filter not in ["ap", "fc", None]:
             return await interaction.response.send_message(
@@ -1401,7 +1429,15 @@ class DataAnalysis(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "all", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         odiff = difficulty
         difficulty = converters.DiffFromPJSK(difficulty)

@@ -80,18 +80,20 @@ class InfoCog(commands.Cog):
         return escaped_text, blocked_section, is_blocked
 
     pjsk = app_commands.Group(
-        name="pjsk",
-        description="PJSK related information commands.",
+        name=locale_str("pjsk", key="pjsk.name", file="commands"),
+        description=locale_str("pjsk.desc", file="commands"),
         allowed_installs=app_commands.AppInstallationType(guild=True, user=True),
     )
 
     @pjsk.command(
         auto_locale_strings=False,
-        name="why_inappropriate",
-        description="Check to see why some text is inappropriate according to PJSK.",
+        name=locale_str(
+            "why_inappropriate", key="pjsk.cmds.why_inappropriate.name", file="commands"
+        ),
+        description=locale_str("pjsk.cmds.why_inappropriate.desc", file="commands"),
     )
     @app_commands.describe(
-        text="Text to check, max length 255 characters.",
+        text=locale_str("pjsk.cmds.why_inappropriate.describes.text", file="commands"),
         region=locale_str("general.region"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
@@ -104,7 +106,15 @@ class InfoCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         if len(text) > 512:
             await interaction.response.send_message(
@@ -148,7 +158,11 @@ class InfoCog(commands.Cog):
 
         await interaction.followup.send(embed=embed)
 
-    @app_commands.command(auto_locale_strings=False, description="Pong! View latency.")
+    @app_commands.command(
+        auto_locale_strings=False,
+        name=locale_str("ping", key="ping.name", file="commands"),
+        description=locale_str("ping.desc", file="commands"),
+    )
     @app_commands.allowed_installs(guilds=True, users=True)
     async def ping(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False, thinking=True)
@@ -190,7 +204,9 @@ class InfoCog(commands.Cog):
         await interaction.followup.send(embed=embed)
 
     @app_commands.command(
-        auto_locale_strings=False, description="View donation information."
+        auto_locale_strings=False,
+        name=locale_str("donate", key="donate.name", file="commands"),
+        description=locale_str("donate.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     async def donate(self, interaction: discord.Interaction):
@@ -205,8 +221,8 @@ class InfoCog(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name="help",
-        description="Bot information, including invite.",
+        name=locale_str("help", key="help.name", file="commands"),
+        description=locale_str("help.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     async def help(self, interaction: discord.Interaction):
@@ -219,12 +235,12 @@ class InfoCog(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name="xp_for",
-        description="Get XP required for a certain level.",
+        name=locale_str("xp_for", key="xp_for.name", file="commands"),
+        description=locale_str("xp_for.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.describe(
-        level="Level to calculate XP for.",
+        level=locale_str("xp_for.describes.level", file="commands"),
     )
     async def xp_for_cmd(self, interaction: discord.Interaction, level: int):
         if level < 1 or level > 3939:
@@ -263,10 +279,12 @@ class InfoCog(commands.Cog):
         await interaction.followup.send(embed=embed)
 
     @app_commands.command(
-        auto_locale_strings=False, name="profile", description="View a user's profile."
+        auto_locale_strings=False,
+        name=locale_str("profile", key="profile.name", file="commands"),
+        description=locale_str("profile.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
-    @app_commands.describe(user="User you want to view.")
+    @app_commands.describe(user=locale_str("general.discord_user"))
     async def profile(
         self, interaction: discord.Interaction, user: discord.User = None
     ):
@@ -339,15 +357,16 @@ class InfoCog(commands.Cog):
         await interaction.followup.send(embed=embed)
 
     @pjsk.command(
-        auto_locale_strings=False, name="profile", description="View a user's profile."
+        auto_locale_strings=False,
+        name=locale_str("profile", key="pjsk.cmds.profile.name", file="commands"),
+        description=locale_str("pjsk.cmds.profile.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.autocomplete(
         region=autocompletes.autocompletes.pjsk_region(["en", "jp", "tw", "kr", "cn"])
     )
     @app_commands.describe(
-        user_id="User ID you want to view.",
-        region=locale_str("general.region"),
+        user_id=locale_str("general.pjsk_user_id"), region=locale_str("general.region")
     )
     async def pjsk_profile(
         self,
@@ -358,7 +377,15 @@ class InfoCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         await interaction.response.defer(ephemeral=False, thinking=True)
         if region == "default":

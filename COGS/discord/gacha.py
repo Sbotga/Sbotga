@@ -302,7 +302,15 @@ class GachaCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         sub_level = await self.bot.subscribed(interaction.user)
         current_time = time.time()

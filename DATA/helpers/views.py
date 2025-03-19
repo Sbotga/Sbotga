@@ -37,6 +37,21 @@ class SbotgaView(discord.ui.View):
     async def on_error(self, interaction: discord.Interaction, error: Exception, item):
         await interaction.client.tree.on_error(interaction, error, item)
 
+    async def translate(self, interaction: discord.Interaction):
+        for child in self.children:
+            if isinstance(child, discord.ui.Button):
+                if child.label and (not (hasattr(child, "_TRANSLATED"))):
+                    child._TRANSLATED = True
+                    child.label = await interaction.translate(child.label)
+            if isinstance(child, discord.ui.Select):
+                if child.placeholder and (not (hasattr(child, "_TRANSLATED"))):
+                    child._TRANSLATED = True
+                    child.placeholder = await interaction.translate(child.placeholder)
+                for option in child.options:
+                    if not (hasattr(option, "_TRANSLATED")):
+                        option._TRANSLATED = True
+                        option.label = await interaction.translate(option.label)
+
 
 def merge_views(*args, timeout: int = 180):
     new = SbotgaView(timeout=timeout)

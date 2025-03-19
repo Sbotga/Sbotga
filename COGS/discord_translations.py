@@ -16,16 +16,17 @@ dataanalysis.py
 achievements.py
 events.py
 ranked.py
-"""
-"""TODO LIST
 character.py
 guessing.py
 information.py
+"""
+"""TODO LIST
 song.py
 user.py
 """
 # - Translating all errors (TODO!!)
 # - Translating all responses (MAJOR TODO!! LOW PRIORITY, DO THE FIRST TWO.)
+# - Translate views.py (TODO!! remember to view.translate() where possible.)
 
 
 def replace(source: str, rep: dict) -> str:
@@ -169,7 +170,7 @@ class Translations:
                 return None
             except Exception as e:
                 traceback.print_exc()
-                return "err_tranlation"
+                return "err_translation"
 
         # replace values in value
         if replacements:

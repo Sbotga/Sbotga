@@ -85,7 +85,15 @@ class SongInfo(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "all", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         await interaction.response.defer(thinking=True)
         if region == "default":
@@ -620,7 +628,9 @@ class SongInfo(commands.Cog):
                     interaction.user.id
                     != interaction.message.interaction_metadata.user.id
                 ):
-                    embed = embeds.error_embed("You cannot click this button!")
+                    embed = embeds.error_embed(
+                        await interaction.translate("errors.cannot_click")
+                    )
                     await interaction.response.send_message(embed=embed, ephemeral=True)
                     return
                 await interaction.response.defer()
@@ -636,7 +646,9 @@ class SongInfo(commands.Cog):
                     interaction.user.id
                     != interaction.message.interaction_metadata.user.id
                 ):
-                    embed = embeds.error_embed("You cannot click this button!")
+                    embed = embeds.error_embed(
+                        await interaction.translate("errors.cannot_click")
+                    )
                     await interaction.response.send_message(embed=embed, ephemeral=True)
                     return
                 await interaction.response.defer()
@@ -818,7 +830,9 @@ class SongInfo(commands.Cog):
                             interaction.user.id
                             != interaction.message.interaction_metadata.user.id
                         ):
-                            embed = embeds.error_embed("You cannot use this menu!")
+                            embed = embeds.error_embed(
+                                await interaction.translate("errors.cannot_select")
+                            )
                             await interaction.response.send_message(
                                 embed=embed, ephemeral=True
                             )
@@ -913,7 +927,9 @@ class SongInfo(commands.Cog):
                             interaction.user.id
                             != interaction.message.interaction_metadata.user.id
                         ):
-                            embed = embeds.error_embed("You cannot use this menu!")
+                            embed = embeds.error_embed(
+                                await interaction.translate("errors.cannot_select")
+                            )
                             await interaction.response.send_message(
                                 embed=embed, ephemeral=True
                             )
@@ -965,7 +981,9 @@ class SongInfo(commands.Cog):
                             interaction.user.id
                             != interaction.message.interaction_metadata.user.id
                         ):
-                            embed = embeds.error_embed("You cannot use this menu!")
+                            embed = embeds.error_embed(
+                                await interaction.translate("errors.cannot_select")
+                            )
                             await interaction.response.send_message(
                                 embed=embed, ephemeral=True
                             )
@@ -994,7 +1012,9 @@ class SongInfo(commands.Cog):
                         interaction.user.id
                         != interaction.message.interaction_metadata.user.id
                     ):
-                        embed = embeds.error_embed("You cannot click this button!")
+                        embed = embeds.error_embed(
+                            await interaction.translate("errors.cannot_click")
+                        )
                         await interaction.response.send_message(
                             embed=embed, ephemeral=True
                         )

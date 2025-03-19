@@ -207,7 +207,7 @@ class CalculationService(commands.Cog):
             await interaction.response.send_message(
                 embed=embeds.embed(
                     description=f"**{song.title}** [{difficulty.upper()}]\n\n"
-                    + f"**Result:** {result['result']:.2f} (`{constant} {result['diff']}`) (*{rank}*)\n"
+                    + f"**Result:** {result['result']:.2f} (`{constant} {result['diff']}`) (*{rank}*)\n-# Always uses 39s constants.\n"
                     + f"**Accuracy:** {result['accuracy']:.2%}\n"
                     + f"**Score:** {'/'.join([str(res) for res in result['score_values']])}",
                     color=(

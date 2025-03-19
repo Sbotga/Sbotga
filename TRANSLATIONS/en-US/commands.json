@@ -2,8 +2,7 @@
     "achievements": {
         "name": "achievements",
         "desc": "View a user's achievements.",
-        "describes": {
-        }
+        "describes": {}
     },
     "b30": {
         "name": "b30",
@@ -20,9 +19,32 @@
             "score": "Your score in P/G/G/B/M format (supports greats only and G/G/B/M as well)"
         }
     },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "card",
+                "desc": "View a card's info!",
+                "describes": {
+                    "card": "The card you want to view."
+                }
+            },
+            "info": {
+                "name": "info",
+                "desc": "View character information.",
+                "describes": {
+                    "character": "The character you want information on."
+                }
+            }
+        }
+    },
     "comics": {
         "name": "comics",
         "desc": "View in-game comics, as seen in loading screens.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donate",
+        "desc": "View donation information.",
         "describes": {}
     },
     "events": {
@@ -42,8 +64,7 @@
             "predict": {
                 "name": "predict",
                 "desc": "Predict cutoffs for the current event. (sourced from jiiku831)",
-                "describes": {
-                }
+                "describes": {}
             },
             "schedule": {
                 "name": "schedule",
@@ -64,6 +85,111 @@
             "reverse_odds": "Swap the odds for 2* and 4* cards."
         }
     },
+    "guess": {
+        "name": "guess",
+        "desc": "Fun guessing games... rage!!",
+        "cmds": {
+            "stats": {
+                "name": "stats",
+                "desc": "View your stats for guessing.",
+                "describes": {
+                    "guess_type": "The type of guess to fetch stats for.",
+                    "user": "The Discord user to view stats.",
+                    "lb_rank": "The rank of the user to view stats."
+                }
+            },
+            "leaderboard": {
+                "name": "leaderboard",
+                "desc": "View the leaderboard for guessing.",
+                "describes": {
+                    "guess_type": "The type of guess to fetch leaderboard for."
+                }
+            },
+            "hint": {
+                "name": "hint",
+                "desc": "Cheat a bit on your guess."
+            },
+            "toggle": {
+                "name": "toggle",
+                "desc": "Turn on/off guessing in your server.",
+                "describes": {
+                    "on": "Whether guessing is on or off."
+                }
+            },
+            "character": {
+                "name": "character",
+                "desc": "Guess a PJSK character from a cut card."
+            },
+            "character_bw": {
+                "name": "character_bw",
+                "desc": "Guess a PJSK character from a grayscale cut card."
+            },
+            "chart": {
+                "name": "chart",
+                "desc": "Guess a PJSK song from a cut master chart."
+            },
+            "chart_append": {
+                "name": "chart_append",
+                "desc": "Guess a PJSK chart from a cut append chart."
+            },
+            "event": {
+                "name": "event",
+                "desc": "Guess a PJSK event from a cut event background."
+            },
+            "jacket": {
+                "name": "jacket",
+                "desc": "Guess a PJSK song from a cut jacket."
+            },
+            "jacket_smol": {
+                "name": "jacket_smol",
+                "desc": "Guess a PJSK song from a 30px cut jacket."
+            },
+            "jacket_bw": {
+                "name": "jacket_bw",
+                "desc": "Guess a PJSK song from a grayscale cut jacket."
+            },
+            "jacket_challenge": {
+                "name": "jacket_challenge",
+                "desc": "Guess a PJSK song from a grayscale 30px cut jacket."
+            },
+            "notes": {
+                "name": "notes",
+                "desc": "Guess a PJSK song from its note count on Master."
+            }
+        }
+    },
+    "help": {
+        "name": "help",
+        "desc": "Bot information, including invite, TOS, privacy policy, and commands.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "ping",
+        "desc": "Pong! View latency.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK related information commands.",
+        "cmds": {
+            "profile": {
+                "name": "profile",
+                "desc": "View a PJSK user's profile."
+            },
+            "why_inappropriate": {
+                "name": "why_inappropriate",
+                "desc": "Check to see why some text is inappropriate according to PJSK.",
+                "describes": {
+                    "text": "Text to check, max length 255 characters."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profile",
+        "desc": "View a user's profile.",
+        "describes": {}
+    },
     "progress": {
         "name": "progress",
         "desc": "View your PJSK progress! Shows APs, FCs, and Clears for ALL song levels in a difficulty.",
@@ -83,6 +209,13 @@
                 "desc": "View details of a specific player at this rank.",
                 "describes": {}
             }
+        }
+    },
+    "xp_for": {
+        "name": "xp_for",
+        "desc": "Get XP required for a certain level.",
+        "describes": {
+            "level": "Level to calculate XP for."
         }
     }
 }

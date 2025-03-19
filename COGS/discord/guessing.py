@@ -29,6 +29,8 @@ from DATA.helpers import tools
 
 from DATA.game_api import methods
 
+# TODO: translate get_view (and views.py i suppose)
+
 # See also to modify: DATA/helpers/discord_autocompletes.autocompletes.py
 TYPE_TO_NAME = {
     "jacket": "Jacket",
@@ -1130,14 +1132,16 @@ class GuessCog(commands.Cog):
                 self.cancel.disabled = True
 
         @discord.ui.button(
-            label="Cancel",
+            label="labels.cancel",
             style=discord.ButtonStyle.primary,
         )
         async def cancel(
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             if not GuessCog.guess_ended(self.bot, self.data):
@@ -1160,14 +1164,16 @@ class GuessCog(commands.Cog):
                 )
 
         @discord.ui.button(
-            label="End Guess",
+            label="labels.end_guess",
             style=discord.ButtonStyle.danger,
         )
         async def end(
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             await interaction.response.defer()
@@ -1254,7 +1260,9 @@ class GuessCog(commands.Cog):
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             await interaction.response.defer()
@@ -1267,7 +1275,9 @@ class GuessCog(commands.Cog):
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             await interaction.response.defer()
@@ -1283,8 +1293,8 @@ class GuessCog(commands.Cog):
     """
 
     guess = app_commands.Group(
-        name="guess",
-        description="Fun guessing games... rage!!",
+        name=locale_str("guess", key="guess.name", file="commands"),
+        description=locale_str("guess.desc", file="commands"),
         allowed_installs=app_commands.AppInstallationType(guild=True, user=True),
     )
 
@@ -1295,13 +1305,13 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="stats",
-        description="View your stats for guessing.",
+        name=locale_str("stats", key="guess.cmds.stats.name", file="commands"),
+        description=locale_str("guess.cmds.stats.desc", file="commands"),
     )
     @app_commands.describe(
-        guess_type="The type of guess to fetch stats for.",
-        user="The Discord user to view stats.",
-        lb_rank="The rank of the user to view stats.",
+        guess_type=locale_str("guess.cmds.stats.describes.guess_type", file="commands"),
+        user=locale_str("guess.cmds.stats.describes.user", file="commands"),
+        lb_rank=locale_str("guess.cmds.stats.describes.lb_rank", file="commands"),
     )
     @app_commands.autocomplete(
         guess_type=autocompletes.autocompletes.pjsk_guessing_types,
@@ -1380,12 +1390,16 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="leaderboard",
-        description="View the leaderboard for guessing.",
+        name=locale_str(
+            "leaderboard", key="guess.cmds.leaderboard.name", file="commands"
+        ),
+        description=locale_str("guess.cmds.leaderboard.desc", file="commands"),
     )
     @app_commands.describe(
-        guess_type="The type of guess to fetch leaderboard for.",
-        page="Leaderboard page.",
+        guess_type=locale_str(
+            "guess.cmds.leaderboard.describes.guess_type", file="commands"
+        ),
+        page=locale_str("general.page"),
     )
     @app_commands.autocomplete(
         guess_type=autocompletes.autocompletes.pjsk_guessing_types,
@@ -1439,6 +1453,7 @@ class GuessCog(commands.Cog):
             guess_type=guess_type,
             bot=self.bot,
         )
+        await view.translate(interaction)
         await interaction.followup.send(embed=embed, view=view)
         view.message = await interaction.original_response()
 
@@ -1472,6 +1487,7 @@ class GuessCog(commands.Cog):
                 view = self.GuessEndWarning(
                     self.bot, data, amount, first_time=True, disabled=True
                 )
+                await view.translate(interaction)
                 await interaction.followup.send(
                     embed=embed,
                     view=view,
@@ -1481,6 +1497,7 @@ class GuessCog(commands.Cog):
                 embed.description = f"**Are you sure you want to end this guess?**\nThis will cost you {amount:,} {emojis.sbugacoin}.\n-# This is your first time seeing this warning."
                 await asyncio.sleep(10)
                 view = self.GuessEndWarning(self.bot, data, amount, first_time=True)
+                await view.translate(interaction)
                 view.message = msg
                 return await msg.edit(
                     embed=embed,
@@ -1489,6 +1506,7 @@ class GuessCog(commands.Cog):
             else:
                 embed.description = f"**Are you sure you want to end this guess?**\nThis will cost you {amount:,} {emojis.sbugacoin}."
                 view = self.GuessEndWarning(self.bot, data, amount, first_time=False)
+                await view.translate(interaction)
                 await interaction.followup.send(
                     embed=embed,
                     view=view,
@@ -1506,7 +1524,9 @@ class GuessCog(commands.Cog):
         self.remove_guess(self.bot, interaction.channel.id)
 
     @guess.command(
-        auto_locale_strings=False, name="hint", description="Cheat a bit on your guess."
+        auto_locale_strings=False,
+        name=locale_str("hint", key="guess.cmds.hint.name", file="commands"),
+        description=locale_str("guess.cmds.hint.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_hint(self, interaction: discord.Interaction):
@@ -1950,12 +1970,14 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="toggle",
-        description="Turn on/off guessing in your server.",
+        name=locale_str("toggle", key="guess.cmds.toggle.name", file="commands"),
+        description=locale_str("guess.cmds.toggle.desc", file="commands"),
     )
-    @app_commands.describe(on="Whether guessing is on or off.")
+    @app_commands.describe(
+        on=locale_str("guess.cmds.toggle.describes.on", file="commands")
+    )
     @app_commands.guild_only()
-    async def jacket_guess(self, interaction: discord.Interaction, on: bool):
+    async def toggle_guessing(self, interaction: discord.Interaction, on: bool):
         await interaction.response.defer()
         if interaction.user.guild_permissions.manage_guild:
             state = await self.bot.user_data.discord.toggle_guessing(
@@ -1975,14 +1997,14 @@ class GuessCog(commands.Cog):
 
     # endregion
     """
-    JACKET GUESSING (jacket, jacket_bw, jacket_30px, jacket_challenge)
+    GUESSING
     """
-    # region JACKET GUESSING
+    # region GUESSING
 
     @guess.command(
         auto_locale_strings=False,
-        name="jacket",
-        description="Guess a PJSK song from a cut jacket.",
+        name=locale_str("jacket", key="guess.cmds.jacket.name", file="commands"),
+        description=locale_str("guess.cmds.jacket.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def jacket_guess(self, interaction: discord.Interaction):
@@ -1996,8 +2018,10 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="jacket_smol",
-        description="Guess a PJSK song from a 30px cut jacket.",
+        name=locale_str(
+            "jacket_smol", key="guess.cmds.jacket_smol.name", file="commands"
+        ),
+        description=locale_str("guess.cmds.jacket_smol.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_30px(self, interaction: discord.Interaction):
@@ -2011,8 +2035,8 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="jacket_bw",
-        description="Guess a PJSK song from a grayscale cut jacket.",
+        name=locale_str("jacket_bw", key="guess.cmds.jacket_bw.name", file="commands"),
+        description=locale_str("guess.cmds.jacket_bw.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_bw(self, interaction: discord.Interaction):
@@ -2026,8 +2050,10 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="jacket_challenge",
-        description="Guess a PJSK song from a grayscale 30px cut jacket.",
+        name=locale_str(
+            "jacket_challenge", key="guess.cmds.jacket_challenge.name", file="commands"
+        ),
+        description=locale_str("guess.cmds.jacket_challenge.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_bw_30px(self, interaction: discord.Interaction):
@@ -2039,16 +2065,10 @@ class GuessCog(commands.Cog):
             return
         await self.handle_guess(interaction, "jacket_challenge")
 
-    # endregion
-    """
-    CHARACTER GUESSES (character)
-    """
-    # region CHARACTER GUESSING
-
     @guess.command(
         auto_locale_strings=False,
-        name="character",
-        description="Guess a PJSK character from a cut card.",
+        name=locale_str("character", key="guess.cmds.character.name", file="commands"),
+        description=locale_str("guess.cmds.character.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_character(self, interaction: discord.Interaction):
@@ -2062,8 +2082,10 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="character_bw",
-        description="Guess a PJSK character from a grayscale cut card.",
+        name=locale_str(
+            "character_bw", key="guess.cmds.character_bw.name", file="commands"
+        ),
+        description=locale_str("guess.cmds.character_bw.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_character_bw(self, interaction: discord.Interaction):
@@ -2075,18 +2097,10 @@ class GuessCog(commands.Cog):
             return
         await self.handle_guess(interaction, "character_bw")
 
-    # endregion
-    """
-
-    CHART GUESSING (chart)
-    
-    """
-    # region CHART GUESSING
-
     @guess.command(
         auto_locale_strings=False,
-        name="chart",
-        description="Guess a PJSK song from a cut master chart.",
+        name=locale_str("chart", key="guess.cmds.chart.name", file="commands"),
+        description=locale_str("guess.cmds.chart.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_chart(self, interaction: discord.Interaction):
@@ -2100,8 +2114,10 @@ class GuessCog(commands.Cog):
 
     @guess.command(
         auto_locale_strings=False,
-        name="chart_append",
-        description="Guess a PJSK chart from a cut append chart.",
+        name=locale_str(
+            "chart_append", key="guess.cmds.chart_append.name", file="commands"
+        ),
+        description=locale_str("guess.cmds.chart_append.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_chart_append(self, interaction: discord.Interaction):
@@ -2113,41 +2129,19 @@ class GuessCog(commands.Cog):
             return
         await self.handle_guess(interaction, "chart_append")
 
-    # endregion
-    """
-
-    EVENT GUESSING
-    
-    """
-    # region EVENT GUESSING
-
     @guess.command(
         auto_locale_strings=False,
-        name="event",
-        description="Guess a PJSK event from a cut event background.",
+        name=locale_str("event", key="guess.cmds.event.name", file="commands"),
+        description=locale_str("guess.cmds.event.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_event(self, interaction: discord.Interaction):
-        # if self.bot.downloading_event_slides:
-        #     embed = embeds.error_embed(
-        #         f"I'm currently refreshing all my event backgrounds. Please be patient and try again in a minute.",
-        #     )
-        #     await interaction.response.send_message(embed=embed)
-        #     return
         await self.handle_guess(interaction, "event")
-
-    # endregion
-    """
-
-    META GUESSING
-    
-    """
-    # region META GUESSING
 
     @guess.command(
         auto_locale_strings=False,
-        name="notes",
-        description="Guess a PJSK song from its note count on Master.",
+        name=locale_str("notes", key="guess.cmds.notes.name", file="commands"),
+        description=locale_str("guess.cmds.notes.desc", file="commands"),
     )
     @app_commands.guild_only()
     async def guess_notes(self, interaction: discord.Interaction):

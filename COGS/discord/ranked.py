@@ -150,7 +150,9 @@ class RankedCog(commands.Cog):
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             await interaction.response.defer()
@@ -163,7 +165,9 @@ class RankedCog(commands.Cog):
             self, interaction: discord.Interaction, button: discord.ui.Button
         ):
             if interaction.user.id != interaction.message.interaction_metadata.user.id:
-                embed = embeds.error_embed("You cannot click this button!")
+                embed = embeds.error_embed(
+                    await interaction.translate("errors.cannot_click")
+                )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             await interaction.response.defer()
@@ -309,7 +313,15 @@ class RankedCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         if region == "default":
             region = await self.bot.user_data.discord.get_settings(
@@ -379,7 +391,15 @@ class RankedCog(commands.Cog):
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
-                embed=embeds.error_embed("Unsupported region."), ephemeral=True
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
             )
         if region == "default":
             region = await self.bot.user_data.discord.get_settings(

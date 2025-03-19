@@ -66,15 +66,15 @@ class TasksAndUpdates(commands.Cog):
     ) -> float | tuple:
         key = (music_id, difficulty)
         diff = self.bot.constants_override.get(key)
-        source = "Community Override (not 39s)"
+        source = "Community (not 39s)"
         if force_39s or (not diff):
             diff = self.bot.constants.get(key)
-            source = "39s"
+            source = "Community (39s)"
         if not diff:
             if error_on_not_found:
                 raise IndexError()
             diff = methods.Tools.get_music_diff(music_id, difficulty)
-            source = "Not Rated"
+            source = "Not Community Rated"
         if include_source:
             return (
                 diff - 1 if diff and not ap else diff if diff and ap else diff

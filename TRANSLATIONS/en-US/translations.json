@@ -5,15 +5,25 @@
         "difficulty": "PJSK difficulty.",
         "difficulty_default_master": "PJSK difficulty. Defaults to Master.",
         "pjsk_private": "Hide PJSK ID and name.",
+        "pjsk_user_id": "PJSK user ID (friend code).",
         "discord_user": "Discord user you want to view.",
         "event_wl_character": "Use a chapter-specific character leaderboard (World Link).",
-        "rank": "What rank/tier to view."
+        "rank": "What rank/tier to view.",
+        "page": "What page to view."
     },
     "errors": {
+        "cannot_click": "You cannot click this button!",
+        "cannot_select": "You cannot use this menu!",
         "invalid_input": "Invalid input. Please check your parameters.",
         "unsupported_difficulty": "Unsupported difficulty: `{difficulty}`.",
+        "unsupported_region": "Unsupported region: `{region}`.",
         "unknown_song": "Unknown song: `{song}`.",
         "unknown_character": "Unknown character: `{character}`.",
-        "unknown_event": "Unknown event: `{event}`."
+        "unknown_event": "Unknown event: `{event}`.",
+        "unknown_card": "Unknown card: `{card}`."
+    },
+    "labels": {
+        "cancel": "Cancel",
+        "end_guess": "End Guess"
     }
 }
