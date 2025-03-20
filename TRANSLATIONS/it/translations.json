@@ -1,7 +1,7 @@
 {
     "general": {
         "song_name": "Il nome della canzone di PJSK.",
-        "region": "Regione PJSK da usare. Valore predefinito: la tua regione predefinita (EN, o quella impostata nelle impostazioni).",
+        "region": "Regione PJSK da usare, predefinita su EN o quella impostata nelle impostazioni.",
         "difficulty": "Difficoltà di PJSK.",
         "difficulty_default_master": "Difficoltà di PJSK. Valore predefinito: Master.",
         "pjsk_private": "Nascondi ID e nome di PJSK.",

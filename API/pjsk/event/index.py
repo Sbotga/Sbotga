@@ -8,6 +8,8 @@ from main import TwitchBot, DiscordBot
 
 from DATA.game_api import methods
 
+from DATA.helpers.unblock import to_process_with_timeout
+
 router = APIRouter()
 
 cached = {}
@@ -44,13 +46,18 @@ def setup():
             )
 
         updated = time.time()
-        data = {
-            "updated": updated,
-            "next_available_update": updated + 300,
-            "event_id": cur,
-            "top_100": api.get_event_leaderboard(),
-            "border": api.get_event_border(),
-        }
+
+        def grab_data():
+            data = {
+                "updated": updated,
+                "next_available_update": updated + 300,
+                "event_id": cur,
+                "top_100": api.get_event_leaderboard(),
+                "border": api.get_event_border(),
+            }
+            return data
+
+        data = await to_process_with_timeout(grab_data)
         cached[region] = data
 
         return JSONResponse(content=data)

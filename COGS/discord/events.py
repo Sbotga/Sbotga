@@ -21,6 +21,8 @@ from DATA.helpers import embeds
 from DATA.helpers import views
 from DATA.helpers import tools
 
+from DATA.helpers.unblock import to_process_with_timeout
+
 
 class EventsCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
@@ -426,7 +428,7 @@ class EventsCog(commands.Cog):
             )
 
         await interaction.response.defer(thinking=True)
-        self.update_rank_data(region=region)
+        await to_process_with_timeout(self.update_rank_data, region=region)
 
         if character:
             character = converters.CharFromPJSK(self.bot.pjsk, character)
@@ -546,7 +548,7 @@ class EventsCog(commands.Cog):
             )
 
         await interaction.response.defer(thinking=True)
-        event_name = self.update_rank_data(region=region)
+        event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
         if character:
             character = converters.CharFromPJSK(self.bot.pjsk, character)
@@ -773,7 +775,7 @@ class EventsCog(commands.Cog):
             )
 
         await interaction.response.defer(thinking=True)
-        event_name = self.update_rank_data(region=region)
+        event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
         if character:
             character = converters.CharFromPJSK(self.bot.pjsk, character)
@@ -911,7 +913,7 @@ class EventsCog(commands.Cog):
             )
 
         await interaction.response.defer(thinking=True)
-        event_name = self.update_rank_data(region=region)
+        event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
         if character:
             character = converters.CharFromPJSK(self.bot.pjsk, character)

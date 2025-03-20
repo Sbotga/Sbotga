@@ -15,6 +15,8 @@ from DATA.helpers import views
 from DATA.helpers import embeds
 from DATA.helpers import tools
 
+from DATA.helpers.unblock import to_process_with_timeout
+
 # English Grade Names
 RANKMATCH_GRADES_EN = {
     1: "Beginner",
@@ -328,7 +330,7 @@ class RankedCog(commands.Cog):
                 interaction.user.id, "default_region"
             )
         await interaction.response.defer(ephemeral=False, thinking=True)
-        self.update_rank_data(region=region)
+        await to_process_with_timeout(self.update_rank_data, region=region)
         if rank is None:
             pass
         elif not 1 <= rank <= len(self.ranked_data[region]["rankings"]):
@@ -406,7 +408,9 @@ class RankedCog(commands.Cog):
                 interaction.user.id, "default_region"
             )
         await interaction.response.defer(ephemeral=False, thinking=True)
-        season_name = self.update_rank_data(region=region)
+        season_name = await to_process_with_timeout(
+            self.update_rank_data, region=region
+        )
         total_pages = math.ceil(len(self.ranked_data[region]["rankings"]) / 25)
         pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
             interaction.user.id, region

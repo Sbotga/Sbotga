@@ -8,6 +8,9 @@ from main import TwitchBot, DiscordBot
 
 from DATA.game_api import methods
 
+from DATA.helpers.unblock import to_process_with_timeout
+
+
 router = APIRouter()
 
 cached = {}
@@ -62,12 +65,16 @@ def setup():
                 status_code=404,
             )
 
-        data = {
-            "updated": updated,
-            "next_available_update": updated + 300,
-            "ranked_season": current,
-            "top_100": api.get_ranked_leaderboard(),
-        }
+        def grab_data():
+            data = {
+                "updated": updated,
+                "next_available_update": updated + 300,
+                "ranked_season": current,
+                "top_100": api.get_ranked_leaderboard(),
+            }
+            return data
+
+        data = await to_process_with_timeout(grab_data)
         cached[region] = data
 
         return JSONResponse(content=data)
