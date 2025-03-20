@@ -192,7 +192,7 @@
     },
     "progress": {
         "name": "progresso",
-        "desc": "Visualizza i tuoi progressi in PJSK! Mostra AP, FC e Clear per TUTTI i livelli in una difficolt\\u00e0.",
+        "desc": "Visualizza i progressi in PJSK! Mostra AP, FC e Clear per tutti i livelli di una difficoltà.",
         "describes": {}
     },
     "ranked": {
