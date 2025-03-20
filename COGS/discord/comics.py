@@ -25,8 +25,8 @@ class ComicsCog(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("comic", key="comic.name", file="commands"),
-        description=locale_str("comic.desc", file="commands"),
+        name=locale_str("comics", key="comics.name", file="commands"),
+        description=locale_str("comics.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.describe(region=locale_str("general.region"))
