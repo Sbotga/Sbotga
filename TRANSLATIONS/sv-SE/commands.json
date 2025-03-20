@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "prestationer",
+        "desc": "Visa en användares prestationer.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "B30-läge",
+        "desc": "Visa dina bästa 30 PJSK-låtar!",
+        "describes": {
+            "filter": "B30-låtens statusfilter att använda.",
+            "count": "Antal låtar att visa i dina bästa listor, istället för 30. Värde mellan 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "beräkna",
+        "desc": "Beräkna poäng för vald låt. Endast 39s!",
+        "describes": {
+            "score": "Din poäng i P/G/G/B/M-format (stöder endast 'greats' och G/G/B/M också)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kort",
+                "desc": "Visa info om ett kort!",
+                "describes": {
+                    "card": "Kortet du vill visa."
+                }
+            },
+            "info": {
+                "name": "Information",
+                "desc": "Visa karaktärsinformation.",
+                "describes": {
+                    "character": "Karaktären du vill ha information om."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "serier",
+        "desc": "Visa spelets serier, som i laddningsskärmar.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donera",
+        "desc": "Visa donationsinformation.",
+        "describes": {}
+    },
+    "events": {
+        "name": "händelser",
+        "desc": "Sbotga kommandon för händelser.",
+        "cmds": {
+            "border": {
+                "name": "gräns",
+                "desc": "Visar nuvarande händelsegränser (highlight)-ranking.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "topplista",
+                "desc": "Visa nuvarande händelsetopplista.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "förutsäg",
+                "desc": "Förutsäg gränser för nuvarande händelse. (från jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "schema",
+                "desc": "Visar nuvarande och kommande händelseschema.",
+                "describes": {}
+            },
+            "view": {
+                "name": "visa",
+                "desc": "Visa detaljer för en specifik rank.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "Gacha-läge",
+        "desc": "Simulera en PJSK gacha 10-dragning.",
+        "describes": {
+            "reverse_odds": "Byt oddsen för 2*- och 4*-kort."
+        }
+    },
+    "guess": {
+        "name": "gissa",
+        "desc": "Roliga gissningsspel... raseri!!",
+        "cmds": {
+            "stats": {
+                "name": "statistik",
+                "desc": "Visa din statistik för gissning.",
+                "describes": {
+                    "guess_type": "Vilken typ av gissning att hämta statistik för.",
+                    "user": "Discord-användaren att visa statistik för.",
+                    "lb_rank": "Rangen för användaren att visa statistik för."
+                }
+            },
+            "leaderboard": {
+                "name": "topplista",
+                "desc": "Visa topplistan för gissning.",
+                "describes": {
+                    "guess_type": "Vilken typ av gissning att hämta topplista för."
+                }
+            },
+            "hint": {
+                "name": "Ledtråd",
+                "desc": "Fuska lite på din gissning."
+            },
+            "toggle": {
+                "name": "växla",
+                "desc": "Slå på/av gissning i din server.",
+                "describes": {
+                    "on": "Om gissning är på eller av."
+                }
+            },
+            "character": {
+                "name": "karaktär",
+                "desc": "Gissa en PJSK-karaktär från ett beskuret kort."
+            },
+            "character_bw": {
+                "name": "karaktär_bw",
+                "desc": "Gissa en PJSK-karaktär från ett gråskalebeskuret kort."
+            },
+            "chart": {
+                "name": "notdiagram",
+                "desc": "Gissa en PJSK-låt från ett beskuret master-notdiagram."
+            },
+            "chart_append": {
+                "name": "notdiagram_append",
+                "desc": "Gissa en PJSK-notdiagram från ett beskuret append-notdiagram."
+            },
+            "event": {
+                "name": "händelse",
+                "desc": "Gissa en PJSK-händelse från en beskuren händelsebakgrund."
+            },
+            "jacket": {
+                "name": "omslag",
+                "desc": "Gissa en PJSK-låt från ett beskuret omslag."
+            },
+            "jacket_smol": {
+                "name": "omslag_litet",
+                "desc": "Gissa en PJSK-låt från ett 30px beskuret omslag."
+            },
+            "jacket_bw": {
+                "name": "omslag_bw",
+                "desc": "Gissa en PJSK-låt från ett gråskalebeskuret omslag."
+            },
+            "jacket_challenge": {
+                "name": "omslag_utmaning",
+                "desc": "Gissa en PJSK-låt från ett gråskaligt 30px beskuret omslag."
+            },
+            "notes": {
+                "name": "noter",
+                "desc": "Gissa en PJSK-låt från dess notantal på Master."
+            }
+        }
+    },
+    "help": {
+        "name": "hjälp",
+        "desc": "Bottinformation, inklusive inbjudan, TOS, integritetspolicy och kommandon.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "Pinga",
+        "desc": "Pong! Visa fördröjning.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK-relaterade informationskommandon.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Visa en PJSK-användares profil."
+            },
+            "why_inappropriate": {
+                "name": "varför_opassande",
+                "desc": "Kolla varför någon text är opassande enligt PJSK.",
+                "describes": {
+                    "text": "Text att kontrollera, maxlängd 255 tecken."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Visa en användares profil.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "framsteg",
+        "desc": "Visa dina PJSK-framsteg! Visar AP, FC och Clears för ALLA låtnivåer i en svårighetsgrad.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "rankad",
+        "desc": "Sbotga kommandon för rankad (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "topplista",
+                "desc": "Visa nuvarande rankad topplista.",
+                "describes": {}
+            },
+            "view": {
+                "name": "visa",
+                "desc": "Visa detaljer för en specifik spelare på denna rank.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_för",
+        "desc": "Hämta XP som krävs för en viss nivå.",
+        "describes": {
+            "level": "Nivå att beräkna XP för."
+        }
+    }
+}

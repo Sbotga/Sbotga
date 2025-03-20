@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Název písně PJSK.",
+        "region": "Který region PJSK se má použít. Výchozí je váš výchozí region (EN), nebo nastavený v nastaveních.",
+        "difficulty": "Obtížnost PJSK.",
+        "difficulty_default_master": "Obtížnost PJSK. Výchozí je Master.",
+        "pjsk_private": "Skrýt ID a jméno PJSK.",
+        "pjsk_user_id": "Uživatelské ID PJSK (kód přítele).",
+        "discord_user": "Discord uživatel, kterého chcete zobrazit.",
+        "event_wl_character": "Použít žebříček postav pro danou kapitolu (World Link).",
+        "rank": "Kterou hodnost/úroveň zobrazit.",
+        "page": "Kterou stránku zobrazit."
+    },
+    "errors": {
+        "cannot_click": "Toto tlačítko nelze kliknout!",
+        "cannot_select": "Toto menu nelze použít!",
+        "invalid_input": "Neplatný vstup. Zkontrolujte prosím své parametry.",
+        "unsupported_difficulty": "Nepodporovaná obtížnost: \"{difficulty}\".",
+        "unsupported_region": "Nepodporovaný region: \"{region}\".",
+        "unknown_song": "Neznámá píseň: \"{song}\".",
+        "unknown_character": "Neznámá postava: \"{character}\".",
+        "unknown_event": "Neznámá událost: \"{event}\".",
+        "unknown_card": "Neznámá karta: \"{card}\"."
+    },
+    "labels": {
+        "cancel": "Zrušit",
+        "end_guess": "Ukončit hádání"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Navnet på PJSK-sangen.",
+        "region": "Benytt PJSK-region. Standard er din standardregion <b>(</b>EN, eller den du satte i innstillinger).",
+        "difficulty": "PJSK-vanskegrad.",
+        "difficulty_default_master": "PJSK-vanskegrad. Standard er Master.",
+        "pjsk_private": "Skjul PJSK-ID og -navn.",
+        "pjsk_user_id": "PJSK-bruker-ID (vennekode).",
+        "discord_user": "Discord-bruker du vil se.",
+        "event_wl_character": "Bruk en kapittelspesifikk karakter-liste (World Link).",
+        "rank": "Hvilken rang/klasse skal vises.",
+        "page": "Hvilken side å vise."
+    },
+    "errors": {
+        "cannot_click": "Du kan ikke klikke denne knappen!",
+        "cannot_select": "Du kan ikke bruke denne menyen!",
+        "invalid_input": "Ugyldig inndata. Sjekk parameterne dine.",
+        "unsupported_difficulty": "Ikke støttet vanskelighetsgrad: `{difficulty}`.",
+        "unsupported_region": "Ikke støttet region: `{region}`.",
+        "unknown_song": "Ukjent sang: `{song}`.",
+        "unknown_character": "Ukjent karakter: `{character}`.",
+        "unknown_event": "Ukjent hendelse: `{event}`.",
+        "unknown_card": "Ukjent kort: `{card}`."
+    },
+    "labels": {
+        "cancel": "Avbryt",
+        "end_guess": "Avslutt gjetting"
+    }
+}

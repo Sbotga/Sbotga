@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "De PJSK-nummernaam.",
+        "region": "PJSK-regio om te gebruiken. Standaard jouw standaardregio (EN of de ingestelde).",
+        "difficulty": "PJSK-moeilijkheidsgraad.",
+        "difficulty_default_master": "PJSK-moeilijkheidsgraad. Standaard Master.",
+        "pjsk_private": "Verberg PJSK-ID en naam.",
+        "pjsk_user_id": "PJSK-gebruikers-ID (vriendcode).",
+        "discord_user": "Discord-gebruiker die je wilt bekijken.",
+        "event_wl_character": "Gebruik een hoofdstukspecifiek karakterklassement (World Link).",
+        "rank": "Welke rang/klasse wil je bekijken.",
+        "page": "Welke pagina wil je bekijken."
+    },
+    "errors": {
+        "cannot_click": "Je kunt niet op deze knop klikken!",
+        "cannot_select": "Je kunt dit menu niet gebruiken!",
+        "invalid_input": "Ongeldige invoer. Controleer je parameters.",
+        "unsupported_difficulty": "Niet-ondersteunde moeilijkheidsgraad: `{difficulty}`.",
+        "unsupported_region": "Niet-ondersteunde regio: `{region}`.",
+        "unknown_song": "Onbekend nummer: `{song}`.",
+        "unknown_character": "Onbekend karakter: `{character}`.",
+        "unknown_event": "Onbekend evenement: `{event}`.",
+        "unknown_card": "Onbekende kaart: `{card}`."
+    },
+    "labels": {
+        "cancel": "Annuleren",
+        "end_guess": "Beëindig raden"
+    }
+}

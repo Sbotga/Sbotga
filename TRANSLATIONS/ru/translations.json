@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Название песни PJSK.",
+        "region": "Регион PJSK для использования. По умолчанию (EN) или заданный в настройках.",
+        "difficulty": "Сложность PJSK.",
+        "difficulty_default_master": "Сложность PJSK. По умолчанию Master.",
+        "pjsk_private": "Скрыть PJSK ID и имя.",
+        "pjsk_user_id": "Идентификатор пользователя PJSK (код друга).",
+        "discord_user": "Пользователь Discord, которого вы хотите просмотреть.",
+        "event_wl_character": "Использовать таблицу лидеров персонажей по главам (World Link).",
+        "rank": "Какой рейтинг/уровень просмотреть.",
+        "page": "Какую страницу просмотреть."
+    },
+    "errors": {
+        "cannot_click": "Вы не можете нажать эту кнопку!",
+        "cannot_select": "Вы не можете использовать это меню!",
+        "invalid_input": "Неверный ввод. Проверьте параметры.",
+        "unsupported_difficulty": "Неподдерживаемая сложность: `{difficulty}`.",
+        "unsupported_region": "Неподдерживаемый регион: `{region}`.",
+        "unknown_song": "Неизвестная песня: `{song}`.",
+        "unknown_character": "Неизвестный персонаж: `{character}`.",
+        "unknown_event": "Неизвестное событие: `{event}`.",
+        "unknown_card": "Неизвестная карта: `{card}`."
+    },
+    "labels": {
+        "cancel": "Отмена",
+        "end_guess": "Завершить угадывание"
+    }
+}

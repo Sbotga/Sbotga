@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "teljesítmények",
+        "desc": "Nézd meg egy felhasználó teljesítményeit.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "Legjobb30",
+        "desc": "Tekintsd meg a legjobb 30 PJSK chartodat!",
+        "describes": {
+            "filter": "Használandó b30 dalállapot-szűrő.",
+            "count": "A dalok száma a legjobb chartokban, 30 helyett. Érték 1-50 között. ✨PRÉMIUM"
+        }
+    },
+    "calculate": {
+        "name": "számítás",
+        "desc": "Számítsd ki a kiválasztott chart pontját. Csak 39s!",
+        "describes": {
+            "score": "Pontod P/G/G/B/M formátumban (csak \"great\" és G/G/B/M is támogatott)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kártya",
+                "desc": "Nézd meg egy kártya adatait!",
+                "describes": {
+                    "card": "A kártya, amelyet meg akarsz nézni."
+                }
+            },
+            "info": {
+                "name": "infó",
+                "desc": "Nézd meg a karakter adatait.",
+                "describes": {
+                    "character": "A karakter, akiről információt akarsz."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "képregények",
+        "desc": "Nézd meg a játékbeli képregényeket a betöltő képernyőkről.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "adomány",
+        "desc": "Nézd meg az adományozási információkat.",
+        "describes": {}
+    },
+    "events": {
+        "name": "események",
+        "desc": "Sbotga eseményekkel kapcsolatos parancsok.",
+        "cmds": {
+            "border": {
+                "name": "határ",
+                "desc": "Megjeleníti a jelenlegi esemény határ (kiemelés) rangsorait.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "ranglista",
+                "desc": "Nézd meg a jelenlegi esemény ranglistáját.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "előrejelzés",
+                "desc": "Becsüld meg a jelenlegi esemény határértékeit. (Forrás: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "ütemezés",
+                "desc": "Megjeleníti a jelenlegi és jövőbeli eseményütemezést.",
+                "describes": {}
+            },
+            "view": {
+                "name": "megtekintés",
+                "desc": "Nézd meg egy adott rang részleteit.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "sorsolás",
+        "desc": "Szimulálj egy 10-húzást a PJSK gacha-ban.",
+        "describes": {
+            "reverse_odds": "Cseréld fel a 2* és 4* kártyák esélyeit."
+        }
+    },
+    "guess": {
+        "name": "tipp",
+        "desc": "Szórakoztató tippjátékok... bosszankodj!!",
+        "cmds": {
+            "stats": {
+                "name": "statisztika",
+                "desc": "Nézd meg a tippelési statisztikáidat.",
+                "describes": {
+                    "guess_type": "A tipp típusa, amelyhez statisztikát kérsz.",
+                    "user": "Az a Discord-felhasználó, akinek a statisztikáit megtekinted.",
+                    "lb_rank": "A felhasználó rangja, akinek statisztikáit megnézed."
+                }
+            },
+            "leaderboard": {
+                "name": "ranglista",
+                "desc": "Nézd meg a tippelési ranglistát.",
+                "describes": {
+                    "guess_type": "A tipp típusa, amelyhez a ranglistát lekéred."
+                }
+            },
+            "hint": {
+                "name": "súgás",
+                "desc": "Csalj egy kicsit a tippedben."
+            },
+            "toggle": {
+                "name": "váltás",
+                "desc": "Kapcsold be/kikapcs a tippelést a szervereden.",
+                "describes": {
+                    "on": "Akár be van kapcsolva, akár ki."
+                }
+            },
+            "character": {
+                "name": "karakter",
+                "desc": "Tippelj meg egy PJSK karaktert kártyakivágás alapján."
+            },
+            "character_bw": {
+                "name": "karakter_ff",
+                "desc": "Tippelj meg egy PJSK karaktert egy szürkeárnyalatos kártyakivágásból."
+            },
+            "chart": {
+                "name": "táblázat",
+                "desc": "Tippelj meg egy PJSK dalt egy master chart kivágásából."
+            },
+            "chart_append": {
+                "name": "táblázat_bővít",
+                "desc": "Tippelj meg egy PJSK chartot egy append chart kivágásából."
+            },
+            "event": {
+                "name": "esemény",
+                "desc": "Tippelj meg egy PJSK eseményt egy eseményhátter-kivágásból."
+            },
+            "jacket": {
+                "name": "borító",
+                "desc": "Tippelj meg egy PJSK dalt egy borítókivágásból."
+            },
+            "jacket_smol": {
+                "name": "borító_kicsi",
+                "desc": "Tippelj meg egy PJSK dalt egy 30px borítókivágásból."
+            },
+            "jacket_bw": {
+                "name": "borító_ff",
+                "desc": "Tippelj meg egy PJSK dalt egy szürkeárnyalatos borítókivágásból."
+            },
+            "jacket_challenge": {
+                "name": "borító_kihívás",
+                "desc": "Tippelj meg egy PJSK dalt egy szürkeárnyalatos 30px borítókivágásból."
+            },
+            "notes": {
+                "name": "hangjegyek",
+                "desc": "Tippelj meg egy PJSK dalt a Master hangjegyszáma alapján."
+            }
+        }
+    },
+    "help": {
+        "name": "segítség",
+        "desc": "Botinformációk, beleértve a meghívót, TOS-t, adatvédelmi szabályzatot és parancsokat.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "megping",
+        "desc": "Pong! Nézd meg a késleltetést.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK-hoz kapcsolódó információs parancsok.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Nézd meg egy PJSK-felhasználó profilját."
+            },
+            "why_inappropriate": {
+                "name": "miert_nem_megfelelo",
+                "desc": "Nézd meg, miért minősül valamely szöveg helytelennek a PJSK szerint.",
+                "describes": {
+                    "text": "Ellenőrizendő szöveg, max. 255 karakter."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Nézd meg egy felhasználó profilját.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "haladás",
+        "desc": "Nézd meg a PJSK haladásod! Megmutatja az AP-ket, FC-ket, és Clears-t minden dal nehézségi szinten.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "rangsorolt",
+        "desc": "Sbotga rangsorolt (rankma) parancsai.",
+        "cmds": {
+            "leaderboard": {
+                "name": "ranglista",
+                "desc": "Nézd meg a jelenlegi rangsorolt ranglistát.",
+                "describes": {}
+            },
+            "view": {
+                "name": "megtekintés",
+                "desc": "Nézd meg egy adott játékos részleteit ezen a rangon.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_nek",
+        "desc": "Szerezd meg a szükséges XP-t egy adott szinthez.",
+        "describes": {
+            "level": "A szint, amelyhez az XP-t számolod."
+        }
+    }
+}

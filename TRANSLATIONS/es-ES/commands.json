@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "logros",
+        "desc": "Ver los logros de un usuario.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "¡Mira tus mejores 30 charts de PJSK!",
+        "describes": {
+            "filter": "El filtro de estado de canción b30 a usar.",
+            "count": "N° de canciones a mostrar, en vez de 30. Valor 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "calcular",
+        "desc": "Calcula la puntuación para la chart elegida. ¡Exclusivo 39s!",
+        "describes": {
+            "score": "Tu puntuación en formato P/G/G/B/M (solo soporta greats y G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "carta",
+                "desc": "¡Ver la información de una carta!",
+                "describes": {
+                    "card": "La carta que deseas ver."
+                }
+            },
+            "info": {
+                "name": "información",
+                "desc": "Ver la información del personaje.",
+                "describes": {
+                    "character": "El personaje del que deseas información."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "cómics",
+        "desc": "Ver los cómics del juego, como se ven en las pantallas de carga.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donar",
+        "desc": "Ver la información de donación.",
+        "describes": {}
+    },
+    "events": {
+        "name": "eventos",
+        "desc": "Comandos relacionados con eventos de Sbotga.",
+        "cmds": {
+            "border": {
+                "name": "borde",
+                "desc": "Muestra las clasificaciones actuales del borde <b>(</b>resaltado) del evento.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "clasificación",
+                "desc": "Ver la clasificación actual del evento.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "predecir",
+                "desc": "Predice los límites para el evento actual. (de jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "programa",
+                "desc": "Muestra el programa actual y futuro de eventos.",
+                "describes": {}
+            },
+            "view": {
+                "name": "ver",
+                "desc": "Ver detalles de un rango específico.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha",
+        "desc": "Simula un tirón de 10 en la gacha de PJSK.",
+        "describes": {
+            "reverse_odds": "Intercambia las probabilidades para cartas 2* y 4*."
+        }
+    },
+    "guess": {
+        "name": "adivina",
+        "desc": "Juegos divertidos de adivinanzas... ¡ira!!",
+        "cmds": {
+            "stats": {
+                "name": "estadísticas",
+                "desc": "Ver tus estadísticas de adivinanzas.",
+                "describes": {
+                    "guess_type": "El tipo de adivinanza para obtener estadísticas.",
+                    "user": "El usuario de Discord para ver estadísticas.",
+                    "lb_rank": "El rango del usuario para ver estadísticas."
+                }
+            },
+            "leaderboard": {
+                "name": "clasificación",
+                "desc": "Ver la clasificación de adivinanzas.",
+                "describes": {
+                    "guess_type": "El tipo de adivinanza para obtener la clasificación."
+                }
+            },
+            "hint": {
+                "name": "pista",
+                "desc": "Haz un poco de trampa en tu adivinanza."
+            },
+            "toggle": {
+                "name": "alternar",
+                "desc": "Activa o desactiva adivinanzas en tu servidor.",
+                "describes": {
+                    "on": "Si está activada o desactivada la adivinanza."
+                }
+            },
+            "character": {
+                "name": "personaje",
+                "desc": "Adivina un personaje de PJSK a partir de una carta recortada."
+            },
+            "character_bw": {
+                "name": "personaje_bn",
+                "desc": "Adivina un personaje de PJSK a partir de una carta recortada en escala de grises."
+            },
+            "chart": {
+                "name": "tabla",
+                "desc": "Adivina una canción de PJSK a partir de un chart master recortado."
+            },
+            "chart_append": {
+                "name": "tabla_adjuntar",
+                "desc": "Adivina un chart de PJSK a partir de un chart append recortado."
+            },
+            "event": {
+                "name": "evento",
+                "desc": "Adivina un evento de PJSK a partir de un fondo de evento recortado."
+            },
+            "jacket": {
+                "name": "carátula",
+                "desc": "Adivina una canción de PJSK a partir de una jacket recortada."
+            },
+            "jacket_smol": {
+                "name": "jacket_peque",
+                "desc": "Adivina una canción de PJSK a partir de una jacket recortada de 30px."
+            },
+            "jacket_bw": {
+                "name": "jacket_bn",
+                "desc": "Adivina una canción de PJSK a partir de una jacket recortada en escala de grises."
+            },
+            "jacket_challenge": {
+                "name": "jacket_reto",
+                "desc": "Adivina una canción de PJSK de una jacket recortada en grises de 30px."
+            },
+            "notes": {
+                "name": "notas",
+                "desc": "Adivina una canción de PJSK a partir de su recuento de notas en Master."
+            }
+        }
+    },
+    "help": {
+        "name": "ayuda",
+        "desc": "Información del bot, incluyendo invitación, TOS, política de privacidad y comandos.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "sondeo",
+        "desc": "¡Pong! Ver latencia.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "Comandos de información relacionados con PJSK.",
+        "cmds": {
+            "profile": {
+                "name": "perfil",
+                "desc": "Ver el perfil de un usuario de PJSK."
+            },
+            "why_inappropriate": {
+                "name": "por_qué_inapropiado",
+                "desc": "Verifica por qué cierto texto es inapropiado según PJSK.",
+                "describes": {
+                    "text": "Texto a verificar, máx. 255 caracteres."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "perfil",
+        "desc": "Ver el perfil de un usuario.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "progreso",
+        "desc": "¡Mira tu progreso de PJSK! Ver APs, FCs y Clears para TODOS los niveles en una dificultad.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "clasificado",
+        "desc": "Comandos relacionados con Sbotga clasificado (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "clasificación",
+                "desc": "Ver la clasificación actual de clasificado.",
+                "describes": {}
+            },
+            "view": {
+                "name": "ver",
+                "desc": "Ver detalles de un jugador específico en este rango.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_para",
+        "desc": "Obtén la XP necesaria para un nivel específico.",
+        "describes": {
+            "level": "Nivel para calcular la XP."
+        }
+    }
+}

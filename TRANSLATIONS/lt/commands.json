@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "pasiekimai",
+        "desc": "Rodyti naudotojo pasiekimus.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "Peržiūrėkite savo 30 geriausių PJSK lentelių!",
+        "describes": {
+            "filter": "Naudotinas b30 dainų būsenos filtras.",
+            "count": "Rodomų dainų skaičius vietoj 30. Vertė 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "apskaičiuoti",
+        "desc": "Apskaičiuokite pasirinktos lentelės rezultatą. Tik 39s!",
+        "describes": {
+            "score": "Jūsų rezultatas P/G/G/B/M formatu (palaikomi tik \"greats\" ir G/G/B/M taip pat)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kortelė",
+                "desc": "Peržiūrėkite kortelės informaciją!",
+                "describes": {
+                    "card": "Kortelė, kurią norite peržiūrėti."
+                }
+            },
+            "info": {
+                "name": "informacija",
+                "desc": "Peržiūrėkite veikėjo informaciją.",
+                "describes": {
+                    "character": "Veikėjas, apie kurį norite sužinoti."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "komiksai",
+        "desc": "Peržiūrėkite žaidimo komiksus, rodomus įkėlimo ekranuose.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "paaukok",
+        "desc": "Peržiūrėkite aukojimo informaciją.",
+        "describes": {}
+    },
+    "events": {
+        "name": "renginiai",
+        "desc": "Sbotga renginio komandos.",
+        "cmds": {
+            "border": {
+                "name": "riba",
+                "desc": "Rodo dabartinius renginio ribų <b>(</b>ryškius) reitingus.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "lyderių_lenta",
+                "desc": "Rodyti dabartinę renginio lyderių lentą.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "prognozuoti",
+                "desc": "Prognozuoti dabartinio renginio ribas. (šaltinis: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "tvarkaraštis",
+                "desc": "Rodo dabartinį ir būsimą renginio tvarkaraštį.",
+                "describes": {}
+            },
+            "view": {
+                "name": "peržiūrėti",
+                "desc": "Peržiūrėkite konkretaus rango informaciją.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gača",
+        "desc": "Imituoti PJSK gacha 10 traukimą.",
+        "describes": {
+            "reverse_odds": "Sukeisti 2* ir 4* kortų tikimybę."
+        }
+    },
+    "guess": {
+        "name": "spėti",
+        "desc": "Linksmi spėjimo žaidimai... pyktis!!",
+        "cmds": {
+            "stats": {
+                "name": "statistika",
+                "desc": "Peržiūrėkite savo spėjimo statistiką.",
+                "describes": {
+                    "guess_type": "Spėjimo tipas, kurio statistiką gauti.",
+                    "user": "Discord naudotojas, kurio statistiką peržiūrėti.",
+                    "lb_rank": "Naudotojo rangas, kurio statistiką peržiūrėti."
+                }
+            },
+            "leaderboard": {
+                "name": "lyderių_lenta",
+                "desc": "Peržiūrėkite spėjimo lyderių lentą.",
+                "describes": {
+                    "guess_type": "Spėjimo tipas, kurio lyderių lentą matyti."
+                }
+            },
+            "hint": {
+                "name": "užuomina",
+                "desc": "Šiek tiek sukčiaukite su savo spėjimu."
+            },
+            "toggle": {
+                "name": "perjungti",
+                "desc": "Įjungti/išjungti spėjimą serveryje.",
+                "describes": {
+                    "on": "Ar spėjimas įjungtas, ar išjungtas."
+                }
+            },
+            "character": {
+                "name": "veikėjas",
+                "desc": "Atspėkite PJSK veikėją iš apkirptos kortelės."
+            },
+            "character_bw": {
+                "name": "veikėjas_bw",
+                "desc": "Atspėkite PJSK veikėją iš nespalvotos apkirptos kortelės."
+            },
+            "chart": {
+                "name": "lentelė",
+                "desc": "Atspėkite PJSK dainą iš apkirptos meistro lentelės."
+            },
+            "chart_append": {
+                "name": "lentelė_append",
+                "desc": "Atspėkite PJSK lentelę iš apkirptos pridėtinės lentelės."
+            },
+            "event": {
+                "name": "renginys",
+                "desc": "Atspėkite PJSK renginį iš apkirpto renginio fono."
+            },
+            "jacket": {
+                "name": "viršelis",
+                "desc": "Atspėkite PJSK dainą iš apkirpto viršelio."
+            },
+            "jacket_smol": {
+                "name": "viršelis_smol",
+                "desc": "Atspėkite PJSK dainą iš 30px apkirpto viršelio."
+            },
+            "jacket_bw": {
+                "name": "viršelis_bw",
+                "desc": "Atspėkite PJSK dainą iš nespalvoto apkirpto viršelio."
+            },
+            "jacket_challenge": {
+                "name": "viršelis_challenge",
+                "desc": "Atspėkite PJSK dainą iš nespalvoto 30px apkirpto viršelio."
+            },
+            "notes": {
+                "name": "natos",
+                "desc": "Atspėkite PJSK dainą pagal jos natų skaičių Meistre."
+            }
+        }
+    },
+    "help": {
+        "name": "pagalba",
+        "desc": "Boto informacija, įskaitant kvietimą, TOS, privatumo politiką ir komandas.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "pingas",
+        "desc": "Pong! Peržiūrėkite uždelsimą.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK susijusios informacijos komandos.",
+        "cmds": {
+            "profile": {
+                "name": "profilis",
+                "desc": "Rodyti PJSK naudotojo profilį."
+            },
+            "why_inappropriate": {
+                "name": "kodel_netinkama",
+                "desc": "Patikrinkite, kodėl tam tikras tekstas yra netinkamas pagal PJSK.",
+                "describes": {
+                    "text": "Tekstas patikrinti, maks. ilgis 255 simbolių."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profilis",
+        "desc": "Peržiūrėkite naudotojo profilį.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "progresas",
+        "desc": "Peržiūrėkite savo PJSK progresą! Rodo AP, FC ir įveikimus visuose dainų lygiuose.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "reitinguota",
+        "desc": "Sbotga reitinguotos (rankma) komandos.",
+        "cmds": {
+            "leaderboard": {
+                "name": "lyderių_lenta",
+                "desc": "Rodyti dabartinę reitinguotą lyderių lentą.",
+                "describes": {}
+            },
+            "view": {
+                "name": "peržiūrėti",
+                "desc": "Peržiūrėkite konkretaus žaidėjo detales šiame reitinge.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_uz",
+        "desc": "Gauti reikiamą XP tam tikram lygiui.",
+        "describes": {
+            "level": "Lygis, kuriam apskaičiuoti XP."
+        }
+    }
+}

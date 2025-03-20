@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Nazwa utworu PJSK.",
+        "region": "Region PJSK do użycia. Domyślnie używa twojego regionu (EN lub wybranego w ustawieniach).",
+        "difficulty": "Trudność PJSK.",
+        "difficulty_default_master": "Trudność PJSK. Domyślnie Master.",
+        "pjsk_private": "Ukryj identyfikator i nazwę PJSK.",
+        "pjsk_user_id": "Identyfikator użytkownika PJSK (kod znajomego).",
+        "discord_user": "Użytkownik Discord, którego chcesz wyświetlić.",
+        "event_wl_character": "Użyj rankingu postaci z danej części (World Link).",
+        "rank": "Który poziom/rangę wyświetlić.",
+        "page": "Którą stronę wyświetlić."
+    },
+    "errors": {
+        "cannot_click": "Nie możesz kliknąć tego przycisku!",
+        "cannot_select": "Nie możesz użyć tego menu!",
+        "invalid_input": "Nieprawidłowe dane. Sprawdź parametry.",
+        "unsupported_difficulty": "Nieobsługiwana trudność: `{difficulty}`.",
+        "unsupported_region": "Nieobsługiwany region: `{region}`.",
+        "unknown_song": "Nieznany utwór: `{song}`.",
+        "unknown_character": "Nieznana postać: `{character}`.",
+        "unknown_event": "Nieznane wydarzenie: `{event}`.",
+        "unknown_card": "Nieznana karta: `{card}`."
+    },
+    "labels": {
+        "cancel": "Anuluj",
+        "end_guess": "Zakończ zgadywanie"
+    }
+}

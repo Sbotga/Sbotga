@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "başarılar",
+        "desc": "Bir kullanıcının başarılarına bak.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30 (En iyi 30)",
+        "desc": "En iyi 30 PJSK grafiğini görüntüle!",
+        "describes": {
+            "filter": "Kullanılacak b30 şarkı filtresi.",
+            "count": "En iyi grafiklerde 30 yerine gösterilecek şarkı sayısı, 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "hesapla",
+        "desc": "Seçili grafik için skor hesapla. 39s özel!",
+        "describes": {
+            "score": "Skorun P/G/G/B/M formatında (sadece great ve G/G/B/M desteklenir)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kart",
+                "desc": "Bir kartın bilgisini görüntüle!",
+                "describes": {
+                    "card": "Görüntülemek istediğin kart."
+                }
+            },
+            "info": {
+                "name": "bilgi",
+                "desc": "Karakter bilgilerine bak.",
+                "describes": {
+                    "character": "Bilgi almak istediğin karakter."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "cizgiromanlar",
+        "desc": "Oyundaki yükleme ekranlarında görülen çizgiromanları görüntüle.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "bağış",
+        "desc": "Bağış bilgilerini görüntüle.",
+        "describes": {}
+    },
+    "events": {
+        "name": "etkinlikler",
+        "desc": "Sbotga etkinlik ile ilgili komutlar.",
+        "cmds": {
+            "border": {
+                "name": "sınır",
+                "desc": "Mevcut etkinlik sınır (vurgulama) sıralamasını göster.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "liderlik",
+                "desc": "Mevcut etkinlik liderlik tablosunu görüntüle.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "tahmin",
+                "desc": "Mevcut etkinlikteki cut-off'ları tahmin et. (Kaynak: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "takvim",
+                "desc": "Mevcut ve gelecek etkinlik takvimini göster.",
+                "describes": {}
+            },
+            "view": {
+                "name": "göster",
+                "desc": "Belirli bir sıralamaya dair detayları görüntüle.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha (çekiliş)",
+        "desc": "Bir PJSK 10 çekimi simüle et.",
+        "describes": {
+            "reverse_odds": "2* ve 4* kartların olasılıklarını değiştir."
+        }
+    },
+    "guess": {
+        "name": "tahminler",
+        "desc": "Eğlenceli tahmin oyunları... öfke!!",
+        "cmds": {
+            "stats": {
+                "name": "istatistik",
+                "desc": "Tahmin istatistiklerini görüntüle.",
+                "describes": {
+                    "guess_type": "İstatistiklerini istediğin tahmin türü.",
+                    "user": "İstatistiklerini baktığın Discord kullanıcısı.",
+                    "lb_rank": "Görüntülemek istediğin kullanıcının sıralaması."
+                }
+            },
+            "leaderboard": {
+                "name": "liderlik",
+                "desc": "Tahmin için liderlik tablosunu görüntüle.",
+                "describes": {
+                    "guess_type": "Liderlik tablosunu istediğin tahmin türü."
+                }
+            },
+            "hint": {
+                "name": "ipucu",
+                "desc": "Tahmininde biraz hile yap."
+            },
+            "toggle": {
+                "name": "geçiş",
+                "desc": "Sunucunda tahmin oyununu aç/kapat.",
+                "describes": {
+                    "on": "Tahmin açık mı kapalı mı."
+                }
+            },
+            "character": {
+                "name": "karakter",
+                "desc": "Kesilmiş bir PJSK kartından karakter tahmini yap."
+            },
+            "character_bw": {
+                "name": "karakter_sb",
+                "desc": "Gri tonlamalı kesilmiş bir PJSK kartından karakter tahmini yap."
+            },
+            "chart": {
+                "name": "grafik",
+                "desc": "Kesilmiş bir master grafikten PJSK şarkısını tahmin et."
+            },
+            "chart_append": {
+                "name": "grafik_ek",
+                "desc": "Kesilmiş bir ek grafikten PJSK şarkısını tahmin et."
+            },
+            "event": {
+                "name": "etkinlik",
+                "desc": "Kesilmiş bir etkinlik arkaplanından PJSK etkinliğini tahmin et."
+            },
+            "jacket": {
+                "name": "kapak",
+                "desc": "Kesilmiş bir jacketten PJSK şarkısını tahmin et."
+            },
+            "jacket_smol": {
+                "name": "kapak_kucuk",
+                "desc": "30px kesilmiş bir jacketten PJSK şarkısını tahmin et."
+            },
+            "jacket_bw": {
+                "name": "kapak_sb",
+                "desc": "Gri tonlamalı kesilmiş bir jacketten PJSK şarkısını tahmin et."
+            },
+            "jacket_challenge": {
+                "name": "kapak_zor",
+                "desc": "Gri tonlamalı 30px kesilmiş bir jacketten PJSK şarkısını tahmin et."
+            },
+            "notes": {
+                "name": "nota",
+                "desc": "Master nota sayısına bakarak PJSK şarkısını tahmin et."
+            }
+        }
+    },
+    "help": {
+        "name": "yardım",
+        "desc": "Bot bilgisi, davet, TOS, gizlilik politikası ve komutlar.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "Ping komutu",
+        "desc": "Pong! Gecikmeyi görüntüle.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK ile ilgili bilgi komutları.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Bir PJSK kullanıcısının profilini görüntüle."
+            },
+            "why_inappropriate": {
+                "name": "neden_uygunsuz",
+                "desc": "Bazı metinlerin PJSK'ya göre neden uygunsuz olduğunu gözden geçir.",
+                "describes": {
+                    "text": "Yokla, en fazla 255 karakter."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Bir kullanıcının profilini görüntüle.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "ilerleme",
+        "desc": "PJSK ilerlemeni görüntüle! Tüm şarkı seviyelerinde AP, FC ve Temizlemeler.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "dereceli",
+        "desc": "Sbotga dereceli (rankma) komutları.",
+        "cmds": {
+            "leaderboard": {
+                "name": "liderlik",
+                "desc": "Mevcut dereceli liderlik tablosunu görüntüle.",
+                "describes": {}
+            },
+            "view": {
+                "name": "göster",
+                "desc": "Bu derecedeki belirli bir oyuncunun detaylarını göster.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_gerekli",
+        "desc": "Belirli bir seviye için gereken XP miktarını al.",
+        "describes": {
+            "level": "Hangi seviye için XP hesaplanacağını seç."
+        }
+    }
+}

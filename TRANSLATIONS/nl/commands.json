@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "prestaties",
+        "desc": "Bekijk prestaties van een gebruiker.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "beste30",
+        "desc": "Bekijk je beste 30 PJSK-charts!",
+        "describes": {
+            "filter": "De filter voor b30-nummerstatus.",
+            "count": "Aantal nummers in je beste charts, ipv 30. Tussen 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "berekenen",
+        "desc": "Bereken score voor de gekozen chart. Alleen 39s!",
+        "describes": {
+            "score": "Je score in P/G/G/B/M-formaat (ondersteunt alleen greats en G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kaart",
+                "desc": "Bekijk de info van een kaart!",
+                "describes": {
+                    "card": "De kaart die je wilt bekijken."
+                }
+            },
+            "info": {
+                "name": "informatie",
+                "desc": "Bekijk personage-informatie.",
+                "describes": {
+                    "character": "Het personage waarvoor je informatie wilt."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "strips",
+        "desc": "Bekijk in-game strips zoals te zien op laadschermen.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "doneer",
+        "desc": "Bekijk donatie-informatie.",
+        "describes": {}
+    },
+    "events": {
+        "name": "evenementen",
+        "desc": "Sbotga-evenement gerelateerde commando's.",
+        "cmds": {
+            "border": {
+                "name": "grens",
+                "desc": "Toont de huidige evenementgrens (highlight)-ranglijsten.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "ranglijst",
+                "desc": "Bekijk de huidige evenementranglijst.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "voorspel",
+                "desc": "Voorspel cutoffs voor het huidige evenement. (bron: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "schema",
+                "desc": "Toont het huidige en komende evenementenschema.",
+                "describes": {}
+            },
+            "view": {
+                "name": "bekijk",
+                "desc": "Bekijk details van een specifieke rang.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha-nl",
+        "desc": "Simuleer een PJSK gacha 10-trek.",
+        "describes": {
+            "reverse_odds": "Wissel de kansen voor 2* en 4*-kaarten."
+        }
+    },
+    "guess": {
+        "name": "raad",
+        "desc": "Leuke raadspelletjes... woede!!",
+        "cmds": {
+            "stats": {
+                "name": "statistieken",
+                "desc": "Bekijk je statistieken voor raden.",
+                "describes": {
+                    "guess_type": "Het type raadspel om statistieken voor op te halen.",
+                    "user": "De Discord-gebruiker om statistieken te bekijken.",
+                    "lb_rank": "De rang van de gebruiker om statistieken te bekijken."
+                }
+            },
+            "leaderboard": {
+                "name": "ranglijst",
+                "desc": "Bekijk de ranglijst voor raden.",
+                "describes": {
+                    "guess_type": "Het type raadspel om de ranglijst voor op te halen."
+                }
+            },
+            "hint": {
+                "name": "tip",
+                "desc": "Valsspelen bij je raadspel."
+            },
+            "toggle": {
+                "name": "schakel",
+                "desc": "Zet raden in je server aan/uit.",
+                "describes": {
+                    "on": "Of raden aan of uit staat."
+                }
+            },
+            "character": {
+                "name": "personage",
+                "desc": "Raad een PJSK-personage aan de hand van een uitgesneden kaart."
+            },
+            "character_bw": {
+                "name": "personage_bw",
+                "desc": "Raad een PJSK-personage aan de hand van een grijswaardenkaart."
+            },
+            "chart": {
+                "name": "grafiek",
+                "desc": "Raad een PJSK-nummer van een uitgesneden master-chart."
+            },
+            "chart_append": {
+                "name": "grafiek_toevoegen",
+                "desc": "Raad een PJSK-chart van een uitgesneden append-chart."
+            },
+            "event": {
+                "name": "evenement",
+                "desc": "Raad een PJSK-evenement aan de hand van een uitgesneden eventachtergrond."
+            },
+            "jacket": {
+                "name": "hoes",
+                "desc": "Raad een PJSK-nummer van een uitgesneden jacket."
+            },
+            "jacket_smol": {
+                "name": "hoes_klein",
+                "desc": "Raad een PJSK-nummer van een 30px uitgesneden jacket."
+            },
+            "jacket_bw": {
+                "name": "hoes_zwartwit",
+                "desc": "Raad een PJSK-nummer van een grijswaarden-jacket."
+            },
+            "jacket_challenge": {
+                "name": "hoes_uitdaging",
+                "desc": "Raad een PJSK-nummer van een grijswaarden 30px jacket."
+            },
+            "notes": {
+                "name": "noten",
+                "desc": "Raad een PJSK-nummer op basis van het aantal noten in Master."
+            }
+        }
+    },
+    "help": {
+        "name": "hulp",
+        "desc": "Botinformatie, inclusief invite, TOS, privacybeleid en commando's.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "pingen",
+        "desc": "Pong! Bekijk de latentie.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK-informatiecommando's.",
+        "cmds": {
+            "profile": {
+                "name": "profiel",
+                "desc": "Bekijk het profiel van een PJSK-gebruiker."
+            },
+            "why_inappropriate": {
+                "name": "waarom_ongepast",
+                "desc": "Controleer waarom bepaalde tekst ongepast is volgens PJSK.",
+                "describes": {
+                    "text": "Tekst om te controleren, max 255 tekens."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profiel",
+        "desc": "Bekijk het profiel van een gebruiker.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "voortgang",
+        "desc": "Bekijk je PJSK-voortgang! Toont AP's, FC's en Clears voor ALLE nummers in een moeilijkheid.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "gerangschikt",
+        "desc": "Sbotga-gerangschikt (rankma) gerelateerde commando's.",
+        "cmds": {
+            "leaderboard": {
+                "name": "ranglijst",
+                "desc": "Bekijk de huidige gerangschikte ranglijst.",
+                "describes": {}
+            },
+            "view": {
+                "name": "bekijk",
+                "desc": "Bekijk details van een specifieke speler op deze rang.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_voor",
+        "desc": "Bekijk de vereiste XP voor een bepaald level.",
+        "describes": {
+            "level": "Level waarvoor XP moet worden berekend."
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK-kappaleen nimi.",
+        "region": "Käytettävä PJSK-alue. Oletuksena oma oletusalue (EN tai asettamasi).",
+        "difficulty": "PJSK-vaikeustaso.",
+        "difficulty_default_master": "PJSK-vaikeustaso. Oletuksena Master.",
+        "pjsk_private": "Piilota PJSK-ID ja -nimi.",
+        "pjsk_user_id": "PJSK-käyttäjän tunnus (kaverikoodi).",
+        "discord_user": "Discord-käyttäjä, jonka haluat tarkastella.",
+        "event_wl_character": "Käytä luvun mukaista hahmojen tulostaulukkoa (World Link).",
+        "rank": "Mikä sijoitus/taso näytetään.",
+        "page": "Mikä sivu näytetään."
+    },
+    "errors": {
+        "cannot_click": "Et voi napsauttaa tätä painiketta!",
+        "cannot_select": "Et voi käyttää tätä valikkoa!",
+        "invalid_input": "Virheellinen syöte. Tarkista parametrisi.",
+        "unsupported_difficulty": "Vaikeustasoa ei tueta: `{difficulty}`.",
+        "unsupported_region": "Aluetta ei tueta: `{region}`.",
+        "unknown_song": "Tuntematon kappale: `{song}`.",
+        "unknown_character": "Tuntematon hahmo: `{character}`.",
+        "unknown_event": "Tuntematon tapahtuma: `{event}`.",
+        "unknown_card": "Tuntematon kortti: `{card}`."
+    },
+    "labels": {
+        "cancel": "Peruuta",
+        "end_guess": "Lopeta arvaus"
+    }
+}

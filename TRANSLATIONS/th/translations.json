@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "ชื่อเพลง PJSK.",
+        "region": "เลือก PJSK region ถ้าไม่ระบุจะใช้ region เริ่มต้น (EN หรือค่าที่ตั้งใน settings).",
+        "difficulty": "ระดับความยาก PJSK.",
+        "difficulty_default_master": "ระดับความยาก PJSK ถ้าไม่ระบุจะใช้ Master.",
+        "pjsk_private": "ซ่อน PJSK ID และชื่อ.",
+        "pjsk_user_id": "PJSK user ID (รหัสเพื่อน).",
+        "discord_user": "ผู้ใช้ Discord ที่ต้องการดู.",
+        "event_wl_character": "ใช้ตารางผู้นำตัวละครตามบท (World Link).",
+        "rank": "ต้องการดูอันดับ/ระดับใด.",
+        "page": "ต้องการดูหน้าใด."
+    },
+    "errors": {
+        "cannot_click": "คุณไม่สามารถคลิกปุ่มนี้ได้!",
+        "cannot_select": "คุณไม่สามารถใช้เมนูนี้ได้!",
+        "invalid_input": "ข้อมูลที่ป้อนไม่ถูกต้อง กรุณาตรวจสอบพารามิเตอร์ของคุณ.",
+        "unsupported_difficulty": "ไม่รองรับระดับความยาก: `{difficulty}`.",
+        "unsupported_region": "ไม่รองรับ region: `{region}`.",
+        "unknown_song": "ไม่พบเพลง: `{song}`.",
+        "unknown_character": "ไม่พบตัวละคร: `{character}`.",
+        "unknown_event": "ไม่พบอีเวนต์: `{event}`.",
+        "unknown_card": "ไม่พบการ์ด: `{card}`."
+    },
+    "labels": {
+        "cancel": "ยกเลิก",
+        "end_guess": "สิ้นสุดการทาย"
+    }
+}

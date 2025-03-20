@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "成就",
+        "desc": "查看用戶的成就。",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "查看您在PJSK的最佳30曲譜！",
+        "describes": {
+            "filter": "要使用的 b30 歌曲狀態篩選器。",
+            "count": "要顯示的最佳曲目數量（取代 30），範圍 1-50。✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "計算",
+        "desc": "為所選譜面計算分數。限 39s！",
+        "describes": {
+            "score": "以 P/G/G/B/M 格式輸入您的分數（只支援 greats 或 G/G/B/M）"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "卡片",
+                "desc": "查看卡片資訊！",
+                "describes": {
+                    "card": "想查看的卡片。"
+                }
+            },
+            "info": {
+                "name": "資訊",
+                "desc": "查看角色資訊。",
+                "describes": {
+                    "character": "想要了解的角色。"
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "漫畫",
+        "desc": "查看遊戲內的漫畫，如讀取畫面所見。",
+        "describes": {}
+    },
+    "donate": {
+        "name": "贊助",
+        "desc": "查看贊助資訊。",
+        "describes": {}
+    },
+    "events": {
+        "name": "活動",
+        "desc": "Sbotga的活動相關指令。",
+        "cmds": {
+            "border": {
+                "name": "分數線",
+                "desc": "顯示當前活動的邊界（亮點）排名。",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "排行榜",
+                "desc": "查看目前活動排行榜。",
+                "describes": {}
+            },
+            "predict": {
+                "name": "預測",
+                "desc": "預測本次活動的分數線（數據來自 jiiku831）。",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "日程",
+                "desc": "顯示當前和未來的活動日程。",
+                "describes": {}
+            },
+            "view": {
+                "name": "查看",
+                "desc": "查看特定排名的詳細資訊。",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "扭蛋",
+        "desc": "模擬一次PJSK 10連抽。",
+        "describes": {
+            "reverse_odds": "交換2★和4★卡的機率。"
+        }
+    },
+    "guess": {
+        "name": "猜謎",
+        "desc": "有趣的猜謎遊戲…要暴走了！！",
+        "cmds": {
+            "stats": {
+                "name": "統計",
+                "desc": "查看您的猜謎統計資料。",
+                "describes": {
+                    "guess_type": "要查詢的猜謎類型。",
+                    "user": "要查看其統計的Discord使用者。",
+                    "lb_rank": "要查看的用戶排名。"
+                }
+            },
+            "leaderboard": {
+                "name": "排行榜",
+                "desc": "查看猜謎排行榜。",
+                "describes": {
+                    "guess_type": "要查詢其猜謎排行榜的類型。"
+                }
+            },
+            "hint": {
+                "name": "提示",
+                "desc": "在猜謎時小小作弊一下。"
+            },
+            "toggle": {
+                "name": "切換",
+                "desc": "開啟或關閉伺服器的猜謎功能。",
+                "describes": {
+                    "on": "猜謎功能開啟或關閉。"
+                }
+            },
+            "character": {
+                "name": "角色",
+                "desc": "從裁剪過的卡圖猜PJSK角色。"
+            },
+            "character_bw": {
+                "name": "角色_黑白",
+                "desc": "從灰階的卡圖裁剪中猜PJSK角色。"
+            },
+            "chart": {
+                "name": "譜面",
+                "desc": "從裁剪過的Master譜面猜PJSK歌曲。"
+            },
+            "chart_append": {
+                "name": "譜面_附加",
+                "desc": "從附加譜面裁剪中猜PJSK譜面。"
+            },
+            "event": {
+                "name": "活動",
+                "desc": "從裁剪過的活動背景猜PJSK活動。"
+            },
+            "jacket": {
+                "name": "封面",
+                "desc": "從裁剪過的歌曲封面猜PJSK歌曲。"
+            },
+            "jacket_smol": {
+                "name": "封面_小圖",
+                "desc": "從 30px 的封面裁剪中猜 PJSK 歌曲。"
+            },
+            "jacket_bw": {
+                "name": "封面_黑白",
+                "desc": "從灰階的歌曲封面裁剪中猜PJSK歌曲。"
+            },
+            "jacket_challenge": {
+                "name": "封面_挑戰",
+                "desc": "從灰階 30px 的封面裁剪中猜 PJSK 歌曲。"
+            },
+            "notes": {
+                "name": "音符",
+                "desc": "從Master的音符數量猜PJSK歌曲。"
+            }
+        }
+    },
+    "help": {
+        "name": "幫助",
+        "desc": "機器人資訊，包括邀請連結、使用條款、隱私政策和指令。",
+        "describes": {}
+    },
+    "ping": {
+        "name": "延遲",
+        "desc": "Pong！查看延遲。",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK相關資訊指令。",
+        "cmds": {
+            "profile": {
+                "name": "個人資料",
+                "desc": "查看PJSK用戶的個人資料。"
+            },
+            "why_inappropriate": {
+                "name": "為何不當",
+                "desc": "檢查文字為何在PJSK中被視為不妥。",
+                "describes": {
+                    "text": "要檢查的文字，最多255字元。"
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "個人資料",
+        "desc": "查看用戶的個人資料。",
+        "describes": {}
+    },
+    "progress": {
+        "name": "進度",
+        "desc": "查看您的PJSK進度！顯示所有難度的AP、FC和通關數。",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "排名賽",
+        "desc": "Sbotga排名賽（rankma）相關指令。",
+        "cmds": {
+            "leaderboard": {
+                "name": "排行榜",
+                "desc": "查看目前排名賽排行榜。",
+                "describes": {}
+            },
+            "view": {
+                "name": "查看",
+                "desc": "查看該排名中某玩家的詳細資訊。",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "經驗需求",
+        "desc": "取得指定等級所需的經驗值。",
+        "describes": {
+            "level": "要計算經驗值的等級。"
+        }
+    }
+}

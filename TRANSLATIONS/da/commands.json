@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "præstationer",
+        "desc": "Se en brugers præstationer.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30-kommando",
+        "desc": "Se dine bedste 30 PJSK charts!",
+        "describes": {
+            "filter": "Den b30 sangstatusfilter, der skal bruges.",
+            "count": "Antal sange, der skal vises i dine bedste charts, i stedet for 30. Værdi mellem 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "beregn",
+        "desc": "Beregn score for en valgt chart. Kun for 39s!",
+        "describes": {
+            "score": "Din score i P/G/G/B/M-format (understøtter kun greats og G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kort",
+                "desc": "Se info om et kort!",
+                "describes": {
+                    "card": "Det kort, du vil se."
+                }
+            },
+            "info": {
+                "name": "oplysninger",
+                "desc": "Se karakterinformation.",
+                "describes": {
+                    "character": "Den karakter, du vil have information om."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "tegneserier",
+        "desc": "Se in-game tegneserier, som vist på indlæsningsskærme.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "doner",
+        "desc": "Se donationsinformation.",
+        "describes": {}
+    },
+    "events": {
+        "name": "begivenheder",
+        "desc": "Sbotga begivenhedsrelaterede kommandoer.",
+        "cmds": {
+            "border": {
+                "name": "grænse",
+                "desc": "Viser de nuværende begivenhedsgrænse <b>(</b>fremhævning) ranglister.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "rangliste",
+                "desc": "Se den aktuelle begivenhedsrangliste.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "forudsig",
+                "desc": "Forudsig cutoffs for den aktuelle begivenhed. (fra jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "tidsplan",
+                "desc": "Viser den nuværende og fremtidige begivenhedstidsplan.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vis",
+                "desc": "Vis detaljer om en bestemt rang.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "lodtrækning",
+        "desc": "Simuler en PJSK gacha 10-pull.",
+        "describes": {
+            "reverse_odds": "Byt chancen for 2* og 4*-kort."
+        }
+    },
+    "guess": {
+        "name": "gæt",
+        "desc": "Sjove gættelege ... raseri!!",
+        "cmds": {
+            "stats": {
+                "name": "statistik",
+                "desc": "Se din statistik for gættelege.",
+                "describes": {
+                    "guess_type": "Den type gæt, som du vil hente statistik for.",
+                    "user": "Den Discord-bruger, hvis statistik du vil se.",
+                    "lb_rank": "Brugerens rang for at se statistik."
+                }
+            },
+            "leaderboard": {
+                "name": "rangliste",
+                "desc": "Se ranglisten for gættelege.",
+                "describes": {
+                    "guess_type": "Den type gæt, du vil hente rangliste for."
+                }
+            },
+            "hint": {
+                "name": "tip",
+                "desc": "Snyd lidt på dit gæt."
+            },
+            "toggle": {
+                "name": "skift",
+                "desc": "Tænd/sluk gættelege i din server.",
+                "describes": {
+                    "on": "Hvorvidt gættelege er til eller fra."
+                }
+            },
+            "character": {
+                "name": "karakter",
+                "desc": "Gæt en PJSK-karakter ud fra et beskåret kort."
+            },
+            "character_bw": {
+                "name": "karakter_bw",
+                "desc": "Gæt en PJSK-karakter ud fra et gråtonebeskåret kort."
+            },
+            "chart": {
+                "name": "nodeark",
+                "desc": "Gæt en PJSK-sang ud fra et beskåret master-nodeark."
+            },
+            "chart_append": {
+                "name": "nodeark_append",
+                "desc": "Gæt et PJSK-nodeark ud fra et beskåret append-nodeark."
+            },
+            "event": {
+                "name": "begivenhed",
+                "desc": "Gæt en PJSK-begivenhed ud fra et beskåret begivenhedsbillede."
+            },
+            "jacket": {
+                "name": "omslag",
+                "desc": "Gæt en PJSK-sang ud fra et beskåret omslag."
+            },
+            "jacket_smol": {
+                "name": "omslag_smol",
+                "desc": "Gæt en PJSK-sang ud fra et 30px beskåret omslag."
+            },
+            "jacket_bw": {
+                "name": "omslag_bw",
+                "desc": "Gæt en PJSK-sang ud fra et gråtonebeskåret omslag."
+            },
+            "jacket_challenge": {
+                "name": "omslag_udfordring",
+                "desc": "Gæt en PJSK-sang ud fra et gråtone-30px-beskåret omslag."
+            },
+            "notes": {
+                "name": "noder",
+                "desc": "Gæt en PJSK-sang ud fra dens nodeantal på Master."
+            }
+        }
+    },
+    "help": {
+        "name": "hjælp",
+        "desc": "Botinformation, inklusive invitation, TOS, privatlivspolitik og kommandoer.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "tjek",
+        "desc": "Pong! Se latenstid.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK-relaterede informationskommandoer.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Se en PJSK-brugers profil."
+            },
+            "why_inappropriate": {
+                "name": "hvorfor_upassende",
+                "desc": "Tjek hvorfor noget tekst er upassende ifølge PJSK.",
+                "describes": {
+                    "text": "Tekst, der skal tjekkes, maks. længde 255 tegn."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Se en brugers profil.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "fremskridt",
+        "desc": "Se dit PJSK-fremskridt! Viser AP'er, FC'er og Clears for ALLE sangniveauer i en sværhedsgrad.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "rangeret",
+        "desc": "Sbotga rangerede (rankma) relaterede kommandoer.",
+        "cmds": {
+            "leaderboard": {
+                "name": "rangliste",
+                "desc": "Se den nuværende rangerede rangliste.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vis",
+                "desc": "Vis detaljer om en bestemt spiller på denne rang.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp-for",
+        "desc": "Hent XP, der kræves for et givent niveau.",
+        "describes": {
+            "level": "Niveau at beregne XP for."
+        }
+    }
+}

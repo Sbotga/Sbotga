@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Da PJSK song nyame.",
+        "region": "PJSK wegion tu use. Defauwts tu yowr defauwt wegion (EN, ow da one you set in settings).",
+        "difficulty": "PJSK diffywuwty.",
+        "difficulty_default_master": "PJSK diffywuwty. Defauwts tu Mastew.",
+        "pjsk_private": "Hide PJSK ID and nyame.",
+        "pjsk_user_id": "PJSK usew ID (fwiend code).",
+        "discord_user": "Discowd usew you want tu view.",
+        "event_wl_character": "Use a chaptew-specific chawactew weadewboawd (Wowwd Wink).",
+        "rank": "What wank/tiew tu view.",
+        "page": "What page tu view."
+    },
+    "errors": {
+        "cannot_click": "You cannot cwick dis button!",
+        "cannot_select": "You cannot use dis menu!",
+        "invalid_input": "Invawid input. Pwease check yowr pawametews.",
+        "unsupported_difficulty": "Unsuppowted diffywuwty: {difficulty}.",
+        "unsupported_region": "Unsuppowted wegion: {region}.",
+        "unknown_song": "Unknyown song: {song}.",
+        "unknown_character": "Unknyown chawactew: {character}.",
+        "unknown_event": "Unknyown event: {event}.",
+        "unknown_card": "Unknyown cawd: {card}."
+    },
+    "labels": {
+        "cancel": "Cancew",
+        "end_guess": "End Gwess"
+    }
+}

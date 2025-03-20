@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "úspěchy",
+        "desc": "Zobrazit uživatelovy úspěchy.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "Zobrazí tvých 30 nejlepších PJSK chartů!",
+        "describes": {
+            "filter": "Filtr stavu skladeb pro b30.",
+            "count": "Počet skladeb k zobrazení ve vašich nejlepších žebříčcích místo 30. Hodnota mezi 1–50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "vypočet",
+        "desc": "Vypočítá skóre pro vybraný chart. Pouze 39s!",
+        "describes": {
+            "score": "Tvé skóre ve formátu P/G/G/B/M (podporuje pouze greats i G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "karta",
+                "desc": "Zobrazit informace ke kartě!",
+                "describes": {
+                    "card": "Karta, kterou chcete zobrazit."
+                }
+            },
+            "info": {
+                "name": "info",
+                "desc": "Zobrazit informace o postavě.",
+                "describes": {
+                    "character": "Postava, o které chcete informace."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "komiksy",
+        "desc": "Zobrazit herní komiksy, jako při načítacích obrazovkách.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "darovat",
+        "desc": "Zobrazit informace o darování.",
+        "describes": {}
+    },
+    "events": {
+        "name": "události",
+        "desc": "Příkazy k událostem Sbotga.",
+        "cmds": {
+            "border": {
+                "name": "hranice",
+                "desc": "Zobrazí aktuální pořadí hranic události (highlight)",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "žebříček",
+                "desc": "Zobrazí aktuální žebříček události.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "předpovědět",
+                "desc": "Předpoví cutoffs pro aktuální událost. (zdroj: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "plán",
+                "desc": "Zobrazí aktuální i budoucí plán událostí.",
+                "describes": {}
+            },
+            "view": {
+                "name": "zobrazit",
+                "desc": "Zobrazí podrobnosti konkrétního hodnocení.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha",
+        "desc": "Simulovat 10 pull gacha PJSK.",
+        "describes": {
+            "reverse_odds": "Prohodí šance pro 2* a 4* karty."
+        }
+    },
+    "guess": {
+        "name": "hádej",
+        "desc": "Zábavné hádací hry... vztek!!",
+        "cmds": {
+            "stats": {
+                "name": "staty",
+                "desc": "Zobrazí tvé statistiky pro hádání.",
+                "describes": {
+                    "guess_type": "Typ hádání, pro který zobrazit statistiky.",
+                    "user": "Discord uživatel ke zobrazení statistik.",
+                    "lb_rank": "Hodnost uživatele pro zobrazení statistik."
+                }
+            },
+            "leaderboard": {
+                "name": "žebříček",
+                "desc": "Zobrazí žebříček v hádání.",
+                "describes": {
+                    "guess_type": "Typ hádání, pro který zobrazit žebříček."
+                }
+            },
+            "hint": {
+                "name": "nápověda",
+                "desc": "Trochu si pomoz u své hádanky."
+            },
+            "toggle": {
+                "name": "přepnout",
+                "desc": "Zapnout/vypnout hádání na vašem serveru.",
+                "describes": {
+                    "on": "Zda je hádání zapnuto nebo vypnuto."
+                }
+            },
+            "character": {
+                "name": "postava",
+                "desc": "Hádej postavu z PJSK podle vystřižené karty."
+            },
+            "character_bw": {
+                "name": "postava_bw",
+                "desc": "Hádej PJSK postavu z černobílé vystřižené karty."
+            },
+            "chart": {
+                "name": "chart",
+                "desc": "Hádej PJSK píseň podle cut Master chartu."
+            },
+            "chart_append": {
+                "name": "chart_append",
+                "desc": "Hádej PJSK chart z vystřiženého append chartu."
+            },
+            "event": {
+                "name": "událost",
+                "desc": "Hádej PJSK událost z vystřiženého pozadí události."
+            },
+            "jacket": {
+                "name": "jacket",
+                "desc": "Hádej píseň PJSK z vystřižené obálky."
+            },
+            "jacket_smol": {
+                "name": "jacket_smol",
+                "desc": "Hádej píseň PJSK z 30px vystřižené obálky."
+            },
+            "jacket_bw": {
+                "name": "jacket_bw",
+                "desc": "Hádej píseň PJSK z černobílé vystřižené obálky."
+            },
+            "jacket_challenge": {
+                "name": "jacket_challenge",
+                "desc": "Hádej píseň PJSK z černobílé 30px vystřižené obálky."
+            },
+            "notes": {
+                "name": "noty",
+                "desc": "Hádej píseň PJSK podle počtu not na Master."
+            }
+        }
+    },
+    "help": {
+        "name": "nápověda",
+        "desc": "Informace o botovi, pozvánka, TOS, zásady soukromí a příkazy.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "ping",
+        "desc": "Pong! Zobrazit latenci.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "Informace a příkazy týkající se PJSK.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Zobrazit profil uživatele PJSK."
+            },
+            "why_inappropriate": {
+                "name": "proc_nevhodne",
+                "desc": "Ověř, proč je nějaký text podle PJSK nevhodný.",
+                "describes": {
+                    "text": "Text ke kontrole, max. délka 255 znaků."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Zobrazit profil uživatele.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "postup",
+        "desc": "Zobrazí tvůj postup v PJSK! AP, FC a Cleary pro všechny úrovně.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "hodnocené",
+        "desc": "Příkazy k hodnocenému (rankma) režimu Sbotga.",
+        "cmds": {
+            "leaderboard": {
+                "name": "žebříček",
+                "desc": "Zobrazí aktuální žebříček hodnocení.",
+                "describes": {}
+            },
+            "view": {
+                "name": "zobrazit",
+                "desc": "Zobrazí detaily konkrétního hráče v tomto hodnocení.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_for",
+        "desc": "Získat XP potřebné pro určitý level.",
+        "describes": {
+            "level": "Úroveň, pro kterou spočítat XP."
+        }
+    }
+}

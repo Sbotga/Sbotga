@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "Erfolge",
+        "desc": "Zeige die Erfolge eines Benutzers an.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "beste30",
+        "desc": "Zeige deine besten 30 PJSK-Charts!",
+        "describes": {
+            "filter": "Der b30-Songstatus-Filter, der verwendet werden soll.",
+            "count": "Anzahl der Songs, die in deinen Best-Charts angezeigt werden, statt 30. Wert zwischen 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "berechnen",
+        "desc": "Punktzahl für gewählte Chart berechnen. Nur für 39s!",
+        "describes": {
+            "score": "Dein Ergebnis im P/G/G/B/M-Format (unterstützt nur Greats und G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "Karte",
+                "desc": "Zeige Informationen zu einer Karte an!",
+                "describes": {
+                    "card": "Die anzuzeigende Karte."
+                }
+            },
+            "info": {
+                "name": "Info",
+                "desc": "Zeige Charakterinformationen an.",
+                "describes": {
+                    "character": "Der Charakter, über den du Infos möchtest."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "Comics",
+        "desc": "Zeige Comics aus dem Spiel, wie sie auf Ladebildschirmen erscheinen.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "Spenden",
+        "desc": "Zeige Spendeninformationen an.",
+        "describes": {}
+    },
+    "events": {
+        "name": "Events",
+        "desc": "Sbotga Eventbefehle.",
+        "cmds": {
+            "border": {
+                "name": "Grenze",
+                "desc": "Zeigt die aktuellen Event-Grenzwerte (Hervorhebung) in den Ranglisten.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "Bestenliste",
+                "desc": "Aktuelle Event-Rangliste anzeigen.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "Vorhersagen",
+                "desc": "Prognostiziere Cutoffs für das aktuelle Event. (Daten von jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "Zeitplan",
+                "desc": "Zeigt den aktuellen und zukünftigen Event-Zeitplan.",
+                "describes": {}
+            },
+            "view": {
+                "name": "Anzeigen",
+                "desc": "Details eines bestimmten Rangs anzeigen.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "Gacha",
+        "desc": "Simuliere einen PJSK-Gacha mit 10 Pulls.",
+        "describes": {
+            "reverse_odds": "Tausche die Wahrscheinlichkeiten für 2*- und 4*-Karten."
+        }
+    },
+    "guess": {
+        "name": "Raten",
+        "desc": "Spaßige Ratespiele... Raserei!!",
+        "cmds": {
+            "stats": {
+                "name": "Statistiken",
+                "desc": "Zeige deine Rate-Statistiken an.",
+                "describes": {
+                    "guess_type": "Art des Ratens für Statistiken.",
+                    "user": "Discord-Benutzer für Statistiken.",
+                    "lb_rank": "Der Rang des Benutzers für die Statistikanzeige."
+                }
+            },
+            "leaderboard": {
+                "name": "Bestenliste",
+                "desc": "Zeige die Bestenliste für Ratespiele an.",
+                "describes": {
+                    "guess_type": "Art des Ratens für die Bestenliste."
+                }
+            },
+            "hint": {
+                "name": "Hinweis",
+                "desc": "Schummle ein wenig bei deinem Ratespiel."
+            },
+            "toggle": {
+                "name": "Umschalten",
+                "desc": "Ratespiel auf deinem Server aktivieren/deaktivieren.",
+                "describes": {
+                    "on": "Ob das Ratespiel ein- oder ausgeschaltet ist."
+                }
+            },
+            "character": {
+                "name": "Charakter",
+                "desc": "Rate einen PJSK-Charakter anhand einer ausgeschnittenen Karte."
+            },
+            "character_bw": {
+                "name": "charakter_sw",
+                "desc": "Rate einen PJSK-Charakter anhand einer Graustufen-Karte."
+            },
+            "chart": {
+                "name": "Diagramm",
+                "desc": "Rate einen PJSK-Song anhand einer ausgeschnittenen Master-Chart."
+            },
+            "chart_append": {
+                "name": "diagramm_anhang",
+                "desc": "Rate eine PJSK-Chart anhand einer ausgeschnittenen Append-Chart."
+            },
+            "event": {
+                "name": "Event",
+                "desc": "Rate ein PJSK-Event anhand eines ausgeschnittenen Event-Hintergrunds."
+            },
+            "jacket": {
+                "name": "Jacke",
+                "desc": "Rate einen PJSK-Song anhand eines Ausschnitts vom Jacket."
+            },
+            "jacket_smol": {
+                "name": "jacke_klein",
+                "desc": "Rate einen PJSK-Song anhand eines 30px-Ausschnitts vom Jacket."
+            },
+            "jacket_bw": {
+                "name": "jacke_sw",
+                "desc": "Rate einen PJSK-Song anhand eines Graustufen-Ausschnitts vom Jacket."
+            },
+            "jacket_challenge": {
+                "name": "jacke_herausforderung",
+                "desc": "Rate einen PJSK-Song anhand eines Graustufen-30px-Ausschnitts vom Jacket."
+            },
+            "notes": {
+                "name": "Notizen",
+                "desc": "Rate einen PJSK-Song anhand der Notenanzahl auf Master."
+            }
+        }
+    },
+    "help": {
+        "name": "Hilfe",
+        "desc": "Bot-Informationen einschließlich Einladung, TOS, Datenschutzrichtlinie und Befehle.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "Ping",
+        "desc": "Pong! Zeige Latenz.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK-Informationsbefehle.",
+        "cmds": {
+            "profile": {
+                "name": "Profil",
+                "desc": "Zeige das Profil eines PJSK-Nutzers an."
+            },
+            "why_inappropriate": {
+                "name": "warum_unangemessen",
+                "desc": "Prüfe, warum ein Text laut PJSK unangemessen ist.",
+                "describes": {
+                    "text": "Zu prüfender Text, max. Länge 255 Zeichen."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "Profil",
+        "desc": "Zeige das Profil eines Nutzers an.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "Fortschritt",
+        "desc": "Zeige deinen PJSK-Fortschritt! Zeigt APs, FCs und Clears für alle Songstufen einer Schwierigkeit.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "Rangmodus",
+        "desc": "Sbotga Ranglistenbefehle (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "Bestenliste",
+                "desc": "Aktuelle Ranglisten-Rangfolge anzeigen.",
+                "describes": {}
+            },
+            "view": {
+                "name": "Anzeigen",
+                "desc": "Details eines bestimmten Spielers in dieser Rangliste anzeigen.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_fuer",
+        "desc": "Zeige benötigte XP für ein bestimmtes Level an.",
+        "describes": {
+            "level": "Level, für das die XP berechnet werden."
+        }
+    }
+}

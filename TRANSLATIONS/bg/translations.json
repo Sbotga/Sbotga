@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Името на PJSK песента.",
+        "region": "Регион на PJSK. По подразбиране: вашият основен регион (EN) или зададен в настройките.",
+        "difficulty": "Трудност на PJSK.",
+        "difficulty_default_master": "Трудност на PJSK. По подразбиране: Master.",
+        "pjsk_private": "Скриване на PJSK ID и име.",
+        "pjsk_user_id": "PJSK потребителско ID (код на приятел).",
+        "discord_user": "Потребител в Discord, когото искате да видите.",
+        "event_wl_character": "Използвайте класация за конкретен герой към глава (World Link).",
+        "rank": "Какъв ранг/ниво да видите.",
+        "page": "Коя страница да видите."
+    },
+    "errors": {
+        "cannot_click": "Не можете да натиснете този бутон!",
+        "cannot_select": "Не можете да използвате това меню!",
+        "invalid_input": "Невалиден вход. Моля, проверете вашите параметри.",
+        "unsupported_difficulty": "Неподдържана трудност: `{difficulty}`.",
+        "unsupported_region": "Неподдържан регион: `{region}`.",
+        "unknown_song": "Неизвестна песен: `{song}`.",
+        "unknown_character": "Неизвестен герой: `{character}`.",
+        "unknown_event": "Неизвестно събитие: `{event}`.",
+        "unknown_card": "Неизвестна карта: `{card}`."
+    },
+    "labels": {
+        "cancel": "Отказ",
+        "end_guess": "Край на познаването"
+    }
+}

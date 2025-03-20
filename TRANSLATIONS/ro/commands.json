@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "realizări",
+        "desc": "Vezi realizările unui utilizator.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b-30",
+        "desc": "Vezi cele mai bune 30 de piese PJSK!",
+        "describes": {
+            "filter": "Filtrul de status de melodie b30 de utilizat.",
+            "count": "Numărul de melodii de afișat în topul tău în loc de 30. Valoare între 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "calculează",
+        "desc": "Calculează scorul pentru melodia aleasă. Exclusiv 39s!",
+        "describes": {
+            "score": "Scorul tău în format P/G/G/B/M (acceptă doar greats și G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "cartonaș",
+                "desc": "Vezi informațiile despre un card!",
+                "describes": {
+                    "card": "Cardul pe care vrei să-l vezi."
+                }
+            },
+            "info": {
+                "name": "informații",
+                "desc": "Vezi informații despre personaj.",
+                "describes": {
+                    "character": "Personajul despre care vrei informații."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "benzi",
+        "desc": "Vezi benzile din joc, afișate în ecranele de încărcare.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donează",
+        "desc": "Vezi informații despre donații.",
+        "describes": {}
+    },
+    "events": {
+        "name": "evenimente",
+        "desc": "Comenzi legate de evenimente Sbotga.",
+        "cmds": {
+            "border": {
+                "name": "bordură",
+                "desc": "Afișează clasamentele curente ale evenimentului pentru bordură (evidențiere).",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "clasament",
+                "desc": "Vezi clasamentul actual al evenimentului.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "prezice",
+                "desc": "Prezice pragurile pentru evenimentul curent. (sursa: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "program",
+                "desc": "Afișează programul evenimentelor curente și viitoare.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vezi",
+                "desc": "Vezi detalii despre un anumit rang.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "extracție",
+        "desc": "Simulează un gacha de 10 cărți PJSK.",
+        "describes": {
+            "reverse_odds": "Inversează șansele pentru cărți 2* și 4*."
+        }
+    },
+    "guess": {
+        "name": "ghicește",
+        "desc": "Jocuri distractive de ghicit... furie!!",
+        "cmds": {
+            "stats": {
+                "name": "statistici",
+                "desc": "Vezi statisticile tale pentru guess.",
+                "describes": {
+                    "guess_type": "Tipul de guess pentru care să preiei statisticile.",
+                    "user": "Utilizatorul Discord pentru care să vezi statisticile.",
+                    "lb_rank": "Rangul utilizatorului ale cărui statistici vrei să le vezi."
+                }
+            },
+            "leaderboard": {
+                "name": "clasament",
+                "desc": "Vezi clasamentul pentru guess.",
+                "describes": {
+                    "guess_type": "Tipul de guess pentru care să preiei clasamentul."
+                }
+            },
+            "hint": {
+                "name": "indiciu",
+                "desc": "Trișează puțin la guess."
+            },
+            "toggle": {
+                "name": "comută",
+                "desc": "Activați/dezactivați guess-ul pe serverul vostru.",
+                "describes": {
+                    "on": "Dacă guess-ul este activ sau inactiv."
+                }
+            },
+            "character": {
+                "name": "personaj",
+                "desc": "Ghicește un personaj PJSK dintr-un card decupat."
+            },
+            "character_bw": {
+                "name": "personaj_bn",
+                "desc": "Ghicește un personaj PJSK dintr-un card decupat în tonuri de gri."
+            },
+            "chart": {
+                "name": "diagramă",
+                "desc": "Ghicește o melodie PJSK dintr-un chart Master decupat."
+            },
+            "chart_append": {
+                "name": "diagramă_adițională",
+                "desc": "Ghicește un chart PJSK dintr-un chart Append decupat."
+            },
+            "event": {
+                "name": "eveniment",
+                "desc": "Ghicește un eveniment PJSK dintr-un fundal de eveniment decupat."
+            },
+            "jacket": {
+                "name": "copertă",
+                "desc": "Ghicește o melodie PJSK dintr-un jacket decupat."
+            },
+            "jacket_smol": {
+                "name": "copertă_mică",
+                "desc": "Ghicește o melodie PJSK dintr-un jacket decupat de 30px."
+            },
+            "jacket_bw": {
+                "name": "copertă_bn",
+                "desc": "Ghicește o melodie PJSK dintr-un jacket decupat în tonuri de gri."
+            },
+            "jacket_challenge": {
+                "name": "copertă_provocare",
+                "desc": "Ghicește o melodie PJSK dintr-un jacket de 30px în tonuri de gri."
+            },
+            "notes": {
+                "name": "note_muzicale",
+                "desc": "Ghicește o melodie PJSK după numărul de note la Master."
+            }
+        }
+    },
+    "help": {
+        "name": "ajutor",
+        "desc": "Informații despre bot, inclusiv link de invitație, TOS, politica de confidențialitate și comenzi.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "semnal",
+        "desc": "Pong! Vezi latența.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "Comenzi cu informații legate de PJSK.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Vezi profilul unui utilizator PJSK."
+            },
+            "why_inappropriate": {
+                "name": "de_ce_inadecvat",
+                "desc": "Verifică de ce un text este inadecvat conform PJSK.",
+                "describes": {
+                    "text": "Text de verificat, lungime maximă 255 de caractere."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Vezi profilul unui utilizator.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "progres",
+        "desc": "Vezi progresul PJSK! Arată AP, FC și Clears pentru toate nivelurile la o dificultate.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "clasat",
+        "desc": "Comenzi Sbotga legate de ranked (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "clasament",
+                "desc": "Vezi clasamentul ranked curent.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vezi",
+                "desc": "Vezi detalii despre un jucător la acest rang.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_pentru",
+        "desc": "Obține XP necesare pentru un anumit nivel.",
+        "describes": {
+            "level": "Nivelul pentru care să calculezi XP-ul."
+        }
+    }
+}

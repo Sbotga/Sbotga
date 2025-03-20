@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "The PJSK song title.",
+        "region": "PJSK region to use. Defaults to your standard region (EN, or the one set in your settings).",
+        "difficulty": "PJSK difficulty level.",
+        "difficulty_default_master": "PJSK difficulty level. Defaults to Master.",
+        "pjsk_private": "Conceal PJSK ID and name.",
+        "pjsk_user_id": "PJSK player ID (friend code).",
+        "discord_user": "Discord user you'd like to view.",
+        "event_wl_character": "Utilise a chapter-specific character leaderboard (World Link).",
+        "rank": "Which rank/tier to view.",
+        "page": "Which page to view."
+    },
+    "errors": {
+        "cannot_click": "You cannot press this button!",
+        "cannot_select": "You cannot utilise this menu!",
+        "invalid_input": "Invalid input. Please review your parameters.",
+        "unsupported_difficulty": "Unsupported challenge level: `{difficulty}`.",
+        "unsupported_region": "Unsupported territory: `{region}`.",
+        "unknown_song": "Unrecognised song: `{song}`.",
+        "unknown_character": "Unrecognised character: `{character}`.",
+        "unknown_event": "Unrecognised event: `{event}`.",
+        "unknown_card": "Unrecognised card: `{card}`."
+    },
+    "labels": {
+        "cancel": "Cancel now",
+        "end_guess": "Conclude Guess"
+    }
+}

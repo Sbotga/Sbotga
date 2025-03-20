@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK 곡 이름입니다.",
+        "region": "사용할 PJSK 지역입니다. 기본값은 기본 지역(EN 또는 설정)입니다.",
+        "difficulty": "PJSK 난이도입니다.",
+        "difficulty_default_master": "PJSK 난이도입니다. 기본값은 Master입니다.",
+        "pjsk_private": "PJSK ID와 이름을 숨깁니다.",
+        "pjsk_user_id": "PJSK 사용자 ID(친구 코드).",
+        "discord_user": "조회할 Discord 사용자입니다.",
+        "event_wl_character": "챕터별 캐릭터 리더보드를 사용합니다 (World Link).",
+        "rank": "조회할 랭크/티어입니다.",
+        "page": "조회할 페이지입니다."
+    },
+    "errors": {
+        "cannot_click": "이 버튼을 클릭할 수 없습니다!",
+        "cannot_select": "이 메뉴를 사용할 수 없습니다!",
+        "invalid_input": "잘못된 입력입니다. 매개변수를 확인해주세요.",
+        "unsupported_difficulty": "지원되지 않는 난이도입니다: `{difficulty}`.",
+        "unsupported_region": "지원되지 않는 지역입니다: `{region}`.",
+        "unknown_song": "알 수 없는 곡입니다: `{song}`.",
+        "unknown_character": "알 수 없는 캐릭터입니다: `{character}`.",
+        "unknown_event": "알 수 없는 이벤트입니다: `{event}`.",
+        "unknown_card": "알 수 없는 카드입니다: `{card}`."
+    },
+    "labels": {
+        "cancel": "취소",
+        "end_guess": "추측 종료"
+    }
+}

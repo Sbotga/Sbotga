@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK歌曲名称。",
+        "region": "要使用的PJSK区服。默认为您的默认区服（EN，或在设置中指定的区服）。",
+        "difficulty": "PJSK难度。",
+        "difficulty_default_master": "PJSK难度。默认为Master。",
+        "pjsk_private": "隐藏PJSK的ID和名称。",
+        "pjsk_user_id": "PJSK用户ID（好友码）。",
+        "discord_user": "要查看的Discord用户。",
+        "event_wl_character": "使用特定章节的角色排行（World Link）。",
+        "rank": "要查看的排名/段位。",
+        "page": "要查看的页面。"
+    },
+    "errors": {
+        "cannot_click": "你无法点击此按钮！",
+        "cannot_select": "你无法使用此菜单！",
+        "invalid_input": "输入无效。请检查您的参数。",
+        "unsupported_difficulty": "不支持的难度：`{difficulty}`。",
+        "unsupported_region": "不支持的区服：`{region}`。",
+        "unknown_song": "未知歌曲：`{song}`。",
+        "unknown_character": "未知角色：`{character}`。",
+        "unknown_event": "未知活动：`{event}`。",
+        "unknown_card": "未知卡片：`{card}`。"
+    },
+    "labels": {
+        "cancel": "取消",
+        "end_guess": "结束猜测"
+    }
+}

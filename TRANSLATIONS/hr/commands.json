@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "postignuća",
+        "desc": "Pogledaj postignuća korisnika.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "Prikaži tvojih 30 najboljih PJSK partitura!",
+        "describes": {
+            "filter": "Filter statusa b30 pjesama za upotrebu.",
+            "count": "Broj pjesama za prikaz u tvojim najboljim listama, umjesto 30. Vrijednost 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "izračunaj",
+        "desc": "Izračunaj rezultat za odabranu partituru. Samo za 39s!",
+        "describes": {
+            "score": "Tvoj rezultat u formatu P/G/G/B/M (podržava samo greats i G/G/B/M također)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kartica",
+                "desc": "Pogledaj informacije o kartici!",
+                "describes": {
+                    "card": "Kartica koju želiš prikazati."
+                }
+            },
+            "info": {
+                "name": "informacije",
+                "desc": "Pogledaj informacije o liku.",
+                "describes": {
+                    "character": "Lik o kojem želiš više informacija."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "stripovi",
+        "desc": "Pogledaj stripove iz igre, kao na zaslonima učitavanja.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "doniraj",
+        "desc": "Pogledaj podatke o donaciji.",
+        "describes": {}
+    },
+    "events": {
+        "name": "događaji",
+        "desc": "Naredbe vezane uz Sbotga događaje.",
+        "cmds": {
+            "border": {
+                "name": "granica",
+                "desc": "Prikazuje trenutačne poretke granice događaja <b>(</b>istaknuto)",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "ljestvica",
+                "desc": "Pogledaj trenutačnu ljestvicu događaja.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "predviđanje",
+                "desc": "Predvidi granične vrijednosti za trenutačni događaj. (izvor: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "raspored",
+                "desc": "Prikazuje trenutačni i budući raspored događaja.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vidi",
+                "desc": "Pogledaj pojedinosti određenog ranga.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "lutrija",
+        "desc": "Simuliraj povlačenje 10 gacha unutar PJSK.",
+        "describes": {
+            "reverse_odds": "Zamijeni izglede za 2* i 4* kartice."
+        }
+    },
+    "guess": {
+        "name": "pogađanje",
+        "desc": "Zabavne igre pogađanja... bijes!!",
+        "cmds": {
+            "stats": {
+                "name": "statistike",
+                "desc": "Pogledaj svoje statistike pogađanja.",
+                "describes": {
+                    "guess_type": "Vrsta pogađanja za dobivanje statistika.",
+                    "user": "Discord korisnik za prikaz statistika.",
+                    "lb_rank": "Rang korisnika za prikaz statistika."
+                }
+            },
+            "leaderboard": {
+                "name": "ljestvica",
+                "desc": "Pogledaj ljestvicu za pogađanje.",
+                "describes": {
+                    "guess_type": "Vrsta pogađanja za dohvat ljestvice."
+                }
+            },
+            "hint": {
+                "name": "trag",
+                "desc": "Malo varaj u svojem pogađanju."
+            },
+            "toggle": {
+                "name": "prebaci",
+                "desc": "Uključi/isključi pogađanje na svom poslužitelju.",
+                "describes": {
+                    "on": "Je li pogađanje uključeno ili isključeno."
+                }
+            },
+            "character": {
+                "name": "lik",
+                "desc": "Pogodi PJSK lika iz izrezane kartice."
+            },
+            "character_bw": {
+                "name": "lik_bw",
+                "desc": "Pogodi PJSK lika iz izrezane kartice u nijansama sive."
+            },
+            "chart": {
+                "name": "partitura",
+                "desc": "Pogodi PJSK pjesmu iz izrezane master partiture."
+            },
+            "chart_append": {
+                "name": "partitura_append",
+                "desc": "Pogodi PJSK pjesmu iz izrezane dodatne partiture."
+            },
+            "event": {
+                "name": "događaj",
+                "desc": "Pogodi PJSK događaj iz izrezane pozadine događaja."
+            },
+            "jacket": {
+                "name": "omot",
+                "desc": "Pogodi PJSK pjesmu iz izrezanog omota."
+            },
+            "jacket_smol": {
+                "name": "omot_mali",
+                "desc": "Pogodi PJSK pjesmu iz 30px izrezanog omota."
+            },
+            "jacket_bw": {
+                "name": "omot_bw",
+                "desc": "Pogodi PJSK pjesmu iz izrezanog omota u nijansama sive."
+            },
+            "jacket_challenge": {
+                "name": "omot_izazov",
+                "desc": "Pogodi PJSK pjesmu iz izrezanog 30px omota u nijansama sive."
+            },
+            "notes": {
+                "name": "note",
+                "desc": "Pogodi PJSK pjesmu prema broju nota na Master."
+            }
+        }
+    },
+    "help": {
+        "name": "pomoć",
+        "desc": "Informacije o botu, uključujući pozivnicu, Uvjete korištenja, politiku privatnosti i naredbe.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "odziv",
+        "desc": "Pong! Prikaz kašnjenja.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "Naredbe s informacijama vezanim uz PJSK.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Pogledaj profil PJSK korisnika."
+            },
+            "why_inappropriate": {
+                "name": "zašto_neprimjereno",
+                "desc": "Provjeri zašto je neki tekst neprimjeren prema PJSK-u.",
+                "describes": {
+                    "text": "Tekst za provjeru, najviše 255 znakova."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Pogledaj profil korisnika.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "napredak",
+        "desc": "Pogledaj svoj PJSK napredak! Prikazuje AP, FC i Clear za SVE razine pjesama u težini.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "rangirani",
+        "desc": "Naredbe vezane uz Sbotga rangirane (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "ljestvica",
+                "desc": "Pogledaj trenutačnu rangiranu ljestvicu.",
+                "describes": {}
+            },
+            "view": {
+                "name": "vidi",
+                "desc": "Pogledaj pojedinosti određenog igrača na ovom rangu.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_za",
+        "desc": "Dobij XP potreban za određenu razinu.",
+        "describes": {
+            "level": "Razina za izračun XP-a."
+        }
+    }
+}

@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "achievements",
+        "desc": "View a usew's achievements, nya.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30",
+        "desc": "View youw best 30 PJSK chawts, nya!",
+        "describes": {
+            "filter": "Da b30 song status fiwtew tu use, nya.",
+            "count": "Amount of songs tu dispway in youw best chawts, instead of 30. Vawue between 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "cawcuwate",
+        "desc": "Cawcuwate scowe fow chosen chawt. 39s excwusive!",
+        "describes": {
+            "score": "Youw scowe in P/G/G/B/M fowmat (suppowts gweats onwy and G/G/B/M as weww)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "cawd",
+                "desc": "View a cawd's info, nya!",
+                "describes": {
+                    "card": "Da cawd you want tu view, nya."
+                }
+            },
+            "info": {
+                "name": "info",
+                "desc": "View chawactew infowmation, nya.",
+                "describes": {
+                    "character": "Da chawactew you want infowmation on, nya."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "comics",
+        "desc": "View in-game comics, as seen in woading scweens, nya.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donate",
+        "desc": "View donation infowmation, nya.",
+        "describes": {}
+    },
+    "events": {
+        "name": "events",
+        "desc": "Sbotga event wewated commands, nya.",
+        "cmds": {
+            "border": {
+                "name": "bowdew",
+                "desc": "Dispways da cuwwent event bowdew (highwight) wankings, nya.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "weadewboawd",
+                "desc": "View cuwwent event weadewboawd, nya.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "pwedict",
+                "desc": "Pwedict cutoffs fow da cuwwent event. (souwced fwom jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "scheduwe",
+                "desc": "Dispways da cuwwent and futuwe event scheduwe, nya.",
+                "describes": {}
+            },
+            "view": {
+                "name": "view",
+                "desc": "View detaiws of a specific wank, nya.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "gacha",
+        "desc": "Simuwate a PJSK gacha 10 puww, nya.",
+        "describes": {
+            "reverse_odds": "Swap da odds fow 2* and 4* cawds, nya."
+        }
+    },
+    "guess": {
+        "name": "guess",
+        "desc": "Fun guessing games... wage, nya!!",
+        "cmds": {
+            "stats": {
+                "name": "stats",
+                "desc": "View youw stats fow guessing, nya.",
+                "describes": {
+                    "guess_type": "Da type of guess tu fetch stats fow, nya.",
+                    "user": "Da Discowd usew tu view stats, nya.",
+                    "lb_rank": "Da wank of da usew tu view stats, nya."
+                }
+            },
+            "leaderboard": {
+                "name": "weadewboawd",
+                "desc": "View da weadewboawd fow guessing, nya.",
+                "describes": {
+                    "guess_type": "Da type of guess tu fetch weadewboawd fow, nya."
+                }
+            },
+            "hint": {
+                "name": "hint",
+                "desc": "Cheat a bit on youw guess, nya."
+            },
+            "toggle": {
+                "name": "toggwe",
+                "desc": "Tuwn on/off guessing in youw sewvew, nya.",
+                "describes": {
+                    "on": "Wheda guessing is on ow off, nya."
+                }
+            },
+            "character": {
+                "name": "chawactew",
+                "desc": "Guess a PJSK chawactew fwom a cut cawd, nya."
+            },
+            "character_bw": {
+                "name": "chawactew_bw",
+                "desc": "Guess a PJSK chawactew fwom a gwayscawe cut cawd, nya."
+            },
+            "chart": {
+                "name": "chawt",
+                "desc": "Guess a PJSK song fwom a cut mastew chawt, nya."
+            },
+            "chart_append": {
+                "name": "chawt_append",
+                "desc": "Guess a PJSK chawt fwom a cut append chawt, nya."
+            },
+            "event": {
+                "name": "event",
+                "desc": "Guess a PJSK event fwom a cut event backgwound, nya."
+            },
+            "jacket": {
+                "name": "jacket",
+                "desc": "Guess a PJSK song fwom a cut jacket, nya."
+            },
+            "jacket_smol": {
+                "name": "jacket_smow",
+                "desc": "Guess a PJSK song fwom a 30px cut jacket, nya."
+            },
+            "jacket_bw": {
+                "name": "jacket_bw",
+                "desc": "Guess a PJSK song fwom a gwayscawe cut jacket, nya."
+            },
+            "jacket_challenge": {
+                "name": "jacket_chawwenge",
+                "desc": "Guess a PJSK song fwom a gwayscawe 30px cut jacket, nya."
+            },
+            "notes": {
+                "name": "notes",
+                "desc": "Guess a PJSK song fwom its note count on Mastew, nya."
+            }
+        }
+    },
+    "help": {
+        "name": "hewp",
+        "desc": "Bot infowmation, incwuding invite, TOS, pwivacy powicy, and commands, nya.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "ping",
+        "desc": "Pong! View watency, nya.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK wewated infowmation commands, nya.",
+        "cmds": {
+            "profile": {
+                "name": "pwofiwe",
+                "desc": "View a PJSK usew's pwofiwe, nya."
+            },
+            "why_inappropriate": {
+                "name": "why_inappwopwiate",
+                "desc": "Check tu see why some text is inappwopwiate accowding tu PJSK, nya.",
+                "describes": {
+                    "text": "Text tu check, max wength 255 chawactews, nya."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "pwofiwe",
+        "desc": "View a usew's pwofiwe, nya.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "pwogwess",
+        "desc": "View youw PJSK pwogwess! Shows APs, FCs, and Cweaws fow AWW song wevews in a diffycuwty, nya.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "wanked",
+        "desc": "Sbotga wanked (wankma) wewated commands, nya.",
+        "cmds": {
+            "leaderboard": {
+                "name": "weadewboawd",
+                "desc": "View cuwwent wanked weadewboawd, nya.",
+                "describes": {}
+            },
+            "view": {
+                "name": "view",
+                "desc": "View detaiws of a specific pwayew at dis wank, nya.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_fow",
+        "desc": "Get XP wequiwed fow a cewtain wevew, nya.",
+        "describes": {
+            "level": "Wevew tu cawcuwate XP fow, nya."
+        }
+    }
+}

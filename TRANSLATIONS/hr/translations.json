@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Naziv PJSK pjesme.",
+        "region": "PJSK regija. Zadano: vaša zadana regija (EN ili ona iz postavki).",
+        "difficulty": "PJSK težina.",
+        "difficulty_default_master": "PJSK težina. Zadano: Master.",
+        "pjsk_private": "Sakrij PJSK ID i ime.",
+        "pjsk_user_id": "PJSK korisnički ID (friend code).",
+        "discord_user": "Discord korisnik kojeg želite pregledati.",
+        "event_wl_character": "Koristite rang-listu likova vezanu za poglavlje (World Link).",
+        "rank": "Koji rang/razinu želite prikazati.",
+        "page": "Koju stranicu prikazati."
+    },
+    "errors": {
+        "cannot_click": "Ne možete kliknuti ovaj gumb!",
+        "cannot_select": "Ne možete koristiti ovaj izbornik!",
+        "invalid_input": "Neispravan unos. Provjerite parametre.",
+        "unsupported_difficulty": "Nepodržana težina: `{difficulty}`.",
+        "unsupported_region": "Nepodržana regija: `{region}`.",
+        "unknown_song": "Nepoznata pjesma: `{song}`.",
+        "unknown_character": "Nepoznati lik: `{character}`.",
+        "unknown_event": "Nepoznati događaj: `{event}`.",
+        "unknown_card": "Nepoznata kartica: `{card}`."
+    },
+    "labels": {
+        "cancel": "Odustani",
+        "end_guess": "Završi pogađanje"
+    }
+}

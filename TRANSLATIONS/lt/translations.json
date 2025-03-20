@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK dainos pavadinimas.",
+        "region": "PJSK regionas. Numatytasis yra jūsų regionas (EN) arba tas, kurį nustatėte nuostatose.",
+        "difficulty": "PJSK sunkumo lygis.",
+        "difficulty_default_master": "PJSK sunkumo lygis. Numatytasis – Master.",
+        "pjsk_private": "Slėpti PJSK ID ir vardą.",
+        "pjsk_user_id": "PJSK naudotojo ID (draugo kodas).",
+        "discord_user": "Discord vartotojas, kurį norite peržiūrėti.",
+        "event_wl_character": "Naudoti skyriui būdingą veikėjų reitingą (World Link).",
+        "rank": "Kokį rangą/lygį peržiūrėti.",
+        "page": "Kurią puslapį peržiūrėti."
+    },
+    "errors": {
+        "cannot_click": "Negalite spustelėti šio mygtuko!",
+        "cannot_select": "Negalite naudoti šio meniu!",
+        "invalid_input": "Neteisinga įvestis. Patikrinkite parametrus.",
+        "unsupported_difficulty": "Nepalaikomas sunkumo lygis: `{difficulty}`.",
+        "unsupported_region": "Nepalaikomas regionas: `{region}`.",
+        "unknown_song": "Nežinoma daina: `{song}`.",
+        "unknown_character": "Nežinomas veikėjas: `{character}`.",
+        "unknown_event": "Nežinomas įvykis: `{event}`.",
+        "unknown_card": "Nežinoma kortelė: `{card}`."
+    },
+    "labels": {
+        "cancel": "Atšaukti",
+        "end_guess": "Baigti spėjimą"
+    }
+}

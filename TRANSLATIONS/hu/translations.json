@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "A PJSK dal neve.",
+        "region": "Használandó PJSK régió. Alapértelmezés a beállított régiód (EN vagy a beállításokban megadott).",
+        "difficulty": "PJSK nehézség.",
+        "difficulty_default_master": "PJSK nehézség. Alapértelmezés: Master.",
+        "pjsk_private": "PJSK-azonosító és név elrejtése.",
+        "pjsk_user_id": "PJSK felhasználói azonosító (barátkód).",
+        "discord_user": "Megtekintendő Discord-felhasználó.",
+        "event_wl_character": "Fejezet-specifikus karakterlista (World Link) használata.",
+        "rank": "Melyik rang/szint megtekintése.",
+        "page": "Melyik oldalt tekinted meg."
+    },
+    "errors": {
+        "cannot_click": "Nem tudod ezt a gombot megnyomni!",
+        "cannot_select": "Nem használhatod ezt a menüt!",
+        "invalid_input": "Érvénytelen bemenet. Ellenőrizd a paramétereket.",
+        "unsupported_difficulty": "Nem támogatott nehézség: `{difficulty}`.",
+        "unsupported_region": "Nem támogatott régió: `{region}`.",
+        "unknown_song": "Ismeretlen dal: `{song}`.",
+        "unknown_character": "Ismeretlen karakter: `{character}`.",
+        "unknown_event": "Ismeretlen esemény: `{event}`.",
+        "unknown_card": "Ismeretlen kártya: `{card}`."
+    },
+    "labels": {
+        "cancel": "Mégse",
+        "end_guess": "Tipp vége"
+    }
+}

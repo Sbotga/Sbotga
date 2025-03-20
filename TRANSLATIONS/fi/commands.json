@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "saavutukset",
+        "desc": "Näytä käyttäjän saavutukset.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30-luettelo",
+        "desc": "Näytä parhaat 30 PJSK-nuottiraitaa!",
+        "describes": {
+            "filter": "Käytettävä b30-kappaleiden tilasuodatin.",
+            "count": "Kappaleiden määrä parhaissa listoissa korvaa 30. Arvo välillä 1–50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "laske",
+        "desc": "Laske valitun radan pistemäärä. Vain 39s!",
+        "describes": {
+            "score": "Pisteesi muodossa P/G/G/B/M (tukee vain great-muotoa ja G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "kortti",
+                "desc": "Näytä kortin tiedot!",
+                "describes": {
+                    "card": "Kortti, jonka haluat katsoa."
+                }
+            },
+            "info": {
+                "name": "tiedot",
+                "desc": "Näytä hahmon tiedot.",
+                "describes": {
+                    "character": "Hahmo, josta haluat tietoa."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "sarjakuvat",
+        "desc": "Näytä pelin sarjakuvia, jotka näkyvät latausruuduissa.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "lahjoita",
+        "desc": "Näytä lahjoitustiedot.",
+        "describes": {}
+    },
+    "events": {
+        "name": "tapahtumat",
+        "desc": "Sbotga-tapahtumiin liittyvät komennot.",
+        "cmds": {
+            "border": {
+                "name": "raja",
+                "desc": "Näyttää tämänhetkiset tapahtuman raja <b>(</b>korostus) rankingit.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "pistetilasto",
+                "desc": "Näytä nykyinen tapahtuman leaderboard.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "ennusta",
+                "desc": "Ennusta nykyisen tapahtuman pistemääriä. (lähde: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "aikataulu",
+                "desc": "Näyttää nykyisen ja tulevan tapahtuma-aikataulun.",
+                "describes": {}
+            },
+            "view": {
+                "name": "näytä",
+                "desc": "Näytä tietoja tietystä sijoituksesta.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "arvonta",
+        "desc": "Simuloi PJSK gacha 10 -veto.",
+        "describes": {
+            "reverse_odds": "Vaihda 2*- ja 4*-korttien todennäköisyydet."
+        }
+    },
+    "guess": {
+        "name": "arvaa",
+        "desc": "Hauskoja arvauspelejä... raivoa!!",
+        "cmds": {
+            "stats": {
+                "name": "tilastot",
+                "desc": "Näytä arvauksen tilastosi.",
+                "describes": {
+                    "guess_type": "Arvaustyyppi, jolle tilastoja haetaan.",
+                    "user": "Discord-käyttäjä, jonka tilastot näytetään.",
+                    "lb_rank": "Käyttäjän sijoitus, jonka tilastot näytetään."
+                }
+            },
+            "leaderboard": {
+                "name": "pistetilasto",
+                "desc": "Näytä arvauksen leaderboard.",
+                "describes": {
+                    "guess_type": "Arvaustyyppi, jolle leaderboard haetaan."
+                }
+            },
+            "hint": {
+                "name": "vihje",
+                "desc": "Huijaa hieman arvauksessasi."
+            },
+            "toggle": {
+                "name": "vaihda",
+                "desc": "Laita arvaus päälle/pois palvelimellasi.",
+                "describes": {
+                    "on": "Onko arvaus päällä vai pois päältä."
+                }
+            },
+            "character": {
+                "name": "hahmo",
+                "desc": "Arvaa PJSK-hahmo katkaistusta kortista."
+            },
+            "character_bw": {
+                "name": "hahmo_mv",
+                "desc": "Arvaa PJSK-hahmo harmaasävyisestä kortista."
+            },
+            "chart": {
+                "name": "kaavio",
+                "desc": "Arvaa PJSK-kappale katkaistusta Master-radasta."
+            },
+            "chart_append": {
+                "name": "kaavio_lisäys",
+                "desc": "Arvaa PJSK-radan append-versio katkaistusta radasta."
+            },
+            "event": {
+                "name": "tapahtuma",
+                "desc": "Arvaa PJSK-tapahtuma katkaistusta tapahtumataustasta."
+            },
+            "jacket": {
+                "name": "kansi",
+                "desc": "Arvaa PJSK-kappale katkaistusta kannesta."
+            },
+            "jacket_smol": {
+                "name": "kansi_pieni",
+                "desc": "Arvaa PJSK-kappale 30px:n katkaistusta kannesta."
+            },
+            "jacket_bw": {
+                "name": "kansi_mv",
+                "desc": "Arvaa PJSK-kappale harmaasävyisestä kannesta."
+            },
+            "jacket_challenge": {
+                "name": "kansi_haaste",
+                "desc": "Arvaa PJSK-kappale harmaasävyisestä 30px:n kannesta."
+            },
+            "notes": {
+                "name": "nuotit",
+                "desc": "Arvaa PJSK-kappale sen Master-nuottimäärän perusteella."
+            }
+        }
+    },
+    "help": {
+        "name": "apua",
+        "desc": "Bottitietoja, mukaan lukien kutsu, TOS, tietosuojakäytäntö ja komennot.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "pingaus",
+        "desc": "Pong! Näytä viive.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "PJSK",
+        "desc": "PJSK-aiheiset tietokomennot.",
+        "cmds": {
+            "profile": {
+                "name": "profiili",
+                "desc": "Näytä PJSK-käyttäjän profiili."
+            },
+            "why_inappropriate": {
+                "name": "miksi_epäsopiva",
+                "desc": "Tarkista, miksi jokin teksti on epäsopivaa PJSK:n mukaan.",
+                "describes": {
+                    "text": "Tarkistettava teksti, enintään 255 merkkiä."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profiili",
+        "desc": "Näytä käyttäjän profiili.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "edistys",
+        "desc": "Näytä PJSK-edistyksesi! Näyttää AP-, FC- ja Clear-määrät kaikilla vaikeustasoilla.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "rankattu",
+        "desc": "Sbotga-ranked (rankma) -komennot.",
+        "cmds": {
+            "leaderboard": {
+                "name": "pistetilasto",
+                "desc": "Näytä nykyinen ranked-leaderboard.",
+                "describes": {}
+            },
+            "view": {
+                "name": "näytä",
+                "desc": "Näytä tiedot tietystä pelaajasta tällä sijoituksella.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_tarve",
+        "desc": "Hanki XP: tietylle tasolle.",
+        "describes": {
+            "level": "Taso, jolle lasketaan XP."
+        }
+    }
+}

@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "osiągnięcia",
+        "desc": "Zobacz osiągnięcia użytkownika.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "b30_kod",
+        "desc": "Zobacz swoje najlepsze 30 chartów PJSK!",
+        "describes": {
+            "filter": "Filtr statusu b30 do użycia.",
+            "count": "Liczba piosenek do pokazania w najlepszych chartach zamiast 30. Wartość 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "oblicz",
+        "desc": "Oblicz wynik dla wybranego charta. Tylko 39s!",
+        "describes": {
+            "score": "Twój wynik w formacie P/G/G/B/M (obsługuje tylko great i G/G/B/M)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "karta",
+                "desc": "Zobacz informacje o karcie!",
+                "describes": {
+                    "card": "Karta, którą chcesz zobaczyć."
+                }
+            },
+            "info": {
+                "name": "informacje",
+                "desc": "Zobacz informacje o postaci.",
+                "describes": {
+                    "character": "Postać, o której chcesz informacje."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "komiksy",
+        "desc": "Zobacz komiksy z ekranu ładowania gry.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "donacja",
+        "desc": "Zobacz informacje o dotacjach.",
+        "describes": {}
+    },
+    "events": {
+        "name": "wydarzenia",
+        "desc": "Polecenia wydarzeń Sbotga.",
+        "cmds": {
+            "border": {
+                "name": "granica",
+                "desc": "Wyświetla aktualne rankingi granicy wydarzenia <b>(</b>wyróżnione<b>)</b>.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "tabela",
+                "desc": "Zobacz obecną tabelę wydarzenia.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "przewidź",
+                "desc": "Przewidź progi dla bieżącego wydarzenia. (źródło: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "harmonogram",
+                "desc": "Wyświetla obecny i przyszły harmonogram wydarzenia.",
+                "describes": {}
+            },
+            "view": {
+                "name": "pokaż",
+                "desc": "Pokaż szczegóły konkretnej rangi.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "losowanie",
+        "desc": "Symuluj 10-pull gacha w PJSK.",
+        "describes": {
+            "reverse_odds": "Zamień szanse kart 2* i 4*."
+        }
+    },
+    "guess": {
+        "name": "zgadnij",
+        "desc": "Zabawne gry w zgadywanie... szał!!",
+        "cmds": {
+            "stats": {
+                "name": "staty",
+                "desc": "Zobacz swoje statystyki zgadywania.",
+                "describes": {
+                    "guess_type": "Typ zgadywanki, dla którego pobrać statystyki.",
+                    "user": "Użytkownik Discorda, którego statystyki chcesz zobaczyć.",
+                    "lb_rank": "Ranga użytkownika, którego statystyki chcesz zobaczyć."
+                }
+            },
+            "leaderboard": {
+                "name": "tabela",
+                "desc": "Zobacz tabelę zgadywania.",
+                "describes": {
+                    "guess_type": "Typ zgadywanki, dla którego pobrać tabelę."
+                }
+            },
+            "hint": {
+                "name": "wskazówka",
+                "desc": "Trochę oszukaj w zgadywance."
+            },
+            "toggle": {
+                "name": "przełącz",
+                "desc": "Włącz/wyłącz zgadywanie na swoim serwerze.",
+                "describes": {
+                    "on": "Czy zgadywanie jest włączone czy wyłączone."
+                }
+            },
+            "character": {
+                "name": "postać",
+                "desc": "Zgadnij postać PJSK z wyciętej karty."
+            },
+            "character_bw": {
+                "name": "postać_bw",
+                "desc": "Zgadnij postać PJSK z wyciętej karty w skali szarości."
+            },
+            "chart": {
+                "name": "wykres",
+                "desc": "Zgadnij utwór PJSK z wyciętego chartu Master."
+            },
+            "chart_append": {
+                "name": "wykres_dodaj",
+                "desc": "Zgadnij chart PJSK z wyciętego chartu Append."
+            },
+            "event": {
+                "name": "wydarzenie",
+                "desc": "Zgadnij wydarzenie PJSK z wyciętego tła wydarzenia."
+            },
+            "jacket": {
+                "name": "okładka",
+                "desc": "Zgadnij utwór PJSK z wyciętej okładki."
+            },
+            "jacket_smol": {
+                "name": "okładka_smol",
+                "desc": "Zgadnij utwór PJSK z 30px wyciętej okładki."
+            },
+            "jacket_bw": {
+                "name": "okładka_bw",
+                "desc": "Zgadnij utwór PJSK z wyciętej okładki w skali szarości."
+            },
+            "jacket_challenge": {
+                "name": "okładka_wyzwanie",
+                "desc": "Zgadnij utwór PJSK z 30px wyciętej okładki w skali szarości."
+            },
+            "notes": {
+                "name": "nuty",
+                "desc": "Zgadnij utwór PJSK z liczby nut w trybie Master."
+            }
+        }
+    },
+    "help": {
+        "name": "pomoc",
+        "desc": "Informacje o bocie, w tym zaproszenie, TOS, polityka prywatności i polecenia.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "sygnał",
+        "desc": "Pong! Zobacz opóźnienie.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "Polecenia związane z informacjami PJSK.",
+        "cmds": {
+            "profile": {
+                "name": "profil",
+                "desc": "Zobacz profil użytkownika PJSK."
+            },
+            "why_inappropriate": {
+                "name": "dlaczego_niewłaściwe",
+                "desc": "Sprawdź, dlaczego tekst jest niewłaściwy według PJSK.",
+                "describes": {
+                    "text": "Tekst do sprawdzenia, maks. długość 255 znaków."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "profil",
+        "desc": "Zobacz profil użytkownika.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "postęp",
+        "desc": "Zobacz swój postęp w PJSK! Wyświetla AP, FC i Cleary dla wszystkich poziomów piosenki.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "ranking",
+        "desc": "Polecenia rankingowe Sbotga (rankma).",
+        "cmds": {
+            "leaderboard": {
+                "name": "tabela",
+                "desc": "Zobacz obecną tabelę rankingową.",
+                "describes": {}
+            },
+            "view": {
+                "name": "pokaż",
+                "desc": "Pokaż szczegóły konkretnego gracza na tej randze.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_dla",
+        "desc": "Pobierz wymaganą liczbę XP dla określonego poziomu.",
+        "describes": {
+            "level": "Poziom, dla którego obliczyć XP."
+        }
+    }
+}

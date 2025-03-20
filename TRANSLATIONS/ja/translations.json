@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSKの楽曲名。",
+        "region": "使用するPJSKのリージョン。デフォルトはあなたのデフォルトリージョン(EN、または設定で指定したもの)です。",
+        "difficulty": "PJSKの難易度。",
+        "difficulty_default_master": "PJSKの難易度。デフォルトはMasterです。",
+        "pjsk_private": "PJSKのIDと名前を非表示にします。",
+        "pjsk_user_id": "PJSKユーザーID(フレンドコード)。",
+        "discord_user": "表示するDiscordユーザー。",
+        "event_wl_character": "特定の章に応じたキャラクターのリーダーボード(ワールドリンク)を使用します。",
+        "rank": "表示するランク/ティアを指定します。",
+        "page": "表示するページ。"
+    },
+    "errors": {
+        "cannot_click": "このボタンはクリックできません！",
+        "cannot_select": "このメニューは使用できません！",
+        "invalid_input": "無効な入力です。パラメーターを確認してください。",
+        "unsupported_difficulty": "サポートされていない難易度です: `{difficulty}`。",
+        "unsupported_region": "サポートされていないリージョンです: `{region}`。",
+        "unknown_song": "不明な楽曲です: `{song}`。",
+        "unknown_character": "不明なキャラクターです: `{character}`。",
+        "unknown_event": "不明なイベントです: `{event}`。",
+        "unknown_card": "不明なカードです: `{card}`。"
+    },
+    "labels": {
+        "cancel": "キャンセル",
+        "end_guess": "推測を終了"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK şarkı adı.",
+        "region": "Kullanılacak PJSK bölgesi. Varsayılan bölgeniz (EN veya ayarlarda belirttiğiniz) kullanılır.",
+        "difficulty": "PJSK zorluk derecesi.",
+        "difficulty_default_master": "PJSK zorluk derecesi. Varsayılan Master.",
+        "pjsk_private": "PJSK kimliği ve adını gizle.",
+        "pjsk_user_id": "PJSK kullanıcı kimliği (arkadaş kodu).",
+        "discord_user": "Görüntülemek istediğiniz Discord kullanıcısı.",
+        "event_wl_character": "Bölüm odaklı karakter lider tablosunu kullan (World Link).",
+        "rank": "Görüntülenecek rütbe/seviye.",
+        "page": "Hangi sayfa görüntülenecek."
+    },
+    "errors": {
+        "cannot_click": "Bu düğmeye tıklayamazsınız!",
+        "cannot_select": "Bu menüyü kullanamazsınız!",
+        "invalid_input": "Geçersiz girdi. Lütfen parametrelerinizi kontrol edin.",
+        "unsupported_difficulty": "Desteklenmeyen zorluk: `{difficulty}`.",
+        "unsupported_region": "Desteklenmeyen bölge: `{region}`.",
+        "unknown_song": "Bilinmeyen şarkı: `{song}`.",
+        "unknown_character": "Bilinmeyen karakter: `{character}`.",
+        "unknown_event": "Bilinmeyen etkinlik: `{event}`.",
+        "unknown_card": "Bilinmeyen kart: `{card}`."
+    },
+    "labels": {
+        "cancel": "İptal",
+        "end_guess": "Tahmini Bitir"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Το όνομα του τραγουδιού PJSK.",
+        "region": "Περιοχή PJSK. Από προεπιλογή, η προκαθορισμένη (EN ή αυτή στις ρυθμίσεις).",
+        "difficulty": "Δυσκολία PJSK.",
+        "difficulty_default_master": "Δυσκολία PJSK. Από προεπιλογή: Master.",
+        "pjsk_private": "Απόκρυψη PJSK ID και ονόματος.",
+        "pjsk_user_id": "PJSK αναγνωριστικό χρήστη (κωδικός φίλου).",
+        "discord_user": "Χρήστης Discord για προβολή.",
+        "event_wl_character": "Χρησιμοποίησε πίνακα χαρακτήρων για το κεφάλαιο (World Link).",
+        "rank": "Ποια κατάταξη/βαθμίδα να προβληθεί.",
+        "page": "Ποια σελίδα να προβληθεί."
+    },
+    "errors": {
+        "cannot_click": "Δεν μπορείτε να κάνετε κλικ σε αυτό το κουμπί!",
+        "cannot_select": "Δεν μπορείτε να χρησιμοποιήσετε αυτό το μενού!",
+        "invalid_input": "Μη έγκυρη εισαγωγή. Ελέγξτε τις παραμέτρους σας.",
+        "unsupported_difficulty": "Μη υποστηριζόμενη δυσκολία: `{difficulty}`.",
+        "unsupported_region": "Μη υποστηριζόμενη περιοχή: `{region}`.",
+        "unknown_song": "Άγνωστο τραγούδι: `{song}`.",
+        "unknown_character": "Άγνωστος χαρακτήρας: `{character}`.",
+        "unknown_event": "Άγνωστο συμβάν: `{event}`.",
+        "unknown_card": "Άγνωστη κάρτα: `{card}`."
+    },
+    "labels": {
+        "cancel": "Ακύρωση",
+        "end_guess": "Τερματισμός εκτίμησης"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "Tên bài hát PJSK.",
+        "region": "Khu vực PJSK cần dùng. Mặc định là khu vực của bạn (EN hoặc đã đặt trong cài đặt).",
+        "difficulty": "Độ khó PJSK.",
+        "difficulty_default_master": "Độ khó PJSK. Mặc định là Master.",
+        "pjsk_private": "Ẩn ID và tên PJSK.",
+        "pjsk_user_id": "ID người dùng PJSK (mã kết bạn).",
+        "discord_user": "Người dùng Discord bạn muốn xem.",
+        "event_wl_character": "Dùng bảng xếp hạng nhân vật cho từng chương (World Link).",
+        "rank": "Xem hạng/tier nào.",
+        "page": "Xem trang nào."
+    },
+    "errors": {
+        "cannot_click": "Bạn không thể nhấn nút này!",
+        "cannot_select": "Bạn không thể sử dụng menu này!",
+        "invalid_input": "Đầu vào không hợp lệ. Vui lòng kiểm tra tham số.",
+        "unsupported_difficulty": "Độ khó không được hỗ trợ: `{difficulty}`.",
+        "unsupported_region": "Khu vực không được hỗ trợ: `{region}`.",
+        "unknown_song": "Bài hát không xác định: `{song}`.",
+        "unknown_character": "Nhân vật không xác định: `{character}`.",
+        "unknown_event": "Sự kiện không xác định: `{event}`.",
+        "unknown_card": "Thẻ không xác định: `{card}`."
+    },
+    "labels": {
+        "cancel": "Hủy",
+        "end_guess": "Kết thúc đoán"
+    }
+}

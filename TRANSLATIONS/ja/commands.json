@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "実績",
+        "desc": "ユーザーの実績を表示します。",
+        "describes": {}
+    },
+    "b30": {
+        "name": "ベスト30",
+        "desc": "あなたのベスト30のPJSK譜面を表示！",
+        "describes": {
+            "filter": "使用するb30の楽曲ステータスフィルター。",
+            "count": "ベスト譜面に表示する楽曲数(1-50)。30の代わりに設定可能。✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "スコア計算",
+        "desc": "選択した譜面のスコアを計算します。39s限定！",
+        "describes": {
+            "score": "あなたのスコアをP/G/G/B/M形式で入力(グレートのみ、またはG/G/B/Mにも対応)"
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "カード",
+                "desc": "カードの情報を表示！",
+                "describes": {
+                    "card": "表示したいカード。"
+                }
+            },
+            "info": {
+                "name": "情報",
+                "desc": "キャラクター情報を表示します。",
+                "describes": {
+                    "character": "情報を表示したいキャラクター。"
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "コミック",
+        "desc": "ロード画面で表示されるゲーム内コミックを表示。",
+        "describes": {}
+    },
+    "donate": {
+        "name": "寄付",
+        "desc": "寄付情報を表示します。",
+        "describes": {}
+    },
+    "events": {
+        "name": "イベント",
+        "desc": "Sbotgaのイベント関連コマンド。",
+        "cmds": {
+            "border": {
+                "name": "ボーダー",
+                "desc": "現在のイベントボーダー(ハイライト)ランキングを表示。",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "リーダーボード",
+                "desc": "現在のイベントリーダーボードを表示。",
+                "describes": {}
+            },
+            "predict": {
+                "name": "予測",
+                "desc": "現在のイベントのボーダーを予測。(情報提供: jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "スケジュール",
+                "desc": "現在および今後のイベントスケジュールを表示。",
+                "describes": {}
+            },
+            "view": {
+                "name": "表示",
+                "desc": "特定ランクの詳細を表示します。",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "ガチャ",
+        "desc": "PJSKのガチャ10連をシミュレート。",
+        "describes": {
+            "reverse_odds": "2*と4*カードの排出率を入れ替えます。"
+        }
+    },
+    "guess": {
+        "name": "推測",
+        "desc": "楽しい推測ゲーム…盛り上がろう！！",
+        "cmds": {
+            "stats": {
+                "name": "統計",
+                "desc": "推測の統計を表示します。",
+                "describes": {
+                    "guess_type": "統計を取得する推測の種類。",
+                    "user": "統計を表示するDiscordユーザー。",
+                    "lb_rank": "統計を表示するユーザーのランク。"
+                }
+            },
+            "leaderboard": {
+                "name": "リーダーボード",
+                "desc": "推測用リーダーボードを表示します。",
+                "describes": {
+                    "guess_type": "リーダーボードを取得する推測の種類。"
+                }
+            },
+            "hint": {
+                "name": "ヒント",
+                "desc": "推測を少しズルする。"
+            },
+            "toggle": {
+                "name": "トグル",
+                "desc": "サーバーで推測機能をオン/オフします。",
+                "describes": {
+                    "on": "推測機能をオンにするかオフにするか。"
+                }
+            },
+            "character": {
+                "name": "キャラクター",
+                "desc": "切り抜きカードからPJSKキャラクターを推測。"
+            },
+            "character_bw": {
+                "name": "キャラクター_bw",
+                "desc": "グレースケールの切り抜きカードからPJSKキャラクターを推測。"
+            },
+            "chart": {
+                "name": "譜面",
+                "desc": "切り抜いたマスター譜面からPJSK楽曲を推測。"
+            },
+            "chart_append": {
+                "name": "譜面_append",
+                "desc": "切り抜いた追加譜面からPJSK譜面を推測。"
+            },
+            "event": {
+                "name": "イベント",
+                "desc": "切り抜いたイベント背景からPJSKイベントを推測。"
+            },
+            "jacket": {
+                "name": "ジャケット",
+                "desc": "切り抜いたジャケットからPJSK楽曲を推測。"
+            },
+            "jacket_smol": {
+                "name": "ジャケット_smol",
+                "desc": "30pxに切り抜いたジャケットからPJSK楽曲を推測。"
+            },
+            "jacket_bw": {
+                "name": "ジャケット_bw",
+                "desc": "グレースケールの切り抜きジャケットからPJSK楽曲を推測。"
+            },
+            "jacket_challenge": {
+                "name": "ジャケット_challenge",
+                "desc": "グレースケールの30px切り抜きジャケットからPJSK楽曲を推測。"
+            },
+            "notes": {
+                "name": "ノーツ",
+                "desc": "マスターのノーツ数からPJSK楽曲を推測。"
+            }
+        }
+    },
+    "help": {
+        "name": "ヘルプ",
+        "desc": "Botの情報、招待、利用規約、プライバシーポリシー、コマンドなど。",
+        "describes": {}
+    },
+    "ping": {
+        "name": "ピン",
+        "desc": "ポン！レイテンシを表示。",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK関連の情報コマンド。",
+        "cmds": {
+            "profile": {
+                "name": "プロフィール",
+                "desc": "PJSKユーザーのプロフィールを表示。"
+            },
+            "why_inappropriate": {
+                "name": "naze_futekisetsu",
+                "desc": "PJSK上でテキストが不適切とされる理由を確認します。",
+                "describes": {
+                    "text": "確認するテキスト、最大255文字。"
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "プロフィール",
+        "desc": "ユーザーのプロフィールを表示。",
+        "describes": {}
+    },
+    "progress": {
+        "name": "進捗",
+        "desc": "あなたのPJSK進捗を表示！難易度ごとの全譜面でAP、FC、クリア状況を確認できます。",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "ランクマ",
+        "desc": "Sbotgaランクマ (rankma) 関連のコマンド。",
+        "cmds": {
+            "leaderboard": {
+                "name": "リーダーボード",
+                "desc": "現在のランクマリーダーボードを表示。",
+                "describes": {}
+            },
+            "view": {
+                "name": "表示",
+                "desc": "このランクで特定プレイヤーの詳細を表示します。",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "xp_taishou",
+        "desc": "特定レベルに必要なXPを取得します。",
+        "describes": {
+            "level": "XPを計算するレベル。"
+        }
+    }
+}

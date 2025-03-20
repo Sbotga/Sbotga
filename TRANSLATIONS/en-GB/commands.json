@@ -1,0 +1,221 @@
+{
+    "achievements": {
+        "name": "Achievements",
+        "desc": "Check a user's achievements.",
+        "describes": {}
+    },
+    "b30": {
+        "name": "B30",
+        "desc": "Check your best 30 PJSK charts!",
+        "describes": {
+            "filter": "The B30 track status filter to use.",
+            "count": "Number of songs to display in your best charts, instead of 30. Value between 1-50. ✨PREMIUM"
+        }
+    },
+    "calculate": {
+        "name": "Calculate",
+        "desc": "Compute score for chosen chart. 39s exclusive!",
+        "describes": {
+            "score": "Your total in P/G/G/B/M format (supports greats only and G/G/B/M as well)."
+        }
+    },
+    "char": {
+        "cmds": {
+            "card": {
+                "name": "Card",
+                "desc": "Check a card's info!",
+                "describes": {
+                    "card": "Which card to check."
+                }
+            },
+            "info": {
+                "name": "Info",
+                "desc": "Check character information.",
+                "describes": {
+                    "character": "Which character to check."
+                }
+            }
+        }
+    },
+    "comics": {
+        "name": "Comics",
+        "desc": "Check in-game comics, as seen in loading screens.",
+        "describes": {}
+    },
+    "donate": {
+        "name": "Donate",
+        "desc": "Check donation info.",
+        "describes": {}
+    },
+    "events": {
+        "name": "Events",
+        "desc": "Sbotga event commands.",
+        "cmds": {
+            "border": {
+                "name": "Border",
+                "desc": "Shows the current event border (highlight) rankings.",
+                "describes": {}
+            },
+            "leaderboard": {
+                "name": "Leaderboard",
+                "desc": "Check the current event leaderboard.",
+                "describes": {}
+            },
+            "predict": {
+                "name": "Predict",
+                "desc": "Predict cut-offs for the current event. (sourced from jiiku831)",
+                "describes": {}
+            },
+            "schedule": {
+                "name": "Schedule",
+                "desc": "Shows the current and future event schedule.",
+                "describes": {}
+            },
+            "view": {
+                "name": "View",
+                "desc": "Check details for a specific rank.",
+                "describes": {}
+            }
+        }
+    },
+    "gacha": {
+        "name": "Gacha",
+        "desc": "Simulate a PJSK gacha 10-pull.",
+        "describes": {
+            "reverse_odds": "Invert the odds for 2* and 4* cards."
+        }
+    },
+    "guess": {
+        "name": "Guess",
+        "desc": "Fun guessing games... rage on!!",
+        "cmds": {
+            "stats": {
+                "name": "Stats",
+                "desc": "Check your guessing stats.",
+                "describes": {
+                    "guess_type": "Which guess type to fetch stats for.",
+                    "user": "Which Discord user to check stats.",
+                    "lb_rank": "Which rank to check stats for."
+                }
+            },
+            "leaderboard": {
+                "name": "Leaderboard",
+                "desc": "Check the leaderboard for guessing.",
+                "describes": {
+                    "guess_type": "Which guess type to fetch a leaderboard for."
+                }
+            },
+            "hint": {
+                "name": "Hint",
+                "desc": "Cheat a bit on your guess."
+            },
+            "toggle": {
+                "name": "Toggle",
+                "desc": "Switch guessing on/off in your server.",
+                "describes": {
+                    "on": "States if guessing is on or off."
+                }
+            },
+            "character": {
+                "name": "Character",
+                "desc": "Guess a PJSK character from a cropped card."
+            },
+            "character_bw": {
+                "name": "Character BW",
+                "desc": "Guess a PJSK character from a greyscale cut card."
+            },
+            "chart": {
+                "name": "Chart",
+                "desc": "Guess a PJSK track from a cropped master chart."
+            },
+            "chart_append": {
+                "name": "Chart Append",
+                "desc": "Guess a PJSK chart from a cropped append chart."
+            },
+            "event": {
+                "name": "Event",
+                "desc": "Guess a PJSK event from a cropped event background."
+            },
+            "jacket": {
+                "name": "Jacket",
+                "desc": "Guess a PJSK track from a cropped jacket."
+            },
+            "jacket_smol": {
+                "name": "Jacket Smol",
+                "desc": "Guess a PJSK track from a 30px cropped jacket."
+            },
+            "jacket_bw": {
+                "name": "Jacket BW",
+                "desc": "Guess a PJSK song from a greyscale cut jacket."
+            },
+            "jacket_challenge": {
+                "name": "Jacket Challenge",
+                "desc": "Guess a PJSK song from a greyscale 30px cut jacket."
+            },
+            "notes": {
+                "name": "Notes",
+                "desc": "Guess a PJSK track by its note count on Master."
+            }
+        }
+    },
+    "help": {
+        "name": "Help",
+        "desc": "Bot info, including invite, TOS, privacy policy, and commands.",
+        "describes": {}
+    },
+    "ping": {
+        "name": "Ping",
+        "desc": "Pong! Check latency.",
+        "describes": {}
+    },
+    "pjsk": {
+        "name": "pjsk",
+        "desc": "PJSK info commands.",
+        "cmds": {
+            "profile": {
+                "name": "Profile",
+                "desc": "Check a PJSK user’s profile."
+            },
+            "why_inappropriate": {
+                "name": "Why Inappropriate",
+                "desc": "Check why some text is inappropriate for PJSK.",
+                "describes": {
+                    "text": "Text to check, up to 255 characters."
+                }
+            }
+        }
+    },
+    "profile": {
+        "name": "Profile",
+        "desc": "Check a user's profile.",
+        "describes": {}
+    },
+    "progress": {
+        "name": "Progress",
+        "desc": "Check your PJSK progress! Shows APs, FCs, and Clears for ALL song levels in a difficulty.",
+        "describes": {}
+    },
+    "ranked": {
+        "name": "Ranked",
+        "desc": "Sbotga ranked (rankma) commands.",
+        "cmds": {
+            "leaderboard": {
+                "name": "Leaderboard",
+                "desc": "Check the current ranked leaderboard.",
+                "describes": {}
+            },
+            "view": {
+                "name": "View",
+                "desc": "Check details for a specific player at this rank.",
+                "describes": {}
+            }
+        }
+    },
+    "xp_for": {
+        "name": "XP For",
+        "desc": "Get XP needed for a certain level.",
+        "describes": {
+            "level": "Which level to compute XP for."
+        }
+    }
+}

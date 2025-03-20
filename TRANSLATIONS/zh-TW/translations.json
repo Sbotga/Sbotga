@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK 歌曲名稱。",
+        "region": "要使用的 PJSK 地區。預設為您的預設地區（EN，或您在設定中指定的地區）。",
+        "difficulty": "PJSK 難度。",
+        "difficulty_default_master": "PJSK 難度。預設為 Master。",
+        "pjsk_private": "隱藏 PJSK ID 和名稱。",
+        "pjsk_user_id": "PJSK 使用者ID（好友代碼）。",
+        "discord_user": "要查看的 Discord 使用者。",
+        "event_wl_character": "使用針對章節的角色排行榜（World Link）。",
+        "rank": "要查看的排名/階級。",
+        "page": "要查看的頁面。"
+    },
+    "errors": {
+        "cannot_click": "您無法點擊此按鈕！",
+        "cannot_select": "您無法使用此選單！",
+        "invalid_input": "無效的輸入。請檢查您的參數。",
+        "unsupported_difficulty": "不支援的難度：`{difficulty}`。",
+        "unsupported_region": "不支援的地區：`{region}`。",
+        "unknown_song": "未知的歌曲：`{song}`。",
+        "unknown_character": "未知的角色：`{character}`。",
+        "unknown_event": "未知的活動：`{event}`。",
+        "unknown_card": "未知的卡片：`{card}`。"
+    },
+    "labels": {
+        "cancel": "取消",
+        "end_guess": "結束猜測"
+    }
+}

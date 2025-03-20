@@ -1,0 +1,29 @@
+{
+    "general": {
+        "song_name": "PJSK गाने का नाम।",
+        "region": "उपयोग करने के लिए PJSK क्षेत्र। डिफ़ॉल्ट रूप से आपका डिफ़ॉल्ट क्षेत्र (EN या जो आपने सेटिंग्स में सेट किया हो) होता है।",
+        "difficulty": "PJSK कठिनाई।",
+        "difficulty_default_master": "PJSK कठिनाई। डिफ़ॉल्ट रूप से Master होता है।",
+        "pjsk_private": "PJSK आईडी और नाम छिपाएं।",
+        "pjsk_user_id": "PJSK यूज़र आईडी (फ्रेंड कोड)।",
+        "discord_user": "वह Discord उपयोगकर्ता जिसे आप देखना चाहते हैं।",
+        "event_wl_character": "एक अध्याय-विशेष चरित्र लीडरबोर्ड (World Link) का उपयोग करें।",
+        "rank": "कौन-सा रैंक/टियर देखना है।",
+        "page": "कौन-सा पेज देखना है।"
+    },
+    "errors": {
+        "cannot_click": "आप इस बटन पर क्लिक नहीं कर सकते!",
+        "cannot_select": "आप इस मेनू का उपयोग नहीं कर सकते!",
+        "invalid_input": "अमान्य इनपुट। कृपया अपने पैरामीटर जांचें।",
+        "unsupported_difficulty": "असमर्थित कठिनाई: `{difficulty}`।",
+        "unsupported_region": "असमर्थित क्षेत्र: `{region}`।",
+        "unknown_song": "अज्ञात गाना: `{song}`।",
+        "unknown_character": "अज्ञात चरित्र: `{character}`।",
+        "unknown_event": "अज्ञात इवेंट: `{event}`।",
+        "unknown_card": "अज्ञात कार्ड: `{card}`।"
+    },
+    "labels": {
+        "cancel": "रद्द करें",
+        "end_guess": "अनुमान समाप्त करें"
+    }
+}
