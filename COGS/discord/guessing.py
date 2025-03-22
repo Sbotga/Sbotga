@@ -26,6 +26,7 @@ from DATA.helpers import discord_autocompletes as autocompletes
 from DATA.helpers import embeds
 from DATA.helpers.unblock import to_process_with_timeout
 from DATA.helpers import tools
+from DATA.helpers import pjsk_chart
 
 from DATA.game_api import methods
 
@@ -268,7 +269,7 @@ class GuessCog(commands.Cog):
             cards[rannum]["cardRarityType"],
         )
 
-    async def random_crop_chart(self, png_path: str) -> BytesIO:
+    async def random_crop_chart(self, png_path: str | BytesIO) -> BytesIO:
         def _make():
             img = Image.open(png_path)
 
@@ -1634,6 +1635,9 @@ class GuessCog(commands.Cog):
         self.bot.existing_guess_ids.append(new_id)
         new_guess["id"] = new_id
         self.bot.guess_channels[interaction.channel.id] = new_guess
+        user_settings = await interaction.client.user_data.discord.get_settings(
+            interaction.user.id
+        )
 
         async def random_chart(diff: str = "master") -> Tuple[Song, str, str]:
             for _ in range(10):  # maximum 10 retries
@@ -1858,6 +1862,8 @@ class GuessCog(commands.Cog):
                     new_guess["data"]["success_modifier"] = 2
 
                     song, png, region = await random_chart()
+                    if user_settings["mirror_charts_by_default"]:
+                        png = await to_process_with_timeout(pjsk_chart.mirror, png)
 
                     new_guess["answer_file_path"] = png
                     new_guess["answer"] = song.id
@@ -1874,13 +1880,22 @@ class GuessCog(commands.Cog):
                     file = discord.File(edited_image, "image.png")
                     embed.set_image(url="attachment://image.png")
 
-                    embed.description = f"Guess song name based on cropped master chart.\nUse {('**'+self.bot.user.mention+'` ') if ((not self.bot.intents.message_content) and self.use_prefix) else ('**`' + self.guess_prefix)}your guess`** to guess. You have 60 seconds."
+                    embed.description = (
+                        f"Guess song name based on cropped master chart.\nUse {('**'+self.bot.user.mention+'` ') if ((not self.bot.intents.message_content) and self.use_prefix) else ('**`' + self.guess_prefix)}your guess`** to guess. You have 60 seconds."
+                        + (
+                            "\n\n**Chart is mirrored! (user settings)**"
+                            if user_settings["mirror_charts_by_default"]
+                            else ""
+                        )
+                    )
                     # debugging, comment this for prod
                     # embed.description += f"\ndebug - answer `{song.title}` (`{song.id}`)"
                 case "chart_append":
                     new_guess["guessType"] = "song"
 
                     song, png, region = await random_chart("append")
+                    if user_settings["mirror_charts_by_default"]:
+                        png = await to_process_with_timeout(pjsk_chart.mirror, png)
 
                     new_guess["answer_file_path"] = png
                     new_guess["answer"] = song.id
@@ -1897,7 +1912,14 @@ class GuessCog(commands.Cog):
                     file = discord.File(edited_image, "image.png")
                     embed.set_image(url="attachment://image.png")
 
-                    embed.description = f"Guess song name based on cropped append chart.\nUse {('**'+self.bot.user.mention+'` ') if ((not self.bot.intents.message_content) and self.use_prefix) else ('**`' + self.guess_prefix)}your guess`** to guess. You have 20 seconds."
+                    embed.description = (
+                        f"Guess song name based on cropped append chart.\nUse {('**'+self.bot.user.mention+'` ') if ((not self.bot.intents.message_content) and self.use_prefix) else ('**`' + self.guess_prefix)}your guess`** to guess. You have 20 seconds."
+                        + (
+                            "\n\n**Chart is mirrored! (user settings)**"
+                            if user_settings["mirror_charts_by_default"]
+                            else ""
+                        )
+                    )
                     # debugging, comment this for prod
                     # embed.description += f"\ndebug - answer `{song.title}` (`{song.id}`)"
                 case "event":

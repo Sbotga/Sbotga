@@ -620,7 +620,11 @@ class UserCog(commands.Cog):
             key: value for key, value in settings.items() if key not in ignore_keys
         }
 
-        setting_names_map = {"default_region": "Default Region"}
+        setting_names_map = {
+            "default_region": "Default Region",
+            "default_difficulty": "Default Difficulty",
+            "mirror_charts_by_default": "Mirror Charts by Default",
+        }
         options_map = {
             "default_region": ["EN", "JP", "TW", "KR"],  # "CN"],
             "default_difficulty": [
@@ -631,7 +635,9 @@ class UserCog(commands.Cog):
                 "Easy",
             ],  # no append, not every chart has append.
         }
-        setting_descriptions = {}
+        setting_descriptions = {
+            "mirror_charts_by_default": "Applies to guessing as well!"
+        }
 
         class CustomSelect(discord.ui.Select):
             def __init__(self, options: list[str] | dict, placeholder: str):

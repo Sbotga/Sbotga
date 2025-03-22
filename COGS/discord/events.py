@@ -1057,13 +1057,6 @@ class EventsCog(commands.Cog):
         embed.set_footer(
             text=f"Event T{int(tier):,} Prediction - {region.upper()} - Current EP Last Updated {round(time.time()-self.last_updated[region])}s ago"
         )
-
-        if region != "jp":  # TODO: remove warning after 2025/04
-            embed.add_field(
-                name="⚠️WARNING",
-                value="Only JP predictions are completely accurate; this is due to EN/TW/KR not having any previous data.",
-                inline=False,
-            )
         await interaction.followup.send(embed=embed, file=file)
 
 
