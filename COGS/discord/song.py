@@ -21,6 +21,7 @@ from DATA.helpers.discord_emojis import emojis
 from DATA.helpers import views
 from DATA.helpers import embeds
 from DATA.helpers.unblock import to_process_with_timeout
+from DATA.helpers import pjsk_chart
 
 from DATA.data.pjsk import Song, pjsk as pjsk_data_obj
 
@@ -376,9 +377,14 @@ class SongInfo(commands.Cog):
     @app_commands.describe(
         song=locale_str("general.song_name"),
         difficulty=locale_str("general.difficulty_default_master"),
+        mirror="Whether to show a mirrored PJSK chart.",
     )
     async def song_chart(
-        self, interaction: discord.Interaction, song: str, difficulty: str = "master"
+        self,
+        interaction: discord.Interaction,
+        song: str,
+        difficulty: str = "master",
+        mirror: bool = False,
     ):
         await interaction.response.defer(ephemeral=False, thinking=True)
         osong = song
@@ -417,16 +423,20 @@ class SongInfo(commands.Cog):
         try:
             region = region[0]
             chart = await methods.Tools.get_chart(difficulty, song.id, region)
+            if mirror:
+                chart = await to_process_with_timeout(pjsk_chart.mirror, chart)
             file = discord.File(chart, "image.png")
             embed.set_image(url="attachment://image.png")
             embed.description = f"**Difficulty:** {emojis.difficulty_colors[difficulty]} {difficulty.title()}"
+            if mirror:
+                embed.description += f"\n\n**MIRRORED CHART**"
             view = views.ReportBrokenChartButton(region, song.id, difficulty)
             view2 = views.SbotgaView(timeout=None)
             view2.add_item(
                 discord.ui.Button(
                     label="File",
                     style=discord.ButtonStyle.url,
-                    url=f"https://sbotga.sbuga.com/cdn/charts/?id={song.id}&difficulty={difficulty}",
+                    url=f"https://sbotga.sbuga.com/cdn/charts/?id={song.id}&difficulty={difficulty}&mirror={int(mirror)}",
                 )
             )
             view = views.merge_views(view, view2)

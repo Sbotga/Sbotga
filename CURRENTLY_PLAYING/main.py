@@ -106,7 +106,6 @@ class CurrentlyPlayingApp:
         style.configure("TCombobox", padding=6, relief="flat")
         style.configure("TLabel", padding=5)
 
-
         # Buttons for monitoring control
         self.button_frame = tk.Frame(self.root)
         self.button_frame.pack(pady=10)
@@ -151,7 +150,9 @@ class CurrentlyPlayingApp:
         proxy_port_frame.pack(pady=5)
 
         # Port entry field
-        self.proxy_port_entry = ttk.Entry(proxy_port_frame, textvariable=self.proxy_port, width=15)
+        self.proxy_port_entry = ttk.Entry(
+            proxy_port_frame, textvariable=self.proxy_port, width=15
+        )
         self.proxy_port_entry.pack(side="left", padx=5)
 
         # Change Ports button
@@ -186,7 +187,7 @@ class CurrentlyPlayingApp:
             self.toggle_button.config(text="Hide Source")
 
     async def generate_image(self, url: str = None, song_name: str = None):
-        BASE_URL = "https://pjsk.econuker.xyz/font/"
+        BASE_URL = "https://sbotga.sbuga.com/font/"
 
         async with aiohttp.ClientSession() as session:
             async with session.get(f"{BASE_URL}rodinntlg_eb") as response:
@@ -336,7 +337,14 @@ class CurrentlyPlayingApp:
     async def send_image_update_request(self, action: str, b64: str = None):
 
         if self.image_base64 == None:
-            self.image_base64 = await self.generate_image(url=, song_name=)
+            async with aiohttp.ClientSession() as cs:
+                async with cs.get(
+                    f"https://sbotga.sbuga.com/pjsk/song/{song_id}"
+                ) as resp:
+                    data = await resp.json()
+            self.image_base64 = await self.generate_image(
+                url=data["jacket_url"], song_name=data["name"]
+            )
 
         for websocket in self.websockets.values():
             try:
@@ -604,6 +612,7 @@ class CurrentlyPlayingApp:
     def start_proxy(self):
         if self.process:
             self.stop_proxy()
+
 
 # Main application
 if __name__ == "__main__":

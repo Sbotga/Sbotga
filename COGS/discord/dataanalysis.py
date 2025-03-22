@@ -1139,7 +1139,7 @@ class DataAnalysis(commands.Cog):
                     data[region] = acc_data
                 if not data:
                     embed = embeds.error_embed(
-                        "I don't have access to your **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
                     )
                     return await ctx.reply(embed=embed)
 
@@ -1209,7 +1209,7 @@ class DataAnalysis(commands.Cog):
                     data[region] = acc_data
                 if not data:
                     embed = embeds.error_embed(
-                        "I don't have access to your **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
                     )
                     return await ctx.reply(embed=embed)
 
@@ -1369,7 +1369,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_b30[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        description="I don't have access to your **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        description="I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
 
@@ -1523,7 +1523,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_progress[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        "I don't have access to your **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>",
+                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>",
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
 
