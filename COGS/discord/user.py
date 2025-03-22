@@ -621,7 +621,17 @@ class UserCog(commands.Cog):
         }
 
         setting_names_map = {"default_region": "Default Region"}
-        options_map = {"default_region": ["EN", "JP", "TW", "KR"]}  # , "CN"]
+        options_map = {
+            "default_region": ["EN", "JP", "TW", "KR"],  # "CN"],
+            "default_difficulty": [
+                "Master",
+                "Expert",
+                "Hard",
+                "Normal",
+                "Easy",
+            ],  # no append, not every chart has append.
+        }
+        setting_descriptions = {}
 
         class CustomSelect(discord.ui.Select):
             def __init__(self, options: list[str] | dict, placeholder: str):
@@ -725,7 +735,12 @@ class UserCog(commands.Cog):
         def generate_setting(key: str, value):
             embed = embeds.embed(
                 title=f"{setting_names_map[key]} Setting",
-                description=f"This setting is currently set to `{to_readable(value)}`.",
+                description=f"This setting is currently set to `{to_readable(value)}`."
+                + (
+                    f"\n\n{setting_descriptions[key]}"
+                    if key in setting_descriptions
+                    else ""
+                ),
                 color=discord.Color.dark_gold(),
             )
 
@@ -734,7 +749,7 @@ class UserCog(commands.Cog):
             settings_select.placeholder = setting_names_map[key]
             if type(value) == bool:
                 view.add_item(
-                    ToggleButton(self.bot, key, value, label=f"Set to {not value}")
+                    ToggleButton(self.bot, key, value, label=f"Change to {not value}")
                 )
             elif type(value) == str:
                 select = CustomSelect(options_map[key], to_readable(value))

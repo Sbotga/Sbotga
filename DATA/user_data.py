@@ -575,6 +575,8 @@ class USER_DATA:
             self.SETTING_DEFAULTS = {
                 "first_time_guess_end": True,
                 "default_region": "en",
+                "mirror_charts_by_default": False,
+                "default_difficulty": "master",
             }
 
         async def verify_discord_user(self, user_id: int):
