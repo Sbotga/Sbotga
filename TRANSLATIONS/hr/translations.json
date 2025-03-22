@@ -3,7 +3,7 @@
         "song_name": "Naziv PJSK pjesme.",
         "region": "PJSK regija. Zadano: vaša zadana regija (EN ili ona iz postavki).",
         "difficulty": "PJSK težina.",
-        "difficulty_default_master": "PJSK težina. Zadano: Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Sakrij PJSK ID i ime.",
         "pjsk_user_id": "PJSK korisnički ID (friend code).",
         "discord_user": "Discord korisnik kojeg želite pregledati.",

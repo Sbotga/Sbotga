@@ -1,29 +1,29 @@
 {
     "general": {
-        "song_name": "Назва пісні PJSK.",
-        "region": "Регіон PJSK для використання. За замовчуванням бере ваш регіон (EN або встановлений).",
-        "difficulty": "Складність PJSK.",
-        "difficulty_default_master": "Складність PJSK. За замовчуванням використовується Master.",
-        "pjsk_private": "Приховати PJSK ID та ім’я.",
-        "pjsk_user_id": "Ідентифікатор користувача PJSK (код друга).",
-        "discord_user": "Користувач Discord, якого бажаєте переглянути.",
-        "event_wl_character": "Використовувати таблицю лідерів для певного розділу персонажів (World Link).",
-        "rank": "Який ранг/рівень переглянути.",
-        "page": "Яку сторінку переглянути."
+        "song_name": "",
+        "region": "",
+        "difficulty": "",
+        "difficulty_default_master": "",
+        "pjsk_private": "",
+        "pjsk_user_id": "",
+        "discord_user": "",
+        "event_wl_character": "",
+        "rank": "",
+        "page": ""
     },
     "errors": {
-        "cannot_click": "Ви не можете натиснути цю кнопку!",
-        "cannot_select": "Ви не можете скористатися цим меню!",
-        "invalid_input": "Неправильні дані. Перевірте ваші параметри.",
-        "unsupported_difficulty": "Непідтримувана складність: `{difficulty}`.",
-        "unsupported_region": "Непідтримуваний регіон: `{region}`.",
-        "unknown_song": "Невідома пісня: `{song}`.",
-        "unknown_character": "Невідомий персонаж: `{character}`.",
-        "unknown_event": "Невідома подія: `{event}`.",
-        "unknown_card": "Невідома картка: `{card}`."
+        "cannot_click": "",
+        "cannot_select": "",
+        "invalid_input": "",
+        "unsupported_difficulty": "",
+        "unsupported_region": "",
+        "unknown_song": "",
+        "unknown_character": "",
+        "unknown_event": "",
+        "unknown_card": ""
     },
     "labels": {
-        "cancel": "Скасувати",
-        "end_guess": "Завершити здогад"
+        "cancel": "",
+        "end_guess": ""
     }
 }

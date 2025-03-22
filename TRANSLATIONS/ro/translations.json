@@ -3,7 +3,7 @@
         "song_name": "Numele cântecului PJSK.",
         "region": "Regiunea PJSK de utilizat. Implicit: regiunea prestabilită (EN sau setată în setări).",
         "difficulty": "Nivel PJSK.",
-        "difficulty_default_master": "Nivel PJSK. Implicit: Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Ascunde ID și numele PJSK.",
         "pjsk_user_id": "ID utilizator PJSK (cod prieten).",
         "discord_user": "Utilizator Discord de vizualizat.",

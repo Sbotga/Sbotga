@@ -3,7 +3,7 @@
         "song_name": "Navnet på PJSK-sangen.",
         "region": "Benytt PJSK-region. Standard er din standardregion <b>(</b>EN, eller den du satte i innstillinger).",
         "difficulty": "PJSK-vanskegrad.",
-        "difficulty_default_master": "PJSK-vanskegrad. Standard er Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Skjul PJSK-ID og -navn.",
         "pjsk_user_id": "PJSK-bruker-ID (vennekode).",
         "discord_user": "Discord-bruker du vil se.",

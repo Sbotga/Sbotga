@@ -3,7 +3,7 @@
         "song_name": "De PJSK-nummernaam.",
         "region": "PJSK-regio om te gebruiken. Standaard jouw standaardregio (EN of de ingestelde).",
         "difficulty": "PJSK-moeilijkheidsgraad.",
-        "difficulty_default_master": "PJSK-moeilijkheidsgraad. Standaard Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Verberg PJSK-ID en naam.",
         "pjsk_user_id": "PJSK-gebruikers-ID (vriendcode).",
         "discord_user": "Discord-gebruiker die je wilt bekijken.",

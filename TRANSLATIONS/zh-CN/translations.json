@@ -3,7 +3,7 @@
         "song_name": "PJSK歌曲名称。",
         "region": "要使用的PJSK区服。默认为您的默认区服（EN，或在设置中指定的区服）。",
         "difficulty": "PJSK难度。",
-        "difficulty_default_master": "PJSK难度。默认为Master。",
+        "difficulty_default_master": "",
         "pjsk_private": "隐藏PJSK的ID和名称。",
         "pjsk_user_id": "PJSK用户ID（好友码）。",
         "discord_user": "要查看的Discord用户。",

@@ -3,7 +3,7 @@
         "song_name": "PJSK-kappaleen nimi.",
         "region": "Käytettävä PJSK-alue. Oletuksena oma oletusalue (EN tai asettamasi).",
         "difficulty": "PJSK-vaikeustaso.",
-        "difficulty_default_master": "PJSK-vaikeustaso. Oletuksena Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Piilota PJSK-ID ja -nimi.",
         "pjsk_user_id": "PJSK-käyttäjän tunnus (kaverikoodi).",
         "discord_user": "Discord-käyttäjä, jonka haluat tarkastella.",

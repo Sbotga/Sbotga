@@ -3,7 +3,7 @@
         "song_name": "Název písně PJSK.",
         "region": "Který region PJSK se má použít. Výchozí je váš výchozí region (EN), nebo nastavený v nastaveních.",
         "difficulty": "Obtížnost PJSK.",
-        "difficulty_default_master": "Obtížnost PJSK. Výchozí je Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Skrýt ID a jméno PJSK.",
         "pjsk_user_id": "Uživatelské ID PJSK (kód přítele).",
         "discord_user": "Discord uživatel, kterého chcete zobrazit.",

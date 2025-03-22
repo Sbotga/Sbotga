@@ -3,7 +3,7 @@
         "song_name": "The PJSK song title.",
         "region": "PJSK region to use. Defaults to your standard region (EN, or the one set in your settings).",
         "difficulty": "PJSK difficulty level.",
-        "difficulty_default_master": "PJSK difficulty level. Defaults to Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Conceal PJSK ID and name.",
         "pjsk_user_id": "PJSK player ID (friend code).",
         "discord_user": "Discord user you'd like to view.",

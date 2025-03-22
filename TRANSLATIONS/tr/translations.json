@@ -3,7 +3,7 @@
         "song_name": "PJSK şarkı adı.",
         "region": "Kullanılacak PJSK bölgesi. Varsayılan bölgeniz (EN veya ayarlarda belirttiğiniz) kullanılır.",
         "difficulty": "PJSK zorluk derecesi.",
-        "difficulty_default_master": "PJSK zorluk derecesi. Varsayılan Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "PJSK kimliği ve adını gizle.",
         "pjsk_user_id": "PJSK kullanıcı kimliği (arkadaş kodu).",
         "discord_user": "Görüntülemek istediğiniz Discord kullanıcısı.",

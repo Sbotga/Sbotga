@@ -3,7 +3,7 @@
         "song_name": "PJSKの楽曲名。",
         "region": "使用するPJSKのリージョン。デフォルトはあなたのデフォルトリージョン(EN、または設定で指定したもの)です。",
         "difficulty": "PJSKの難易度。",
-        "difficulty_default_master": "PJSKの難易度。デフォルトはMasterです。",
+        "difficulty_default_master": "",
         "pjsk_private": "PJSKのIDと名前を非表示にします。",
         "pjsk_user_id": "PJSKユーザーID(フレンドコード)。",
         "discord_user": "表示するDiscordユーザー。",

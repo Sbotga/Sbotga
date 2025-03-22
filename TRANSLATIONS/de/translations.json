@@ -3,7 +3,7 @@
         "song_name": "Der PJSK-Songname.",
         "region": "Zu verwendende PJSK-Region (Standard: deine Region oder EN).",
         "difficulty": "PJSK-Schwierigkeitsgrad.",
-        "difficulty_default_master": "PJSK-Schwierigkeitsgrad. Standard: Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "PJSK-ID und -Namen ausblenden.",
         "pjsk_user_id": "PJSK-Benutzer-ID (Freundescode).",
         "discord_user": "Der Discord-Benutzer, den du anzeigen möchtest.",

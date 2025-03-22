@@ -3,7 +3,7 @@
         "song_name": "A PJSK dal neve.",
         "region": "Használandó PJSK régió. Alapértelmezés a beállított régiód (EN vagy a beállításokban megadott).",
         "difficulty": "PJSK nehézség.",
-        "difficulty_default_master": "PJSK nehézség. Alapértelmezés: Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "PJSK-azonosító és név elrejtése.",
         "pjsk_user_id": "PJSK felhasználói azonosító (barátkód).",
         "discord_user": "Megtekintendő Discord-felhasználó.",

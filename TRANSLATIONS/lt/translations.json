@@ -3,7 +3,7 @@
         "song_name": "PJSK dainos pavadinimas.",
         "region": "PJSK regionas. Numatytasis yra jūsų regionas (EN) arba tas, kurį nustatėte nuostatose.",
         "difficulty": "PJSK sunkumo lygis.",
-        "difficulty_default_master": "PJSK sunkumo lygis. Numatytasis – Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Slėpti PJSK ID ir vardą.",
         "pjsk_user_id": "PJSK naudotojo ID (draugo kodas).",
         "discord_user": "Discord vartotojas, kurį norite peržiūrėti.",

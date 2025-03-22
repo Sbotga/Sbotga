@@ -3,7 +3,7 @@
         "song_name": "Da PJSK song nyame.",
         "region": "PJSK wegion tu use. Defauwts tu yowr defauwt wegion (EN, ow da one you set in settings).",
         "difficulty": "PJSK diffywuwty.",
-        "difficulty_default_master": "PJSK diffywuwty. Defauwts tu Mastew.",
+        "difficulty_default_master": "",
         "pjsk_private": "Hide PJSK ID and nyame.",
         "pjsk_user_id": "PJSK usew ID (fwiend code).",
         "discord_user": "Discowd usew you want tu view.",

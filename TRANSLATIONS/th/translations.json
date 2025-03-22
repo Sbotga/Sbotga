@@ -3,7 +3,7 @@
         "song_name": "ชื่อเพลง PJSK.",
         "region": "เลือก PJSK region ถ้าไม่ระบุจะใช้ region เริ่มต้น (EN หรือค่าที่ตั้งใน settings).",
         "difficulty": "ระดับความยาก PJSK.",
-        "difficulty_default_master": "ระดับความยาก PJSK ถ้าไม่ระบุจะใช้ Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "ซ่อน PJSK ID และชื่อ.",
         "pjsk_user_id": "PJSK user ID (รหัสเพื่อน).",
         "discord_user": "ผู้ใช้ Discord ที่ต้องการดู.",

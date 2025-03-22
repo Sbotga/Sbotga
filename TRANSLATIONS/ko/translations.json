@@ -3,7 +3,7 @@
         "song_name": "PJSK 곡 이름입니다.",
         "region": "사용할 PJSK 지역입니다. 기본값은 기본 지역(EN 또는 설정)입니다.",
         "difficulty": "PJSK 난이도입니다.",
-        "difficulty_default_master": "PJSK 난이도입니다. 기본값은 Master입니다.",
+        "difficulty_default_master": "",
         "pjsk_private": "PJSK ID와 이름을 숨깁니다.",
         "pjsk_user_id": "PJSK 사용자 ID(친구 코드).",
         "discord_user": "조회할 Discord 사용자입니다.",

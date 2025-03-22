@@ -3,7 +3,7 @@
         "song_name": "Името на PJSK песента.",
         "region": "Регион на PJSK. По подразбиране: вашият основен регион (EN) или зададен в настройките.",
         "difficulty": "Трудност на PJSK.",
-        "difficulty_default_master": "Трудност на PJSK. По подразбиране: Master.",
+        "difficulty_default_master": "",
         "pjsk_private": "Скриване на PJSK ID и име.",
         "pjsk_user_id": "PJSK потребителско ID (код на приятел).",
         "discord_user": "Потребител в Discord, когото искате да видите.",
