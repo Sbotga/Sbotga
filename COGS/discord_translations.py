@@ -163,6 +163,8 @@ class Translations:
             value = self.translations[locale]
             for key in keys:
                 value = value[key]
+                if value == "":
+                    raise KeyError("Untranslated")
         except KeyError:
             try:
                 value = self.translations["en-US"]
