@@ -1422,7 +1422,7 @@ class DataAnalysis(commands.Cog):
     async def user_progress(
         self,
         interaction: discord.Interaction,
-        difficulty: str = "master",
+        difficulty: str = "default",
         region: str = "default",
         private: bool = False,
     ):
@@ -1439,6 +1439,14 @@ class DataAnalysis(commands.Cog):
                 ),
                 ephemeral=True,
             )
+        if (difficulty == "default") or (region == "default"):
+            settings = await self.bot.user_data.discord.get_settings(
+                interaction.user.id
+            )
+            if difficulty == "default":
+                difficulty = settings["default_difficulty"]
+            if region == "default":
+                region = settings["default_region"]
         odiff = difficulty
         difficulty = converters.DiffFromPJSK(difficulty)
         if not difficulty:
@@ -1482,12 +1490,7 @@ class DataAnalysis(commands.Cog):
         self.cooldown_progress[interaction.user.id] = time.time()
 
         try:
-
             await interaction.response.defer(thinking=True)
-            if region == "default":
-                region = await self.bot.user_data.discord.get_settings(
-                    interaction.user.id, "default_region"
-                )
             if region != "all":
                 pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
                     interaction.user.id, region

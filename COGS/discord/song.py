@@ -320,7 +320,7 @@ class SongInfo(commands.Cog):
         difficulty=locale_str("general.difficulty_default_master"),
     )
     async def song_constant(
-        self, interaction: discord.Interaction, song: str, difficulty: str = "master"
+        self, interaction: discord.Interaction, song: str, difficulty: str = "default"
     ):
         await interaction.response.defer(ephemeral=False, thinking=True)
         osong = song
@@ -333,6 +333,12 @@ class SongInfo(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
             return
+        if difficulty == "default":
+            settings = await self.bot.user_data.discord.get_settings(
+                interaction.user.id
+            )
+            if difficulty == "default":
+                difficulty = settings["default_difficulty"]
         odiff = difficulty
         difficulty = converters.DiffFromPJSK(difficulty)
         if difficulty not in ["expert", "master", "append"]:
@@ -383,8 +389,8 @@ class SongInfo(commands.Cog):
         self,
         interaction: discord.Interaction,
         song: str,
-        difficulty: str = "master",
-        mirror: bool = False,
+        difficulty: str = "default",
+        mirror: bool = None,
     ):
         await interaction.response.defer(ephemeral=False, thinking=True)
         osong = song
@@ -397,6 +403,14 @@ class SongInfo(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
             return
+        if (mirror is None) or (difficulty == "default"):
+            settings = await self.bot.user_data.discord.get_settings(
+                interaction.user.id
+            )
+            if mirror is None:
+                mirror = settings["mirror_charts_by_default"]
+            if difficulty == "default":
+                difficulty = settings["default_difficulty"]
         odiff = difficulty
         difficulty = converters.DiffFromPJSK(difficulty)
         if not difficulty:
@@ -684,7 +698,7 @@ class SongInfo(commands.Cog):
         difficulty=locale_str("general.difficulty_default_master"),
     )
     async def song_strat(
-        self, interaction: discord.Interaction, song: str, difficulty: str = "master"
+        self, interaction: discord.Interaction, song: str, difficulty: str = "default"
     ):
         await interaction.response.defer(ephemeral=False, thinking=True)
         osong = song
@@ -697,6 +711,12 @@ class SongInfo(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
             return
+        if difficulty == "default":
+            settings = await self.bot.user_data.discord.get_settings(
+                interaction.user.id
+            )
+            if difficulty == "default":
+                difficulty = settings["default_difficulty"]
         odiff = difficulty
         difficulty = converters.DiffFromPJSK(difficulty)
         if not difficulty:
