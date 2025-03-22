@@ -1,7 +1,7 @@
 donotload = False
 
 from fastapi import APIRouter, Request, Response, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from main import TwitchBot, DiscordBot
 
 from DATA.game_api import methods
@@ -41,7 +41,11 @@ def setup():
                 if mirror == 1:
                     chart = await to_process_with_timeout(pjsk_chart.mirror, chart)
 
-                return FileResponse(chart)
+                return (
+                    FileResponse(chart)
+                    if isinstance(chart, str)
+                    else StreamingResponse(chart, media_type="image/png")
+                )
             except IndexError as e:
                 return HTTPException(404)
 

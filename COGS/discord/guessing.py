@@ -8,12 +8,12 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, os, secrets, random
-from io import BytesIO
+import time, os, secrets, random, io
 
 from typing import Tuple, Coroutine, Callable, Any
 
 from PIL import Image
+import numpy as np
 
 from DATA.data.pjsk import Song
 from DATA.helpers.discord_user_cache import getch_user_name, save_user_name
@@ -169,37 +169,38 @@ class GuessCog(commands.Cog):
     """
     # region FUNCTIONS AND STATICMETHODS
 
-    async def random_crop_rectangle(self, path, size=250, bw: bool = False) -> BytesIO:
+    async def random_crop_rectangle(path, size=250, bw: bool = False) -> io.BytesIO:
         def _make():
             img = Image.open(path)
-            img = img.convert("RGB")
-            # if not os.path.exists(path[:-3] + 'jpg'):
-            #     img.save(path[:-3] + 'jpg', quality=95)
-            ran1 = random.randint(0, img.size[0] - size)
-            ran2 = random.randint(0, img.size[1] - size)
-            img = img.crop((ran1, ran2, ran1 + size, ran2 + size))
-            if bw:
-                img = img.convert("L")
-            f = BytesIO()
-            img.save(f, "PNG")
+            img_array = np.array(img.convert("L" if bw else "RGB"))
+            height, width = img_array.shape[:2]
+
+            ran1 = random.randint(0, width - size)
+            ran2 = random.randint(0, height - size)
+            cropped = img_array[ran2 : ran2 + size, ran1 : ran1 + size]
+
+            output = Image.fromarray(cropped)
+            f = io.BytesIO()
+            output.save(f, "PNG")
+            f.seek(0)
             return f
 
         return await to_process_with_timeout(_make)
 
-    async def random_crop(self, path, size=140, bw=False) -> BytesIO:
-        """
-        bw = black and white
-        """
-
+    async def random_crop(path, size=140, bw=False) -> io.BytesIO:
         def _make():
             img = Image.open(path)
-            ran1 = random.randint(0, img.size[0] - size)
-            ran2 = random.randint(0, img.size[1] - size)
-            img = img.crop((ran1, ran2, ran1 + size, ran2 + size))
-            if bw:
-                img = img.convert("L")
-            f = BytesIO()
-            img.save(f, "PNG")
+            img_array = np.array(img.convert("L" if bw else "RGB"))
+            height, width = img_array.shape[:2]
+
+            ran1 = random.randint(0, width - size)
+            ran2 = random.randint(0, height - size)
+            cropped = img_array[ran2 : ran2 + size, ran1 : ran1 + size]
+
+            output = Image.fromarray(cropped)
+            f = io.BytesIO()
+            output.save(f, "PNG")
+            f.seek(0)
             return f
 
         return await to_process_with_timeout(_make)
@@ -269,28 +270,35 @@ class GuessCog(commands.Cog):
             cards[rannum]["cardRarityType"],
         )
 
-    async def random_crop_chart(self, png_path: str | BytesIO) -> BytesIO:
+    async def random_crop_chart(self, png_path: str | io.BytesIO) -> io.BytesIO:
         def _make():
             img = Image.open(png_path)
+            img_array = np.array(img)
+            height, width, _ = img_array.shape
 
-            row = round((img.size[0] - 80) / 272)
+            row = round((width - 80) / 272)
             rannum = random.randint(2, row - 1)
-            img = img.crop(
-                (
-                    int(80 + 272 * (rannum - 1)),
-                    32,
-                    int(80 + 272 * (rannum - 1) + 190),
-                    img.size[1] - 287,
-                )
-            )
-            img1 = img.crop((0, 0, 190, int(img.size[1] / 2) + 20))
-            img2 = img.crop((0, int(img.size[1] / 2) - 20, 190, img.size[1]))
-            final = Image.new("RGB", (410, int(img.size[1] / 2) - 10), (255, 255, 255))
-            final.paste(img2, (10, -7))
-            final.paste(img1, (210, -20))
+            start_x = 80 + 272 * (rannum - 1)
+            end_x = start_x + 192
+            start_y, end_y = 32, height - 287
 
-            result = BytesIO()
-            final.save(result, format="png")
+            cropped = img_array[start_y:end_y, start_x:end_x]
+
+            mid_y = cropped.shape[0] // 2
+            img1 = cropped[: mid_y + 20]
+            img2 = cropped[mid_y - 20 :]
+
+            final_height = mid_y - 10
+            final = np.full((final_height, 410, 3), 255, dtype=np.uint8)
+
+            final[-7 : -7 + img2.shape[0], 10 : 10 + img2.shape[1]] = img2
+            final[-20 : -20 + img1.shape[0], 210 : 210 + img1.shape[1]] = img1
+
+            output = Image.fromarray(final)
+
+            result = io.BytesIO()
+            output.save(result, format="png")
+            result.seek(0)
             return result
 
         return await to_process_with_timeout(_make)
@@ -433,6 +441,8 @@ class GuessCog(commands.Cog):
             files.append(file)
             embed.set_thumbnail(url="attachment://thumb.png")
         if data["answer_file_path"]:
+            if isinstance(data["answer_file_path"], io.BytesIO):
+                data["answer_file_path"].seek(0)
             file = discord.File(data["answer_file_path"], "image.png")
             files.append(file)
             embed.set_image(url="attachment://image.png")
@@ -542,6 +552,8 @@ class GuessCog(commands.Cog):
                         files.append(file)
                         embed.set_thumbnail(url="attachment://thumb.png")
                     if data["answer_file_path"]:
+                        if isinstance(data["answer_file_path"], io.BytesIO):
+                            data["answer_file_path"].seek(0)
                         file = discord.File(data["answer_file_path"], "image.png")
                         files.append(file)
                         embed.set_image(url="attachment://image.png")
@@ -769,6 +781,8 @@ class GuessCog(commands.Cog):
                             files.append(file)
                             embed.set_thumbnail(url="attachment://thumb.png")
                         if data["answer_file_path"]:
+                            if isinstance(data["answer_file_path"], io.BytesIO):
+                                data["answer_file_path"].seek(0)
                             file = discord.File(data["answer_file_path"], "image.png")
                             files.append(file)
                             embed.set_image(url="attachment://image.png")
@@ -901,6 +915,8 @@ class GuessCog(commands.Cog):
                             files.append(file)
                             embed.set_thumbnail(url="attachment://thumb.png")
                         if data["answer_file_path"]:
+                            if isinstance(data["answer_file_path"], io.BytesIO):
+                                data["answer_file_path"].seek(0)
                             file = discord.File(data["answer_file_path"], "image.png")
                             files.append(file)
                             embed.set_image(url="attachment://image.png")
@@ -1030,6 +1046,8 @@ class GuessCog(commands.Cog):
                             files.append(file)
                             embed.set_thumbnail(url="attachment://thumb.png")
                         if data["answer_file_path"]:
+                            if isinstance(data["answer_file_path"], io.BytesIO):
+                                data["answer_file_path"].seek(0)
                             file = discord.File(data["answer_file_path"], "image.png")
                             files.append(file)
                             embed.set_image(url="attachment://image.png")

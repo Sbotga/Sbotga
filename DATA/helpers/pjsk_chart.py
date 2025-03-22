@@ -3,7 +3,7 @@ from PIL import Image
 from io import BytesIO
 
 
-def mirror(file: str | BytesIO):
+def mirror(file: str | BytesIO) -> BytesIO:
     img = Image.open(file)
     width, height = img.size
 
@@ -29,4 +29,5 @@ def mirror(file: str | BytesIO):
 
     result = BytesIO()
     output.save(result, format="png")
+    result.seek(0)
     return result

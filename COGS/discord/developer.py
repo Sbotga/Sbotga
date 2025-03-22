@@ -7,7 +7,7 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, asyncio, importlib
+import time, asyncio, importlib, io
 
 from DATA.game_api import methods
 
@@ -121,6 +121,8 @@ class DevCog(commands.Cog):
         )
         file = discord.utils.MISSING
         if data["answer_file_path"]:
+            if isinstance(data["answer_file_path"], io.BytesIO):
+                data["answer_file_path"].seek(0)
             file = discord.File(data["answer_file_path"], "image.png")
             embed.set_image(url="attachment://image.png")
 
@@ -222,26 +224,47 @@ class DevCog(commands.Cog):
 
     @commands.command(name="reimport")
     @is_owner()
-    async def reimport(self, ctx: commands.Context):
+    async def reimport(self, ctx: commands.Context, *specific):
         """Reimport helpers."""
-        items = ["views", "methods", "autocompletes", "CONFIGS", "user_data"]
+        items = [
+            "views",
+            "methods",
+            "autocompletes",
+            "CONFIGS",
+            "user_data",
+            "pjsk_charts",
+        ]
+        items = (
+            items if specific == [] else [item for item in items if item in specific]
+        )
         joiner = "`\n- `"
         await ctx.reply(f"Reimporting:\n- `{joiner.join(items)}`")
 
-        importlib.reload(views)
-        importlib.reload(methods)
-        importlib.reload(discord_autocompletes)
+        if "views" in items:
+            importlib.reload(views)
+        if "methods" in items:
+            importlib.reload(methods)
+        if "autocompletes" in items:
+            importlib.reload(discord_autocompletes)
+        if "pjsk_charts" in items:
+            from DATA.helpers import pjsk_chart
 
-        from DATA import user_data
-        from DATA import CONFIGS
+            importlib.reload(pjsk_chart)
 
-        importlib.reload(user_data)
-        importlib.reload(CONFIGS)
+        if "CONFIGS" in items:
+            from DATA import CONFIGS
 
-        self.bot.user_data = user_data.user_data
-        self.bot.user_data.db = self.bot.db
-        await self.bot.user_data.fetch_data()
-        self.bot.CONFIGS = CONFIGS.CONFIGS
+            importlib.reload(CONFIGS)
+            self.bot.CONFIGS = CONFIGS.CONFIGS
+
+        if "user_data" in items:
+            from DATA import user_data
+
+            importlib.reload(user_data)
+
+            self.bot.user_data = user_data.user_data
+            self.bot.user_data.db = self.bot.db
+            await self.bot.user_data.fetch_data()
 
     @commands.command(name="refresh")
     @is_owner()
