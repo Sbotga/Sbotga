@@ -636,7 +636,8 @@ class UserCog(commands.Cog):
             ],  # no append, not every chart has append.
         }
         setting_descriptions = {
-            "mirror_charts_by_default": "Applies to guessing as well!"
+            "mirror_charts_by_default": "Applies to guessing as well!",
+            "default_difficulty": "Does NOT include Append, as not every song has an Append chart.",
         }
 
         class CustomSelect(discord.ui.Select):
