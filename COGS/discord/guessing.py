@@ -169,7 +169,9 @@ class GuessCog(commands.Cog):
     """
     # region FUNCTIONS AND STATICMETHODS
 
-    async def random_crop_rectangle(path, size=250, bw: bool = False) -> io.BytesIO:
+    async def random_crop_rectangle(
+        self, path, size=250, bw: bool = False
+    ) -> io.BytesIO:
         def _make():
             img = Image.open(path)
             img_array = np.array(img.convert("L" if bw else "RGB"))
@@ -187,7 +189,7 @@ class GuessCog(commands.Cog):
 
         return await to_process_with_timeout(_make)
 
-    async def random_crop(path, size=140, bw=False) -> io.BytesIO:
+    async def random_crop(self, path, size=140, bw=False) -> io.BytesIO:
         def _make():
             img = Image.open(path)
             img_array = np.array(img.convert("L" if bw else "RGB"))
