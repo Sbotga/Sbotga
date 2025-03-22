@@ -737,6 +737,9 @@ class UserCog(commands.Cog):
                     interaction.message.id, embed=embed, view=view
                 )
                 view.message = interaction.message
+                await interaction.followup.send(
+                    embed=embeds.success_embed("Setting changed."), ephemeral=True
+                )
 
         def generate_setting(key: str, value):
             embed = embeds.embed(
