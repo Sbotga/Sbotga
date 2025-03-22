@@ -274,28 +274,37 @@ class GuessCog(commands.Cog):
 
     async def random_crop_chart(self, png_path: str | io.BytesIO) -> io.BytesIO:
         def _make():
-            img = Image.open(png_path)
+            img = Image.open(png_path).convert("RGB")
             img_array = np.array(img)
             height, width, _ = img_array.shape
 
             row = round((width - 80) / 272)
             rannum = random.randint(2, row - 1)
             start_x = 80 + 272 * (rannum - 1)
-            end_x = start_x + 192
+            end_x = start_x + 190
             start_y, end_y = 32, height - 287
 
+            # crop section
             cropped = img_array[start_y:end_y, start_x:end_x]
 
+            # split 2 sections
             mid_y = cropped.shape[0] // 2
             img1 = cropped[: mid_y + 20]
             img2 = cropped[mid_y - 20 :]
 
-            final_height = mid_y - 10
+            # 3-channel consistency
+            img1 = img1[:, :, :3] if img1.shape[-1] == 4 else img1
+            img2 = img2[:, :, :3] if img2.shape[-1] == 4 else img2
+
+            # final height to fit both images
+            final_height = max(img1.shape[0], img2.shape[0])
             final = np.full((final_height, 410, 3), 255, dtype=np.uint8)
 
-            final[-7 : -7 + img2.shape[0], 10 : 10 + img2.shape[1]] = img2
-            final[-20 : -20 + img1.shape[0], 210 : 210 + img1.shape[1]] = img1
+            # images in correct positions
+            final[: img2.shape[0], 10 : 10 + img2.shape[1]] = img2
+            final[: img1.shape[0], 210 : 210 + img1.shape[1]] = img1
 
+            # back to image
             output = Image.fromarray(final)
 
             result = io.BytesIO()
