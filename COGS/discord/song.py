@@ -377,7 +377,7 @@ class SongInfo(commands.Cog):
     @app_commands.describe(
         song=locale_str("general.song_name"),
         difficulty=locale_str("general.difficulty_default_master"),
-        mirror="Whether to show a mirrored PJSK chart.",
+        mirror="Whether to show a mirrored PJSK chart (False, or the value you set in settings).",
     )
     async def song_chart(
         self,
