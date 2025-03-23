@@ -10,7 +10,6 @@ from DATA.game_api import methods
 
 from DATA.helpers.unblock import to_process_with_timeout
 
-
 router = APIRouter()
 
 cached = {}

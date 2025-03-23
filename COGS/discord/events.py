@@ -23,6 +23,31 @@ from DATA.helpers import tools
 
 from DATA.helpers.unblock import to_process_with_timeout
 
+all_tiers = (
+    list(range(1, 101))
+    + list(range(200, 501, 100))
+    + list(range(1000, 3001, 500))
+    + list(range(4000, 5001, 1000))
+    + list(range(10_000, 50_001, 10_000))
+    + list(range(100_000, 200_001, 100_000))
+)
+all_borders = (
+    list(range(100, 501, 100))
+    + list(range(1000, 3001, 500))
+    + list(range(4000, 5001, 1000))
+    + list(range(10_000, 50_001, 10_000))
+    + list(range(100_000, 200_001, 100_000))
+)
+
+
+def get_tier_index(tier: int, from_all: bool = False):
+    if from_all:
+        return all_tiers.index(tier)
+    if tier <= 100:
+        return tier - 1
+    else:
+        return all_borders.index(tier)
+
 
 class EventsCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
@@ -168,7 +193,7 @@ class EventsCog(commands.Cog):
 
     def create_rank_embed(
         self,
-        rank: int,
+        tier: int,
         region: str,
         event_id: int,
         is_self: bool,
@@ -187,15 +212,28 @@ class EventsCog(commands.Cog):
         else:
             name = ""
         if not character:
-            ranking = self.ranking_data[region]["rankings"][rank - 1]
+            if tier <= 100:
+                ranking = self.ranking_data[region]["rankings"][get_tier_index(tier)]
+            else:
+                ranking = self.ranking_data["border"][region]["borderRankings"][
+                    get_tier_index(tier)
+                ]
         else:
             f = False
-            ranking = self.ranking_data[region]
-            for chapter in ranking["userWorldBloomChapterRankings"]:
-                if chapter["gameCharacterId"] == character["id"]:
-                    f = True
-                    ranking = chapter["rankings"][rank - 1]
-                    break
+            if tier <= 100:
+                ranking = self.ranking_data[region]
+                for chapter in ranking["userWorldBloomChapterRankings"]:
+                    if chapter["gameCharacterId"] == character["id"]:
+                        f = True
+                        ranking = chapter["rankings"][get_tier_index(tier)]
+                        break
+            else:
+                ranking = self.ranking_data["border"][region]
+                for chapter in ranking["userWorldBloomChapterRankingBorders"]:
+                    if chapter["gameCharacterId"] == character["id"]:
+                        f = True
+                        darankings = chapter["borderRankings"]
+                        break
             if not f:
                 embed = embeds.error_embed(
                     f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given."
@@ -213,7 +251,7 @@ class EventsCog(commands.Cog):
         score = EventsCog.calculate_rank_details(ranking, region, character)
 
         embed = embeds.embed(
-            title=f"{name}Rank #{ranking['rank']} - {tools.escape_md(ranking['name'] if len(ranking['name']) < 50 else (ranking['name'][:43] + '... ⚠️ (I will not display your very long name)'))}",
+            title=f"{name}T{ranking['rank']:,} - {tools.escape_md(ranking['name'] if len(ranking['name']) < 50 else (ranking['name'][:43] + '... ⚠️ (I will not display your very long name)'))}",
             color=discord.Color.yellow(),
         )
         desc_text = ""
@@ -231,48 +269,100 @@ class EventsCog(commands.Cog):
             + list(range(1000, 3001, 500))
             + list(range(4000, 5001, 1000))
             + list(range(10_000, 50_001, 10_000))
-            + list(range(100_000, 300_001, 100_000))
+            + list(range(100_000, 200_001, 100_000))
         )
 
-        def find_next_border(rank):
-            if rank == 1:
-                return None
-            return next((b for b in borders if b < rank), None)
+        def find_next_borders(tier):
+            up, down = None, None
+            for cur_index, border in enumerate(borders):
+                if border <= tier:
+                    continue
+                down = border
+                if tier != 1:
+                    up = (
+                        borders[cur_index - 1]
+                        if tier != borders[cur_index - 1]
+                        else borders[cur_index - 2]
+                    )
+                break
+            if not down:
+                up = borders[-1] if tier != borders[-1] else borders[-2]
+            return (up, down)
 
         current_ep = ranking["score"]
-        up_border = find_next_border(ranking["rank"])
+        up_border, down_border = find_next_borders(ranking["rank"])
 
-        if up_border:
+        if up_border or down_border:
             if character:
                 f = False
-                if up_border < 100:
+                if (up_border is None or up_border <= 100) and (
+                    down_border is None or down_border <= 100
+                ):
                     ranking = self.ranking_data[region]
                     for chapter in ranking["userWorldBloomChapterRankings"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f = True
                             darankings = chapter["rankings"]
                             break
-                else:
+                elif (up_border is None or up_border > 100) and (
+                    down_border is None or down_border > 100
+                ):
                     ranking = self.ranking_data["border"][region]
                     for chapter in ranking["userWorldBloomChapterRankingBorders"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f = True
                             darankings = chapter["borderRankings"]
                             break
+                else:  # it's a mix
+                    f1, f2 = False
+                    ranking = self.ranking_data[region]
+                    for chapter in ranking["userWorldBloomChapterRankings"]:
+                        if chapter["gameCharacterId"] == character["id"]:
+                            f1 = True
+                            darankings = chapter["rankings"]
+                            break
+                    ranking = self.ranking_data["border"][region]
+                    for chapter in ranking["userWorldBloomChapterRankingBorders"]:
+                        if chapter["gameCharacterId"] == character["id"]:
+                            f2 = True
+                            darankings.extend(chapter["borderRankings"])
+                            break
+                    f = f1 and f2
                 if not f:
                     # ??? this should probably never happen.
                     pass
             else:
-                if up_border < 100:
+                if (up_border is None or up_border <= 100) and (
+                    down_border is None or down_border <= 100
+                ):
                     darankings = self.ranking_data[region]["rankings"]
-                else:
+                elif (up_border is None or up_border > 100) and (
+                    down_border is None or down_border > 100
+                ):
                     darankings = self.ranking_data["border"][region]["borderRankings"]
+                else:  # it's a mix
+                    darankings = self.ranking_data[region]["rankings"]
+                    darankings.extend(
+                        self.ranking_data["border"][region]["borderRankings"]
+                    )
 
-            for rank in darankings:
-                if rank["rank"] == int(up_border):
-                    border_ep = rank["score"]
-                    break
-            desc_text += f"\n\nThe next border is **T{up_border}**, at `{border_ep:,} EP`, which is `+{border_ep-current_ep:,} EP` away."
+            if up_border:
+                for tier in darankings:
+                    if tier["rank"] == int(up_border):
+                        border_ep_up = tier["score"]
+                        break
+            if down_border:
+                for tier in darankings:
+                    if tier["rank"] == int(down_border):
+                        border_ep_down = tier["score"]
+                        break
+
+            if up_border and down_border:
+                desc_text += f"\n{'-'*20}\n⬆️ **T{up_border:,}** `{border_ep_up:,} EP` (`+{border_ep_up-current_ep:,} EP`)\n⬇️ **T{down_border:,}** `{border_ep_down:,} EP` (`-{current_ep-border_ep_down:,} EP`)"
+            elif up_border:
+                desc_text += f"\n{'-'*20}\n⬆️ **T{up_border:,}** `{border_ep_up:,} EP` (`+{border_ep_up-current_ep:,} EP`)"
+            elif down_border:
+                desc_text += f"\n{'-'*20}\n⬇️ **T{down_border:,}** `{border_ep_down:,} EP` (`-{current_ep-border_ep_down:,} EP`)"
         else:
             pass
 
@@ -362,15 +452,15 @@ class EventsCog(commands.Cog):
             score = EventsCog.calculate_rank_details(ranking, region)
             desc += f"{'✅ ' if ranking['userId'] == pjsk_id else ''}**#{ranking['rank']:,} - {tools.escape_md(ranking['name'].replace(newline, ' '))}** - {score}\n"
         embed.description = desc.strip()
-        f_rank = ""
+        f_tier = ""
         if pjsk_id:
             for ranking in rankings:
                 if ranking["userId"] == pjsk_id:
-                    f_rank = f" - You are #{ranking['rank']:,}"
+                    f_tier = f" - You are #{ranking['rank']:,}"
                     break
         embed.set_footer(
             text=f"Event {'Leaderboard' if not border else 'Borders'}{' - ' + name.strip() if name != '' else ''} - {region.upper()} - Last updated {round(time.time()-last_updated[region])}s ago"
-            + f_rank
+            + f_tier
         )
         logo, _, _ = methods.Tools.get_event_images(event_id, region)
         file = discord.File(
@@ -387,28 +477,76 @@ class EventsCog(commands.Cog):
         allowed_installs=app_commands.AppInstallationType(guild=True, user=True),
     )
 
+    async def get_rankings(
+        self,
+        interaction: discord.Interaction,
+        region: str,
+        tier: int,
+        character: str = None,
+    ):
+        if character:
+            character = converters.CharFromPJSK(self.bot.pjsk, character)
+            if not character:
+                return await interaction.followup.send(
+                    embed=embeds.error_embed("Invalid character.")
+                )
+            f = False
+            if int(tier) <= 100:
+                ranking = self.ranking_data[region]
+                for chapter in ranking["userWorldBloomChapterRankings"]:
+                    if chapter["gameCharacterId"] == character["id"]:
+                        f = True
+                        darankings = chapter["rankings"]
+                        break
+            else:
+                ranking = self.ranking_data["border"][region]
+                for chapter in ranking["userWorldBloomChapterRankingBorders"]:
+                    if chapter["gameCharacterId"] == character["id"]:
+                        f = True
+                        darankings = chapter["borderRankings"]
+                        break
+            if not f:
+                embed = embeds.error_embed(
+                    f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given.",
+                )
+                return await interaction.followup.send(embed=embed)
+        else:
+            if int(tier) <= 100:
+                darankings = self.ranking_data[region]["rankings"]
+            else:
+                darankings = self.ranking_data["border"][region]["borderRankings"]
+        return darankings
+
     @event.command(
         auto_locale_strings=False,
         name=locale_str("view", key="events.cmds.view.name", file="commands"),
         description=locale_str("events.cmds.view.desc", file="commands"),
     )
     @app_commands.describe(
-        rank=locale_str("general.rank"),
+        tier=locale_str("general.rank"),
         region=locale_str("general.region"),
         character=locale_str("general.event_wl_character"),
     )
     @app_commands.autocomplete(
-        rank=autocompletes.autocompletes.range(1, 100),
+        tier=autocompletes.autocompletes.custom_values(
+            {f"T{i:,}": str(i) for i in all_tiers}
+        ),
         region=autocompletes.autocompletes.pjsk_region(["en", "jp", "tw", "kr", "cn"]),
         character=autocompletes.autocompletes.pjsk_char,
     )
     async def view(
         self,
         interaction: discord.Interaction,
-        rank: int = None,
+        tier: str = None,
         region: str = "default",
         character: str = None,
     ):
+        try:
+            tier = int(tier.lower().removeprefix("t"))
+        except:
+            return await interaction.response.send_message(
+                embed=embeds.error_embed("Invalid tier.")
+            )
         region = region.lower().strip()
         if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
             return await interaction.response.send_message(
@@ -430,55 +568,37 @@ class EventsCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         await to_process_with_timeout(self.update_rank_data, region=region)
 
-        if character:
-            character = converters.CharFromPJSK(self.bot.pjsk, character)
-            if not character:
-                return await interaction.followup.send(
-                    embed=embeds.error_embed("Invalid character."),
-                )
-            f = False
-            ranking = self.ranking_data[region]
-            for chapter in ranking["userWorldBloomChapterRankings"]:
-                if chapter["gameCharacterId"] == character["id"]:
-                    f = True
-                    darankings = chapter["rankings"]
-                    break
-            if not f:
-                embed = embeds.error_embed(
-                    f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given.",
-                )
-                return await interaction.followup.send(embed=embed)
-        else:
-            darankings = self.ranking_data[region]["rankings"]
-        if rank is None:
+        darankings = await self.get_rankings(interaction, region, tier, character)
+
+        if tier is None:
             pass
-        elif not (1 <= rank <= len(darankings)):
+        elif not (tier in all_tiers):
             return await interaction.followup.send(
                 embed=embeds.error_embed(
-                    "The specified rank couldn't be fetched.", title="Invalid Rank"
+                    "The specified tier couldn't be fetched.", title="Invalid Tier"
                 )
             )
         is_self = False
         pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
             interaction.user.id, region
         )
-        f_rank = None
-        if pjsk_id and (not rank):
+        f_tier = None
+        if pjsk_id and (not tier):
             for ranking in darankings:
                 if ranking["userId"] == pjsk_id:
-                    f_rank = ranking["rank"]
+                    f_tier = ranking["rank"]
                     break
-        elif not rank:
+        elif not tier:
             return await interaction.followup.send(
                 embed=embeds.error_embed(
-                    "You didn't specify a rank and you are not linked to a PJSK account.",
-                    title="Invalid Rank",
+                    "You didn't specify a tier and you are not linked to a PJSK account.",
+                    title="Invalid Tier",
                 )
             )
-        if f_rank:
-            rank = f_rank
+        if f_tier:
+            tier = f_tier
             is_self = True
-        elif not rank:
+        elif not tier:
             if character:
                 name = (
                     str(character["givenName"]) + " " + str(character["firstName"])
@@ -494,13 +614,13 @@ class EventsCog(commands.Cog):
             return await interaction.followup.send(
                 embed=embeds.error_embed(
                     title="Not Found",
-                    description=f"I didn't find you on the {character}leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.last_updated[region])}s ago`",
+                    description=f"I didn't find you on the {name}leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.last_updated[region])}s ago`",
                 )
             )
-        if is_self or pjsk_id == darankings[rank - 1]["userId"]:
+        if is_self or pjsk_id == darankings[get_tier_index(tier)]["userId"]:
             is_self = True
         embed, file, view = self.create_rank_embed(
-            rank,
+            tier,
             region=region,
             event_id=methods.Tools.get_api(region).get_current_event(),
             is_self=is_self,
@@ -550,26 +670,7 @@ class EventsCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
-        if character:
-            character = converters.CharFromPJSK(self.bot.pjsk, character)
-            if not character:
-                return await interaction.followup.send(
-                    embed=embeds.error_embed("Invalid character."),
-                )
-            f = False
-            ranking = self.ranking_data[region]
-            for chapter in ranking["userWorldBloomChapterRankings"]:
-                if chapter["gameCharacterId"] == character["id"]:
-                    f = True
-                    darankings = chapter["rankings"]
-                    break
-            if not f:
-                embed = embeds.error_embed(
-                    f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given.",
-                )
-                return await interaction.followup.send(embed=embed)
-        else:
-            darankings = self.ranking_data[region]["rankings"]
+        darankings = await self.get_rankings(interaction, region, 1, character)
 
         total_pages = math.ceil(len(darankings) / 25)
 
@@ -777,26 +878,7 @@ class EventsCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
-        if character:
-            character = converters.CharFromPJSK(self.bot.pjsk, character)
-            if not character:
-                return await interaction.followup.send(
-                    embed=embeds.error_embed("Invalid character."),
-                )
-            f = False
-            ranking = self.ranking_data["border"][region]
-            for chapter in ranking["userWorldBloomChapterRankingBorders"]:
-                if chapter["gameCharacterId"] == character["id"]:
-                    f = True
-                    darankings = chapter["borderRankings"]
-                    break
-            if not f:
-                embed = embeds.error_embed(
-                    f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given.",
-                )
-                return await interaction.followup.send(embed=embed)
-        else:
-            darankings = self.ranking_data["border"][region]["borderRankings"]
+        darankings = await self.get_rankings(interaction, region, 500, character)
 
         total_pages = math.ceil(len(darankings) / 25)
 
@@ -915,37 +997,7 @@ class EventsCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         event_name = await to_process_with_timeout(self.update_rank_data, region=region)
 
-        if character:
-            character = converters.CharFromPJSK(self.bot.pjsk, character)
-            if not character:
-                return await interaction.followup.send(
-                    embed=embeds.error_embed("Invalid character.")
-                )
-            f = False
-            if int(tier) < 100:
-                ranking = self.ranking_data[region]
-                for chapter in ranking["userWorldBloomChapterRankings"]:
-                    if chapter["gameCharacterId"] == character["id"]:
-                        f = True
-                        darankings = chapter["rankings"]
-                        break
-            else:
-                ranking = self.ranking_data["border"][region]
-                for chapter in ranking["userWorldBloomChapterRankingBorders"]:
-                    if chapter["gameCharacterId"] == character["id"]:
-                        f = True
-                        darankings = chapter["borderRankings"]
-                        break
-            if not f:
-                embed = embeds.error_embed(
-                    f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given.",
-                )
-                return await interaction.followup.send(embed=embed)
-        else:
-            if int(tier) < 100:
-                darankings = self.ranking_data[region]["rankings"]
-            else:
-                darankings = self.ranking_data["border"][region]["borderRankings"]
+        darankings = await self.get_rankings(interaction, region, tier, character)
 
         api = methods.Tools.get_api(region)
         world_link = False
@@ -972,9 +1024,9 @@ class EventsCog(commands.Cog):
             async with cs.get(url) as resp:
                 data = await resp.json(content_type=None)
 
-        for rank in darankings:
-            if rank["rank"] == int(tier):
-                current_ep = rank["score"]
+        for tier in darankings:
+            if tier["rank"] == int(tier):
+                current_ep = tier["score"]
                 break
 
         total_pages = math.ceil(len(darankings) / 25)

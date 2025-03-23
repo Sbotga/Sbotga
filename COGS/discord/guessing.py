@@ -281,7 +281,7 @@ class GuessCog(commands.Cog):
             row = round((width - 80) / 272)
             rannum = random.randint(2, row - 1)
             start_x = 80 + 272 * (rannum - 1)
-            end_x = start_x + 190
+            end_x = start_x + 192
             start_y, end_y = 32, height - 287
 
             # crop section
