@@ -29,17 +29,17 @@ class InfoCog(commands.Cog):
     def _update_cmd_deque(self):
         current_time = time.time()
         while (
-            self.bot.executed_commands
-            and self.bot.executed_commands[0][1] < current_time - 60
+            self.bot.cache.executed_commands
+            and self.bot.cache.executed_commands[0][1] < current_time - 60
         ):
-            self.bot.executed_commands.popleft()
+            self.bot.cache.executed_commands.popleft()
 
     @commands.Cog.listener()
     async def on_app_command_completion(
         self, interaction: discord.Interaction, command: app_commands.Command
     ):
         # Append the command's qualified_name, timestamp, and user ID to the deque
-        self.bot.executed_commands.append(
+        self.bot.cache.executed_commands.append(
             (command.qualified_name, time.time(), interaction.user.id)
         )
 
@@ -169,14 +169,14 @@ class InfoCog(commands.Cog):
 
         self._update_cmd_deque()
 
-        cmds_ran = len(self.bot.executed_commands) + 1
+        cmds_ran = len(self.bot.cache.executed_commands) + 1
         current_time = time.time()
 
         user_ids = set()
         user_ids.add(interaction.user.id)
         command_counter = Counter()
 
-        for cmd, timestamp, user_id in self.bot.executed_commands:
+        for cmd, timestamp, user_id in self.bot.cache.executed_commands:
             if timestamp >= current_time - 60:
                 user_ids.add(user_id)
                 command_counter[cmd] += 1

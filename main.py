@@ -25,6 +25,7 @@ from DATA.helpers.logging import LOGGING
 from DATA.helpers.user_cache import getch_user_id, getch_user_name
 from DATA.helpers.discord_autocompletes import autocompletes
 from DATA.helpers import embeds
+from DATA.helpers.cache import CACHE
 
 from DATA.data.pjsk import pjsk, pjsk_data
 
@@ -56,6 +57,8 @@ class TwitchBot(twitch_commands.Bot):
         self.user_data = user_data
 
         self.active_connections: Dict[str, Dict[int, List[WebSocket]]] = {}
+
+        self.cache = CACHE
 
     async def run_checks(
         self,
@@ -267,20 +270,9 @@ class DiscordBot(discord_commands.Bot):
 
         self.db: asyncpg.Pool = None
 
-        self.executed_commands = deque()
-
-        self.guess_channels: Dict[int, Dict[str, Union[int, str, Dict[str, str]]]] = {}
-        self.existing_guess_ids: List[str] = []
-
         self.CONFIGS = CONFIGS
         self.COLORS = LOGGING.COLORS
         self.pjsk = pjsk
-
-        self.constants = {}
-        self.constants_override = {}
-        self.constants_updated = 0
-
-        self.ban_cache = {}
 
         self.print = LOGGING.print
         self.info = LOGGING.infoprint
@@ -297,6 +289,17 @@ class DiscordBot(discord_commands.Bot):
         self.autocompletes = autocompletes
 
         self.cogs_folder = os.path.join("COGS/discord", "")
+
+        self.cache = CACHE
+        self.cache.discord_bans = {}
+        self.cache.constants = {}
+        self.cache.constants_override = {}
+        self.cache.constants_updated = 0
+        self.cache.guess_channels = (
+            {}
+        )  #: Dict[int, Dict[str, Union[int, str, Dict[str, str]]]] = {}
+        self.cache.existing_guess_ids = {}  #: List[str] = []
+        self.cache.executed_commands = deque()
 
     async def get_constant(
         self,
@@ -464,11 +467,11 @@ class DiscordBotTree(app_commands.CommandTree):
             except:
                 pass
             return False
-        if interaction.user.id in self.client.ban_cache:
-            banned = self.client.ban_cache.get(interaction.user.id)
+        if interaction.user.id in self.client.cache.discord_bans:
+            banned = self.client.cache.discord_bans.get(interaction.user.id)
         else:
             banned = await self.client.user_data.discord.get_banned(interaction.user.id)
-            self.client.ban_cache[interaction.user.id] = banned
+            self.client.cache.discord_bans[interaction.user.id] = banned
         if banned:
             if interaction.command and interaction.command.qualified_name == "help":
                 pass

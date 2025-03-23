@@ -36,7 +36,7 @@ class TasksAndUpdates(commands.Cog):
 
     @tasks.loop(seconds=60)
     async def cog_tasks(self):
-        if self.bot.constants_updated + 3600 < time.time():
+        if self.bot.cache.constants_updated + 3600 < time.time():
             await self.update_constants()
 
     async def get_constant(
@@ -49,7 +49,7 @@ class TasksAndUpdates(commands.Cog):
         force_39s: bool = False,
     ) -> float | tuple:
         # Check if the constants were updated in the last 60 minutes
-        if self.bot.constants_updated + 3600 < time.time():
+        if self.bot.cache.constants_updated + 3600 < time.time():
             await self.update_constants()
         return self.get_constant_sync(
             music_id, difficulty, ap, error_on_not_found, include_source, force_39s
@@ -65,10 +65,10 @@ class TasksAndUpdates(commands.Cog):
         force_39s: bool = False,
     ) -> float | tuple:
         key = (music_id, difficulty)
-        diff = self.bot.constants_override.get(key)
+        diff = self.bot.cache.constants_override.get(key)
         source = "Community (not 39s)"
         if force_39s or (not diff):
-            diff = self.bot.constants.get(key)
+            diff = self.bot.cache.constants.get(key)
             source = "Community (39s)"
         if not diff:
             if error_on_not_found:
@@ -90,12 +90,12 @@ class TasksAndUpdates(commands.Cog):
                 if response.status == 200:
                     csv_data = await response.read()
                     await self.parse_csv(csv_data)
-                    self.bot.constants_updated = time.time()
+                    self.bot.cache.constants_updated = time.time()
             async with session.get(url2) as response:
                 if response.status == 200:
                     csv_data = await response.read()
                     await self.parse_csv(csv_data, secondary=True)
-                    self.bot.constants_updated = time.time()
+                    self.bot.cache.constants_updated = time.time()
 
     async def parse_csv(self, csv_data: bytes, secondary: bool = False):
         # Decode CSV data and load into a dictionary
@@ -120,9 +120,9 @@ class TasksAndUpdates(commands.Cog):
                 ]
 
                 if secondary:
-                    self.bot.constants_override[(music_id, difficulty)] = constant
+                    self.bot.cache.constants_override[(music_id, difficulty)] = constant
                 else:
-                    self.bot.constants[(music_id, difficulty)] = constant
+                    self.bot.cache.constants[(music_id, difficulty)] = constant
 
             except (ValueError, KeyError, AssertionError) as e:
                 pass

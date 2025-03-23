@@ -56,10 +56,12 @@ RANKMATCH_IMAGES = {
 class RankedCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
         self.bot = bot
-        self.ranked_data = {
+        self.bot.cache.ranked_data = {
             api.app_region: {"rankings": []} for api in methods.all_apis
         }
-        self.last_updated = {api.app_region: 0 for api in methods.all_apis}
+        self.bot.cache.ranked_last_updated = {
+            api.app_region: 0 for api in methods.all_apis
+        }
 
         self.update_cooldown = 600  # 10 minutes
 
@@ -67,21 +69,25 @@ class RankedCog(commands.Cog):
             with open("DATA/data/ASSETS/ranked/top100.json", "r") as f:
                 data = json.load(f)
                 for k, v in data["data"].items():
-                    self.ranked_data[k] = v
+                    self.bot.cache.ranked_data[k] = v
                 for k, v in data["last_updated"].items():
-                    self.last_updated[k] = v
+                    self.bot.cache.ranked_last_updated[k] = v
 
     def update_rank_data(self, region: str, force: bool = False) -> str:
         api = methods.Tools.get_api(region)
-        if force or self.last_updated[region] + self.update_cooldown < time.time():
+        if (
+            force
+            or self.bot.cache.ranked_last_updated[region] + self.update_cooldown
+            < time.time()
+        ):
             try:
-                self.ranked_data[region] = api.get_ranked_leaderboard()
-                self.last_updated[region] = time.time()
+                self.bot.cache.ranked_data[region] = api.get_ranked_leaderboard()
+                self.bot.cache.ranked_last_updated[region] = time.time()
                 with open(f"DATA/data/ASSETS/ranked/top100.json", "w+") as f:
                     json.dump(
                         {
-                            "last_updated": self.last_updated,
-                            "data": self.ranked_data,
+                            "last_updated": self.bot.cache.ranked_last_updated,
+                            "data": self.bot.cache.ranked_data,
                         },
                         f,
                     )
@@ -120,8 +126,8 @@ class RankedCog(commands.Cog):
             self.current_page = current_page
             self.total_pages = total_pages
             self.current_region = region
-            self.ranked_data = ranked_data
-            self.last_updated = last_updated
+            self.bot.cache.ranked_data = ranked_data
+            self.bot.cache.ranked_last_updated = last_updated
             self.season_name = season_name
             self.pjsk_id = pjsk_id
             self.update_buttons()
@@ -132,8 +138,8 @@ class RankedCog(commands.Cog):
 
         async def update_message(self, interaction: discord.Interaction):
             embed = RankedCog.create_leaderboard_embed(
-                self.ranked_data,
-                self.last_updated,
+                self.bot.cache.ranked_data,
+                self.bot.cache.ranked_last_updated,
                 self.current_page,
                 self.current_region,
                 season_name=self.season_name,
@@ -200,7 +206,7 @@ class RankedCog(commands.Cog):
             return f"**{grade_name}** Class {kurasu}\n{tier_point}/5", [grade, kurasu]
 
     def create_rank_embed(self, rank: int, region: str, is_self: bool):
-        ranking = self.ranked_data[region]["rankings"][rank - 1]
+        ranking = self.bot.cache.ranked_data[region]["rankings"][rank - 1]
         season = ranking["userRankMatchSeason"]
         grade_details, grade = RankedCog.calculate_rank_details(ranking, region)
 
@@ -238,7 +244,7 @@ class RankedCog(commands.Cog):
         embed.add_field(name="Draws", value=season["drawCount"], inline=True)
 
         embed.set_footer(
-            text=f"Ranked Statistics - {region.upper()} - Last updated {round(time.time()-self.last_updated[region])}s ago"
+            text=f"Ranked Statistics - {region.upper()} - Last updated {round(time.time()-self.bot.cache.ranked_last_updated[region])}s ago"
         )
         return (
             embed,
@@ -333,7 +339,7 @@ class RankedCog(commands.Cog):
         await to_process_with_timeout(self.update_rank_data, region=region)
         if rank is None:
             pass
-        elif not 1 <= rank <= len(self.ranked_data[region]["rankings"]):
+        elif not 1 <= rank <= len(self.bot.cache.ranked_data[region]["rankings"]):
             return await interaction.followup.send(
                 embed=embeds.error_embed(
                     title="Invalid Rank",
@@ -346,7 +352,7 @@ class RankedCog(commands.Cog):
         )
         f_rank = None
         if pjsk_id and (not rank):
-            for ranking in self.ranked_data[region]["rankings"]:
+            for ranking in self.bot.cache.ranked_data[region]["rankings"]:
                 if ranking["userId"] == pjsk_id:
                     f_rank = ranking["rank"]
                     break
@@ -364,12 +370,13 @@ class RankedCog(commands.Cog):
             return await interaction.followup.send(
                 embed=embeds.error_embed(
                     title="Not Found",
-                    description=f"I didn't find you on the leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.last_updated[region])}s ago`",
+                    description=f"I didn't find you on the leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.bot.cache.ranked_last_updated[region])}s ago`",
                 )
             )
         if (
             is_self
-            or pjsk_id == self.ranked_data[region]["rankings"][rank - 1]["userId"]
+            or pjsk_id
+            == self.bot.cache.ranked_data[region]["rankings"][rank - 1]["userId"]
         ):
             is_self = True
         embed, file, view = self.create_rank_embed(rank, region=region, is_self=is_self)
@@ -411,13 +418,15 @@ class RankedCog(commands.Cog):
         season_name = await to_process_with_timeout(
             self.update_rank_data, region=region
         )
-        total_pages = math.ceil(len(self.ranked_data[region]["rankings"]) / 25)
+        total_pages = math.ceil(
+            len(self.bot.cache.ranked_data[region]["rankings"]) / 25
+        )
         pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
             interaction.user.id, region
         )
         embed = self.create_leaderboard_embed(
-            self.ranked_data,
-            self.last_updated,
+            self.bot.cache.ranked_data,
+            self.bot.cache.ranked_last_updated,
             page=1,
             region=region,
             season_name=season_name,
@@ -427,8 +436,8 @@ class RankedCog(commands.Cog):
             current_page=1,
             total_pages=total_pages,
             region=region,
-            ranked_data=self.ranked_data,
-            last_updated=self.last_updated,
+            ranked_data=self.bot.cache.ranked_data,
+            last_updated=self.bot.cache.ranked_last_updated,
             season_name=season_name,
             pjsk_id=pjsk_id,
         )

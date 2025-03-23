@@ -52,38 +52,44 @@ def get_tier_index(tier: int, from_all: bool = False):
 class EventsCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
         self.bot = bot
-        self.ranking_data = {
+        self.bot.cache.ranking_data = {
             api.app_region: {"rankings": []} for api in methods.all_apis
         }
-        self.ranking_data["border"] = {
+        self.bot.cache.ranking_data["border"] = {
             api.app_region: {"borderRankings": []} for api in methods.all_apis
         }
-        self.last_updated = {api.app_region: 0 for api in methods.all_apis}
+        self.bot.cache.ranking_last_updated = {
+            api.app_region: 0 for api in methods.all_apis
+        }
 
-        self.update_cooldown = 00  # 1 minute
+        self.update_cooldown = 60  # 1 minute
 
         if os.path.exists("DATA/data/ASSETS/events/top100.json"):
             with open("DATA/data/ASSETS/events/top100.json", "r") as f:
                 data = json.load(f)
                 for k, v in data["data"].items():
-                    self.ranking_data[k] = v
+                    self.bot.cache.ranking_data[k] = v
                 for k, v in data["last_updated"].items():
-                    self.last_updated[k] = v
+                    self.bot.cache.ranking_last_updated[k] = v
 
     def update_rank_data(self, region: str, force: bool = False) -> str:
         api = methods.Tools.get_api(region)
-        if force or self.last_updated[region] + self.update_cooldown < time.time():
+        if (
+            force
+            or self.bot.cache.ranking_last_updated[region] + self.update_cooldown
+            < time.time()
+        ):
             try:
-                self.ranking_data[region] = api.get_event_leaderboard()
-                self.ranking_data["border"][region] = api.get_event_border()
-                self.last_updated[region] = time.time()
+                self.bot.cache.ranking_data[region] = api.get_event_leaderboard()
+                self.bot.cache.ranking_data["border"][region] = api.get_event_border()
+                self.bot.cache.ranking_last_updated[region] = time.time()
                 if not os.path.exists(f"DATA/data/ASSETS/events/"):
                     os.mkdir(f"DATA/data/ASSETS/events/")
                 with open(f"DATA/data/ASSETS/events/top100.json", "w+") as f:
                     json.dump(
                         {
-                            "last_updated": self.last_updated,
-                            "data": self.ranking_data,
+                            "last_updated": self.bot.cache.ranking_last_updated,
+                            "data": self.bot.cache.ranking_data,
                         },
                         f,
                     )
@@ -125,8 +131,8 @@ class EventsCog(commands.Cog):
             self.current_page = current_page
             self.total_pages = total_pages
             self.current_region = region
-            self.ranking_data = ranking_data
-            self.last_updated = last_updated
+            self.bot.cache.ranking_data = ranking_data
+            self.bot.cache.ranking_last_updated = last_updated
             self.event_name = event_name
             self.character = character
             self.pjsk_id = pjsk_id
@@ -139,8 +145,8 @@ class EventsCog(commands.Cog):
 
         async def update_message(self, interaction: discord.Interaction):
             embed, file = EventsCog.create_leaderboard_embed(
-                self.ranking_data,
-                self.last_updated,
+                self.bot.cache.ranking_data,
+                self.bot.cache.ranking_last_updated,
                 self.current_page,
                 self.current_region,
                 event_name=self.event_name,
@@ -213,22 +219,24 @@ class EventsCog(commands.Cog):
             name = ""
         if not character:
             if tier <= 100:
-                ranking = self.ranking_data[region]["rankings"][get_tier_index(tier)]
-            else:
-                ranking = self.ranking_data["border"][region]["borderRankings"][
+                ranking = self.bot.cache.ranking_data[region]["rankings"][
                     get_tier_index(tier)
                 ]
+            else:
+                ranking = self.bot.cache.ranking_data["border"][region][
+                    "borderRankings"
+                ][get_tier_index(tier)]
         else:
             f = False
             if tier <= 100:
-                ranking = self.ranking_data[region]
+                ranking = self.bot.cache.ranking_data[region]
                 for chapter in ranking["userWorldBloomChapterRankings"]:
                     if chapter["gameCharacterId"] == character["id"]:
                         f = True
                         ranking = chapter["rankings"][get_tier_index(tier)]
                         break
             else:
-                ranking = self.ranking_data["border"][region]
+                ranking = self.bot.cache.ranking_data["border"][region]
                 for chapter in ranking["userWorldBloomChapterRankingBorders"]:
                     if chapter["gameCharacterId"] == character["id"]:
                         f = True
@@ -239,7 +247,7 @@ class EventsCog(commands.Cog):
                     f"Character not found for current event!\n-# Occurs if the current event is NOT a World Link, or the wrong character is given."
                 )
                 embed.set_footer(
-                    text=f"Event Statistics - {region.upper()} - Last updated {round(time.time()-self.last_updated[region])}s ago"
+                    text=f"Event Statistics - {region.upper()} - Last updated {round(time.time()-self.bot.cache.ranking_last_updated[region])}s ago"
                 )
                 return (
                     embed,
@@ -298,7 +306,7 @@ class EventsCog(commands.Cog):
                 if (up_border is None or up_border <= 100) and (
                     down_border is None or down_border <= 100
                 ):
-                    ranking = self.ranking_data[region]
+                    ranking = self.bot.cache.ranking_data[region]
                     for chapter in ranking["userWorldBloomChapterRankings"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f = True
@@ -307,7 +315,7 @@ class EventsCog(commands.Cog):
                 elif (up_border is None or up_border > 100) and (
                     down_border is None or down_border > 100
                 ):
-                    ranking = self.ranking_data["border"][region]
+                    ranking = self.bot.cache.ranking_data["border"][region]
                     for chapter in ranking["userWorldBloomChapterRankingBorders"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f = True
@@ -315,13 +323,13 @@ class EventsCog(commands.Cog):
                             break
                 else:  # it's a mix
                     f1, f2 = False
-                    ranking = self.ranking_data[region]
+                    ranking = self.bot.cache.ranking_data[region]
                     for chapter in ranking["userWorldBloomChapterRankings"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f1 = True
                             darankings = chapter["rankings"]
                             break
-                    ranking = self.ranking_data["border"][region]
+                    ranking = self.bot.cache.ranking_data["border"][region]
                     for chapter in ranking["userWorldBloomChapterRankingBorders"]:
                         if chapter["gameCharacterId"] == character["id"]:
                             f2 = True
@@ -335,15 +343,17 @@ class EventsCog(commands.Cog):
                 if (up_border is None or up_border <= 100) and (
                     down_border is None or down_border <= 100
                 ):
-                    darankings = self.ranking_data[region]["rankings"]
+                    darankings = self.bot.cache.ranking_data[region]["rankings"]
                 elif (up_border is None or up_border > 100) and (
                     down_border is None or down_border > 100
                 ):
-                    darankings = self.ranking_data["border"][region]["borderRankings"]
+                    darankings = self.bot.cache.ranking_data["border"][region][
+                        "borderRankings"
+                    ]
                 else:  # it's a mix
-                    darankings = self.ranking_data[region]["rankings"]
+                    darankings = self.bot.cache.ranking_data[region]["rankings"]
                     darankings.extend(
-                        self.ranking_data["border"][region]["borderRankings"]
+                        self.bot.cache.ranking_data["border"][region]["borderRankings"]
                     )
 
             if up_border:
@@ -375,7 +385,7 @@ class EventsCog(commands.Cog):
         embed.set_thumbnail(url="attachment://image.png")
 
         embed.set_footer(
-            text=f"Event Statistics{' - ' + name.strip() if name != '' else ''} - {region.upper()} - Last updated {round(time.time()-self.last_updated[region])}s ago"
+            text=f"Event Statistics{' - ' + name.strip() if name != '' else ''} - {region.upper()} - Last updated {round(time.time()-self.bot.cache.ranking_last_updated[region])}s ago"
         )
         return (
             embed,
@@ -492,14 +502,14 @@ class EventsCog(commands.Cog):
                 )
             f = False
             if int(tier) <= 100:
-                ranking = self.ranking_data[region]
+                ranking = self.bot.cache.ranking_data[region]
                 for chapter in ranking["userWorldBloomChapterRankings"]:
                     if chapter["gameCharacterId"] == character["id"]:
                         f = True
                         darankings = chapter["rankings"]
                         break
             else:
-                ranking = self.ranking_data["border"][region]
+                ranking = self.bot.cache.ranking_data["border"][region]
                 for chapter in ranking["userWorldBloomChapterRankingBorders"]:
                     if chapter["gameCharacterId"] == character["id"]:
                         f = True
@@ -512,9 +522,11 @@ class EventsCog(commands.Cog):
                 return await interaction.followup.send(embed=embed)
         else:
             if int(tier) <= 100:
-                darankings = self.ranking_data[region]["rankings"]
+                darankings = self.bot.cache.ranking_data[region]["rankings"]
             else:
-                darankings = self.ranking_data["border"][region]["borderRankings"]
+                darankings = self.bot.cache.ranking_data["border"][region][
+                    "borderRankings"
+                ]
         return darankings
 
     @event.command(
@@ -614,7 +626,7 @@ class EventsCog(commands.Cog):
             return await interaction.followup.send(
                 embed=embeds.error_embed(
                     title="Not Found",
-                    description=f"I didn't find you on the {name}leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.last_updated[region])}s ago`",
+                    description=f"I didn't find you on the {name}leaderboards, since you're not on them.\n**Leaderboards Last Updated:** `{round(time.time()-self.bot.cache.ranking_last_updated[region])}s ago`",
                 )
             )
         if is_self or pjsk_id == darankings[get_tier_index(tier)]["userId"]:
@@ -684,8 +696,8 @@ class EventsCog(commands.Cog):
             interaction.user.id, region
         )
         embed, file = self.create_leaderboard_embed(
-            self.ranking_data,
-            self.last_updated,
+            self.bot.cache.ranking_data,
+            self.bot.cache.ranking_last_updated,
             page=1,
             region=region,
             event_name=event_name,
@@ -697,8 +709,8 @@ class EventsCog(commands.Cog):
             current_page=1,
             total_pages=total_pages,
             region=region,
-            ranking_data=self.ranking_data,
-            last_updated=self.last_updated,
+            ranking_data=self.bot.cache.ranking_data,
+            last_updated=self.bot.cache.ranking_last_updated,
             event_name=event_name,
             character=character,
             pjsk_id=pjsk_id,
@@ -892,8 +904,8 @@ class EventsCog(commands.Cog):
             interaction.user.id, region
         )
         embed, file = self.create_leaderboard_embed(
-            self.ranking_data["border"],
-            self.last_updated,
+            self.bot.cache.ranking_data["border"],
+            self.bot.cache.ranking_last_updated,
             page=1,
             region=region,
             event_name=event_name,
@@ -1003,7 +1015,7 @@ class EventsCog(commands.Cog):
         world_link = False
         if (
             len(
-                self.ranking_data["border"][region][
+                self.bot.cache.ranking_data["border"][region][
                     "userWorldBloomChapterRankingBorders"
                 ]
             )
@@ -1107,7 +1119,7 @@ class EventsCog(commands.Cog):
         )
         embed.set_thumbnail(url="attachment://image.png")
         embed.set_footer(
-            text=f"Event T{int(tier):,} Prediction - {region.upper()} - Current EP Last Updated {round(time.time()-self.last_updated[region])}s ago"
+            text=f"Event T{int(tier):,} Prediction - {region.upper()} - Current EP Last Updated {round(time.time()-self.bot.cache.ranking_last_updated[region])}s ago"
         )
         await interaction.followup.send(embed=embed, file=file)
 

@@ -178,14 +178,14 @@ class DevCog(commands.Cog):
     @is_owner()
     async def ban(self, ctx: commands.Context, user: discord.User):
         await self.bot.user_data.discord.set_banned(user.id, True)
-        self.bot.ban_cache.pop(user.id, None)
+        self.bot.cache.discord_bans.pop(user.id, None)
         await ctx.reply(embed=embeds.embed(f"Rip {user.display_name}"))
 
     @commands.command()
     @is_owner()
     async def unban(self, ctx: commands.Context, user: discord.User):
         await self.bot.user_data.discord.set_banned(user.id, False)
-        self.bot.ban_cache.pop(user.id, None)
+        self.bot.cache.discord_bans.pop(user.id, None)
         await ctx.reply(embed=embeds.embed(f"Wb {user.display_name}"))
 
     @commands.command()
@@ -281,7 +281,7 @@ class DevCog(commands.Cog):
                 for api in methods.all_apis:
                     api.master_data_cache = {}
                 self.bot.pjsk.refresh_data()
-                self.bot.constants_updated = 0  # force refresh when available
+                self.bot.cache.constants_updated = 0  # force refresh when available
 
             await to_process_with_timeout(_run, timeout=600)  # 10 minutes
             await self.bot.pjsk.get_custom_title_defs()

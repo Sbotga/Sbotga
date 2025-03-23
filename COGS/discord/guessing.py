@@ -152,7 +152,7 @@ class GuessCog(commands.Cog):
         self.check_guess_task.start()
 
     async def cog_load(self):
-        # if self.bot.guess_channels == {}:
+        # if self.bot.cache.guess_channels == {}:
         #     await self.download_jackets()
         #     # await self.download_cards()
         return await super().cog_load()
@@ -326,7 +326,7 @@ class GuessCog(commands.Cog):
                 await interaction.followup.send(embed=embed)
                 return False
             if already_guessing_check and (
-                (interaction.channel.id in self.bot.guess_channels)
+                (interaction.channel.id in self.bot.cache.guess_channels)
             ):
                 embed = embeds.error_embed(
                     f"A guessing game is already happening in this channel!",
@@ -386,7 +386,7 @@ class GuessCog(commands.Cog):
 
     async def download_jackets(self):
         self.bot.downloading_jackets = True
-        while self.bot.guess_channels != {}:
+        while self.bot.cache.guess_channels != {}:
             await asyncio.sleep(1)  # Wait for all guesses to finish.
         methods.pjsk_game_api.download_music_jackets()
         methods.pjsk_game_api_jp.download_music_jackets()
@@ -394,7 +394,7 @@ class GuessCog(commands.Cog):
 
     async def download_cards(self):
         self.bot.downloading_cards = True
-        while self.bot.guess_channels != {}:
+        while self.bot.cache.guess_channels != {}:
             await asyncio.sleep(1)  # Wait for all guesses to finish.
         # methods.pjsk_game_api.download_character_cards()
         methods.pjsk_game_api_jp.download_character_cards()
@@ -408,7 +408,7 @@ class GuessCog(commands.Cog):
 
     @staticmethod
     def remove_guess(bot: DiscordBot, channel_id: str):
-        guess = bot.guess_channels.pop(channel_id, {})
+        guess = bot.cache.guess_channels.pop(channel_id, {})
         if guess.get("id"):
             try:
                 bot.existing_ids.remove(guess.get("id"))
@@ -417,7 +417,10 @@ class GuessCog(commands.Cog):
 
     @staticmethod
     def guess_ended(bot: DiscordBot, data: dict) -> bool:
-        if bot.guess_channels.get(data["channel"].id, {}).get("id", "") != data["id"]:
+        if (
+            bot.cache.guess_channels.get(data["channel"].id, {}).get("id", "")
+            != data["id"]
+        ):
             return True
         return False
 
@@ -528,7 +531,7 @@ class GuessCog(commands.Cog):
                 else self.max_guess_time // 2
             )
 
-        for channel_id, data in self.bot.guess_channels.copy().items():
+        for channel_id, data in self.bot.cache.guess_channels.copy().items():
             if data["startTime"] and data["startTime"] + max_guess_time() < time.time():
                 try:
                     embed = embeds.embed(
@@ -713,18 +716,18 @@ class GuessCog(commands.Cog):
             ):
                 return
             if (
-                self.bot.guess_channels.get(message.channel.id, {}).get(
+                self.bot.cache.guess_channels.get(message.channel.id, {}).get(
                     "startTime", None
                 )
                 != None
             ):
-                if message.author.id in self.bot.ban_cache:
-                    banned = self.bot.ban_cache.get(message.author.id)
+                if message.author.id in self.bot.cache.discord_bans:
+                    banned = self.bot.cache.discord_bans.get(message.author.id)
                 else:
                     banned = await self.bot.user_data.discord.get_banned(
                         message.author.id
                     )
-                    self.bot.ban_cache[message.author.id] = banned
+                    self.bot.cache.discord_bans[message.author.id] = banned
                 if banned:
                     await message.reply(
                         embed=embeds.error_embed(
@@ -733,7 +736,7 @@ class GuessCog(commands.Cog):
                     )
                     return
                 try:
-                    data = self.bot.guess_channels[message.channel.id]
+                    data = self.bot.cache.guess_channels[message.channel.id]
                 except KeyError:
                     return
                 data["guessed"].append(message.author.id)
@@ -1497,7 +1500,7 @@ class GuessCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         if not (await self.channel_checks(interaction, already_guessing_check=False)):
             return
-        data = self.bot.guess_channels.get(interaction.channel.id)
+        data = self.bot.cache.guess_channels.get(interaction.channel.id)
         if not data:
             embed = embeds.error_embed("No ongoing guess.")
             await interaction.followup.send(embed=embed)
@@ -1563,7 +1566,7 @@ class GuessCog(commands.Cog):
         await interaction.response.defer(thinking=True)
         if not (await self.channel_checks(interaction, already_guessing_check=False)):
             return
-        data = self.bot.guess_channels.get(interaction.channel.id)
+        data = self.bot.cache.guess_channels.get(interaction.channel.id)
         if not data:
             embed = embeds.error_embed(
                 f"No ongoing guess.",
@@ -1659,11 +1662,11 @@ class GuessCog(commands.Cog):
             "data": {"success_modifier": 1},
         }
         new_id = generate_secure_string(25)
-        while new_id in self.bot.existing_guess_ids:
+        while new_id in self.bot.cache.existing_guess_ids:
             new_id = generate_secure_string(25)
-        self.bot.existing_guess_ids.append(new_id)
+        self.bot.cache.existing_guess_ids.append(new_id)
         new_guess["id"] = new_id
-        self.bot.guess_channels[interaction.channel.id] = new_guess
+        self.bot.cache.guess_channels[interaction.channel.id] = new_guess
         user_settings = await interaction.client.user_data.discord.get_settings(
             interaction.user.id
         )
