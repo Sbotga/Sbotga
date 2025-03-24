@@ -1036,8 +1036,8 @@ class EventsCog(commands.Cog):
             async with cs.get(url) as resp:
                 data = await resp.json(content_type=None)
 
-        for tier in darankings:
-            if tier["rank"] == int(tier):
+        for ranking in darankings:
+            if ranking["rank"] == int(tier):
                 current_ep = tier["score"]
                 break
 

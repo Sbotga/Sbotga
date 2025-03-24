@@ -297,8 +297,8 @@ class DiscordBot(discord_commands.Bot):
         self.cache.constants_updated = 0
         self.cache.guess_channels = (
             {}
-        )  #: Dict[int, Dict[str, Union[int, str, Dict[str, str]]]] = {}
-        self.cache.existing_guess_ids = {}  #: List[str] = []
+        )  #: Dict[int, Dict[str, Union[[int, str, Dict[str, str]]]] = {}
+        self.cache.existing_guess_ids = []  #: List[str] = []
         self.cache.executed_commands = deque()
 
     async def get_constant(
