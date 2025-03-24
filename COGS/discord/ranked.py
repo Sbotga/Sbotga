@@ -126,8 +126,8 @@ class RankedCog(commands.Cog):
             self.current_page = current_page
             self.total_pages = total_pages
             self.current_region = region
-            self.bot.cache.ranked_data = ranked_data
-            self.bot.cache.ranked_last_updated = last_updated
+            self.ranked_data = ranked_data
+            self.ranked_last_updated = last_updated
             self.season_name = season_name
             self.pjsk_id = pjsk_id
             self.update_buttons()
@@ -138,8 +138,8 @@ class RankedCog(commands.Cog):
 
         async def update_message(self, interaction: discord.Interaction):
             embed = RankedCog.create_leaderboard_embed(
-                self.bot.cache.ranked_data,
-                self.bot.cache.ranked_last_updated,
+                self.ranked_data,
+                self.ranked_last_updated,
                 self.current_page,
                 self.current_region,
                 season_name=self.season_name,

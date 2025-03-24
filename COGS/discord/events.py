@@ -131,8 +131,8 @@ class EventsCog(commands.Cog):
             self.current_page = current_page
             self.total_pages = total_pages
             self.current_region = region
-            self.bot.cache.ranking_data = ranking_data
-            self.bot.cache.ranking_last_updated = last_updated
+            self.ranking_data = ranking_data
+            self.ranking_last_updated = last_updated
             self.event_name = event_name
             self.character = character
             self.pjsk_id = pjsk_id
@@ -145,8 +145,8 @@ class EventsCog(commands.Cog):
 
         async def update_message(self, interaction: discord.Interaction):
             embed, file = EventsCog.create_leaderboard_embed(
-                self.bot.cache.ranking_data,
-                self.bot.cache.ranking_last_updated,
+                self.ranking_data,
+                self.ranking_last_updated,
                 self.current_page,
                 self.current_region,
                 event_name=self.event_name,
@@ -1038,7 +1038,7 @@ class EventsCog(commands.Cog):
 
         for ranking in darankings:
             if ranking["rank"] == int(tier):
-                current_ep = tier["score"]
+                current_ep = ranking["score"]
                 break
 
         total_pages = math.ceil(len(darankings) / 25)
