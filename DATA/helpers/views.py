@@ -648,6 +648,18 @@ class ProfileButton(SbotgaView):
             embed.set_footer(
                 text=f"Last Updated {round(time.time()-last_updated)}s ago"
             )
-            await interaction.followup.send(embed=embed)
+            try:
+                file = [
+                    file
+                    for file in methods.Tools.get_card_cutout_assets(
+                        data["userDeck"]["leader"]
+                    )
+                    if file.endswith("player_cell_result.png")
+                ][0]
+                file = discord.File(file, "image.png")
+                embed.set_thumbnail(url="attachment://image.png")
+            except:
+                file = discord.utils.MISSING
+            await interaction.followup.send(embed=embed, file=file)
         except Exception as e:
             raise e

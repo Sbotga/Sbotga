@@ -97,8 +97,20 @@ class UserCog(commands.Cog):
                     title="Link Failed",
                     description=f"**{data['user']['name']}**'s current bio is not `{self.link_code}`. Please try again.\n\n**Current Bio**\n```\n{data['userProfile'].get('word') or 'No Bio'}\n```",
                 )
+            try:
+                file = [
+                    file
+                    for file in methods.Tools.get_card_cutout_assets(
+                        data["userDeck"]["leader"]
+                    )
+                    if file.endswith("player_cell_result.png")
+                ][0]
+                file = discord.File(file, "image.png")
+                embed.set_thumbnail(url="attachment://image.png")
+            except:
+                file = discord.utils.MISSING
             return await interaction.followup.edit_message(
-                self.message.id, embed=embed, view=self
+                self.message.id, embed=embed, file=file, view=self
             )
 
     class UserIDModal(discord.ui.Modal):
@@ -181,7 +193,19 @@ class UserCog(commands.Cog):
                 user_id=user_id,
                 region=self.region,
             )
-            await msg.edit(embed=embed, view=view)
+            try:
+                file = [
+                    file
+                    for file in methods.Tools.get_card_cutout_assets(
+                        data["userDeck"]["leader"]
+                    )
+                    if file.endswith("player_cell_result.png")
+                ][0]
+                file = discord.File(file, "image.png")
+                embed.set_thumbnail(url="attachment://image.png")
+            except:
+                file = discord.utils.MISSING
+            await msg.edit(embed=embed, file=file, view=view)
             view.message = msg
 
     class TransferCheckView(views.SbotgaView):

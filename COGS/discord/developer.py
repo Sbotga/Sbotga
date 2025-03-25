@@ -266,6 +266,12 @@ class DevCog(commands.Cog):
             self.bot.user_data.db = self.bot.db
             await self.bot.user_data.fetch_data()
 
+    @commands.command(name="check_api")
+    @is_owner()
+    async def apicheck(self, ctx: commands.Context, region: str):
+        api = methods.Tools.get_api(region)
+        await ctx.reply(str(api.can_use_api))
+
     @commands.command(name="refresh")
     @is_owner()
     async def refresh(self, ctx: commands.Context):

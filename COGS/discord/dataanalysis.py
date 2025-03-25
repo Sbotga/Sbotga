@@ -23,7 +23,12 @@ from DATA.helpers import converters
 
 from DATA.game_api import methods
 
-from COGS.progress_generate import generate_progress, DifficultyCategory
+from COGS.progress_generate import (
+    generate_progress,
+    DifficultyCategory,
+    generate_general_progress,
+    StrDifficultyCategory,
+)
 
 
 class DataAnalysis(commands.Cog):
@@ -31,6 +36,7 @@ class DataAnalysis(commands.Cog):
         self.bot = bot
 
         self.cooldown_progress = {}
+        self.cooldown_summary = {}
         self.cooldown_b30 = {}
 
         self.cog_tasks.start()
@@ -47,6 +53,187 @@ class DataAnalysis(commands.Cog):
         for uid, last_ran in list(self.cooldown_progress.items()):
             if time.time() - last_ran > 120:  # 2 minutes
                 self.cooldown_progress.pop(uid, None)
+        for uid, last_ran in list(self.cooldown_summary.items()):
+            if time.time() - last_ran > 120:  # 2 minutes
+                self.cooldown_summary.pop(uid, None)
+
+    async def generate_summary(
+        self, user_data: dict, region: str, now: int, private: bool, user: discord.User
+    ) -> BytesIO:
+        difficulty_counts = {}
+
+        def _make():
+            for music_id, ds in self.bot.pjsk.difficulties.items():
+                for difficulty in ds.keys():
+                    check_regions = [region]
+                    leak, song_available_regions = methods.Tools.get_music_regions(
+                        music_id
+                    )
+                    song_has_append_regions = methods.Tools.get_music_append_regions(
+                        music_id
+                    )
+                    if leak:  # Leak on all regions
+                        continue
+                    if not any(
+                        m_ar in check_regions for m_ar in song_available_regions
+                    ):  # It's not found in any of the check regions.
+                        continue
+                    if difficulty == "append" and (
+                        not any(
+                            m_ar in check_regions for m_ar in song_has_append_regions
+                        )
+                    ):  # It's append and append was not found in any of the check regions.
+                        continue
+
+                    difficulty_counts[difficulty] = (
+                        difficulty_counts.get(difficulty, 0) + 1
+                    )
+
+            user_data["userMusicDifficultyClearCount"]
+            # [{'musicDifficultyType': 'easy', 'liveClear': 33, 'fullCombo': 22, 'allPerfect': 17}]
+            # 0 easy 1 normal 2 hard 3 expert 4 master 5 append
+
+            data = [
+                StrDifficultyCategory(
+                    difficulty="append",
+                    ap_count=user_data["userMusicDifficultyClearCount"][5][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][5]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][5][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["append"],
+                ),
+                StrDifficultyCategory(
+                    difficulty="master",
+                    ap_count=user_data["userMusicDifficultyClearCount"][4][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][4]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][4][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["master"],
+                ),
+                StrDifficultyCategory(
+                    difficulty="expert",
+                    ap_count=user_data["userMusicDifficultyClearCount"][3][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][3]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][3][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["expert"],
+                ),
+                StrDifficultyCategory(
+                    difficulty="hard",
+                    ap_count=user_data["userMusicDifficultyClearCount"][2][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][2]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][2][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["hard"],
+                ),
+                StrDifficultyCategory(
+                    difficulty="normal",
+                    ap_count=user_data["userMusicDifficultyClearCount"][1][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][1]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][1][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["normal"],
+                ),
+                StrDifficultyCategory(
+                    difficulty="easy",
+                    ap_count=user_data["userMusicDifficultyClearCount"][0][
+                        "allPerfect"
+                    ],
+                    fc_count=user_data["userMusicDifficultyClearCount"][0]["fullCombo"],
+                    clear_count=user_data["userMusicDifficultyClearCount"][0][
+                        "liveClear"
+                    ],
+                    all_count=difficulty_counts["easy"],
+                ),
+            ]
+
+            img = generate_general_progress(data)
+
+            img = Image.open(img)
+
+            SCALE = 2
+            new_height = img.height + (100 * SCALE)
+            new_img = Image.new(
+                "RGBA", (img.width, new_height), (50, 50, 50, 255)
+            )  # Dark gray bar
+            new_img.paste(img, (0, (100 * SCALE)))
+
+            draw = ImageDraw.Draw(new_img)
+            font = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_eb.otf", 30 * SCALE)
+            font_2 = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_m.otf", 30 * SCALE)
+            font_3 = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_m.otf", 20 * SCALE)
+
+            new_height = img.height + 100 * SCALE  # Adjusting for one region
+            new_img = Image.new(
+                "RGBA", (img.width, new_height), (50, 50, 50, 255)
+            )  # Dark gray bar
+            new_img.paste(img, (0, 100 * SCALE))
+
+            timestamp = now
+            data_date = datetime.fromtimestamp(timestamp, tz=timezone.utc).strftime(
+                "%Y-%m-%d"
+            )
+            data_time = datetime.fromtimestamp(timestamp, tz=timezone.utc).strftime(
+                "%H:%M"
+            )
+
+            draw = ImageDraw.Draw(new_img)
+            font = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_eb.otf", 30 * SCALE)
+            font_2 = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_m.otf", 30 * SCALE)
+            font_3 = ImageFont.truetype("DATA/data/ASSETS/rodinntlg_m.otf", 20 * SCALE)
+
+            # Draw user information
+            draw.text(
+                (10, 15 * SCALE),
+                (f"{user_data['user']['name']}" if not private else f"{user.name}"),
+                font=font,
+                fill="white",
+            )
+            draw.text(
+                (10, 60 * SCALE),
+                (
+                    f"{region.upper()} ID: {user_data['user']['userId']}"
+                    if not private
+                    else f"{region.upper()} Account"
+                ),
+                font=font_3,
+                fill="white",
+            )
+            draw.text(
+                (img.width - 215 * SCALE, 10 * SCALE),
+                f"{data_date}",
+                font=font_2,
+                fill="white",
+            )
+            draw.text(
+                (img.width - 200 * SCALE, 50 * SCALE),
+                f"{data_time} UTC",
+                font=font_2,
+                fill="white",
+            )
+            output = BytesIO()
+            new_img.save(output, format="PNG")
+            output.seek(0)
+            return output
+
+        output = await to_process_with_timeout(_make)
+
+        return output
 
     async def generate_progress(
         self, data: dict, difficulty: str, private: bool, user: discord.User
@@ -1293,7 +1480,7 @@ class DataAnalysis(commands.Cog):
         if sub_level < 3:
             cooldown_end = (
                 self.cooldown_b30.get(interaction.user.id, 0) + 90
-            )  # 1 minute
+            )  # 1.5 minutes
             if cooldown_end > current_time:
                 embed = embeds.error_embed(
                     (
@@ -1464,7 +1651,7 @@ class DataAnalysis(commands.Cog):
         if sub_level < 3:
             cooldown_end = (
                 self.cooldown_progress.get(interaction.user.id, 0) + 90
-            )  # 1 minute
+            )  # 1.5 minutes
             if cooldown_end > current_time:
                 embed = embeds.error_embed(
                     (
@@ -1548,6 +1735,109 @@ class DataAnalysis(commands.Cog):
             await interaction.edit_original_response(embed=embed, attachments=[file])
         except:
             self.cooldown_progress[interaction.user.id] = old_cooldown
+            raise
+
+    @app_commands.command(
+        auto_locale_strings=False,
+        name=locale_str("summary", key="summary.name", file="commands"),
+        description=locale_str("summary.desc", file="commands"),
+    )
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.autocomplete(
+        region=autocompletes.autocompletes.pjsk_region(["en", "jp", "tw", "kr", "cn"])
+    )
+    @app_commands.describe(
+        region=locale_str("general.region"), private=locale_str("general.pjsk_private")
+    )
+    async def user_summary(
+        self,
+        interaction: discord.Interaction,
+        region: str = "default",
+        private: bool = False,
+    ):
+        region = region.lower().strip()
+        if region not in ["en", "jp", "tw", "kr", "cn", "default"]:
+            return await interaction.response.send_message(
+                embed=embeds.error_embed(
+                    await interaction.translate(
+                        locale_str(
+                            "errors.unsupported_region",
+                            replacements={"{region}": region.upper()},
+                        )
+                    )
+                ),
+                ephemeral=True,
+            )
+        if region == "default":
+            settings = await self.bot.user_data.discord.get_settings(
+                interaction.user.id
+            )
+            if region == "default":
+                region = settings["default_region"]
+
+        sub_level = await self.bot.subscribed(interaction.user)
+        current_time = time.time()
+        if sub_level < 3:
+            cooldown_end = (
+                self.cooldown_summary.get(interaction.user.id, 0) + 90
+            )  # 1.5 minutes
+            if cooldown_end > current_time:
+                embed = embeds.error_embed(
+                    (
+                        f"You recently ran summary. Try again <t:{int(cooldown_end)}:R>.\n"
+                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See </donate:1326321351417528442>"
+                    )
+                )
+                return await interaction.response.send_message(
+                    embed=embed, ephemeral=True
+                )
+        else:
+            cooldown_end = (
+                self.cooldown_summary.get(interaction.user.id, 0) + 20
+            )  # 20 seconds
+            if cooldown_end > current_time:
+                embed = embeds.error_embed(
+                    f"You recently ran summary already. Try again <t:{int(cooldown_end)}:R>."
+                )
+                return await interaction.response.send_message(
+                    embed=embed, ephemeral=True
+                )
+
+        old_cooldown = self.cooldown_summary.get(interaction.user.id, 0)
+        self.cooldown_summary[interaction.user.id] = time.time()
+
+        try:
+            await interaction.response.defer(thinking=True)
+            pjsk_id = await self.bot.user_data.discord.get_pjsk_id(
+                interaction.user.id, region
+            )
+            if not pjsk_id:
+                self.cooldown_summary[interaction.user.id] = old_cooldown
+                return await interaction.followup.send(
+                    embed=embeds.error_embed(
+                        f"You are not linked to a PJSK {region.upper()} account.",
+                    ).set_footer(text="Your cooldown was reset.")
+                )
+
+            await interaction.followup.send(
+                embed=embeds.embed("Please wait while we generate your image...")
+            )
+
+            api = methods.Tools.get_api(region)
+            data = api.get_profile(pjsk_id, forced=True)
+
+            img = await self.generate_summary(
+                data, region, round(time.time()), private, interaction.user
+            )
+            embed = embeds.embed(
+                title="Your PJSK Summary", color=discord.Color.dark_gold()
+            )
+            file = discord.File(img, "image.png")
+            embed.set_image(url="attachment://image.png")
+            embed.set_footer(text="Limited time songs included.")
+            await interaction.edit_original_response(embed=embed, attachments=[file])
+        except:
+            self.cooldown_summary[interaction.user.id] = old_cooldown
             raise
 
 

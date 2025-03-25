@@ -210,5 +210,10 @@
                 "describes": {}
             }
         }
+    },
+    "summary": {
+        "name": "summary",
+        "desc": "View your PJSK all difficulty summary!",
+        "describes": {}
     }
 }

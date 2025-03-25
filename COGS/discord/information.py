@@ -229,7 +229,7 @@ class InfoCog(commands.Cog):
         await interaction.response.defer(ephemeral=False, thinking=True)
         embed = embeds.embed(
             title=f"{self.bot.user.name}",
-            description=f"Sbuga <:sbuga:1293557990397448285>\n\n**Invite:** https://discord.com/oauth2/authorize?client_id=1322253224799109281\n**Support:** https://discord.gg/JKANSRGPNW\n\n**Commands:** https://github.com/Sbotga/info/blob/main/en/COMMANDS.md\n**TOS:** https://github.com/Sbotga/info/blob/main/legal/TOS.md\n**Privacy Policy:** https://github.com/Sbotga/info/blob/main/legal/PRIVACY.md\n\n-# {self.bot.user.mention} is in no way affiliated with SEGA, Colorful Palette, or Project Sekai.",
+            description=f"Sbuga <:sbuga:1293557990397448285>\n\n**Invite:** https://discord.com/oauth2/authorize?client_id=1322253224799109281\n**Support:** https://discord.gg/JKANSRGPNW\n\n**Commands:** https://github.com/Sbotga/info/blob/main/en/COMMANDS.md\n\nTOS: https://github.com/Sbotga/info/blob/main/legal/TOS.md\nPrivacy Policy: https://github.com/Sbotga/info/blob/main/legal/PRIVACY.md\nSource Code: https://github.com/Sbotga/Sbotga\n\n-# {self.bot.user.mention} is in no way affiliated with SEGA, Colorful Palette, or Project Sekai.",
         )
         await interaction.followup.send(embed=embed)
 
@@ -284,7 +284,7 @@ class InfoCog(commands.Cog):
 
         # Create the embed
         embed = embeds.embed(
-            title=f"{tools.escape_md(user.name)}'s Profile",
+            title=f"{tools.escape_md(user.name)}'s Balance",
             description=is_staff,
             color=discord.Color.blue(),
         )
@@ -405,7 +405,19 @@ class InfoCog(commands.Cog):
         embed.set_footer(
             text=f"{region.upper()} - Last updated {round(time.time()-last_updated)}s ago"
         )
-        await interaction.followup.send(embed=embed)
+        try:
+            file = [
+                file
+                for file in methods.Tools.get_card_cutout_assets(
+                    data["userDeck"]["leader"]
+                )
+                if file.endswith("player_cell_result.png")
+            ][0]
+            file = discord.File(file, "image.png")
+            embed.set_thumbnail(url="attachment://image.png")
+        except Exception as e:
+            file = discord.utils.MISSING
+        await interaction.followup.send(embed=embed, file=file)
 
     alias = app_commands.Group(
         name="alias",
