@@ -330,16 +330,6 @@ class DiscordBot(discord_commands.Bot):
     ):  # overwritten in achievements.py
         ...
 
-    async def add_experience(
-        self,
-        intage: discord.Interaction | discord.Message,
-        xp: int,
-        user: discord.User = None,
-        ephemeral: bool = False,
-        prog_bar: bool = True,
-    ):  # overwritten in achievements.py
-        ...
-
     async def grant_reward(
         self, user: discord.User, type: str, amount: str
     ):  # overwritten in achievements.py
@@ -689,7 +679,6 @@ async def start_bot():
     settings JSONB;
     achievements JSONB DEFAULT '{}';
     currency BIGINT DEFAULT 0;
-    experience BIGINT NOT NULL DEFAULT 0;
     blacklisted BOOLEAN 
 );
 CREATE TABLE counters (

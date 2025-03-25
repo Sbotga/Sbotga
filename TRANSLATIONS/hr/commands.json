@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Pogledaj profil korisnika.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Pogledaj pojedinosti određenog igrača na ovom rangu.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_za",
-        "desc": "Dobij XP potreban za određenu razinu.",
-        "describes": {
-            "level": "Razina za izračun XP-a."
         }
     }
 }

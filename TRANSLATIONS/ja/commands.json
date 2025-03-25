@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "プロフィール",
-        "desc": "ユーザーのプロフィールを表示。",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "このランクで特定プレイヤーの詳細を表示します。",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_taishou",
-        "desc": "特定レベルに必要なXPを取得します。",
-        "describes": {
-            "level": "XPを計算するレベル。"
         }
     }
 }

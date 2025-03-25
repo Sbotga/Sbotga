@@ -25,7 +25,6 @@ class Achievements(commands.Cog):
 
         self.bot.add_achievement = self.add_achievement
         self.bot.grant_reward = self.grant_reward
-        self.bot.add_experience = self.add_experience
         self.bot.add_currency = self.add_currency
 
     @commands.Cog.listener()
@@ -40,8 +39,6 @@ class Achievements(commands.Cog):
     async def grant_reward(self, user: discord.User, type: str, amount: int) -> int:
         if type == "currency":
             return await self.bot.user_data.discord.add_currency(user.id, amount)
-        elif type == "xp":
-            return await self.bot.user_data.discord.add_experience(user.id, amount)
 
     async def add_currency(
         self,
@@ -51,62 +48,6 @@ class Achievements(commands.Cog):
     ):
         user = user or (intage.user if hasattr(intage, "user") else intage.author)
         await self.bot.grant_reward(user, "currency", currency)
-
-    async def add_experience(
-        self,
-        intage: discord.Interaction | discord.Message,
-        xp: int,
-        user: discord.User = None,
-        ephemeral: bool = False,
-        prog_bar: bool = True,
-    ) -> None:
-        user = user or (intage.user if hasattr(intage, "user") else intage.author)
-
-        new_xp = await self.bot.grant_reward(user, "xp", xp)
-        new_level = self.bot.user_data.discord.calculate_level(new_xp)
-        level = self.bot.user_data.discord.calculate_level(new_xp - xp)
-
-        # tuple: level, exp to next level, xp needed
-        if level == new_level:
-            pass
-        else:
-            if level[0] == new_level[0]:
-                pass  # xp added but no new level
-            else:
-                if prog_bar:
-                    bar = (
-                        progress_bar.generate_progress_bar(
-                            0, new_level[1], new_level[2]
-                        )
-                        + " "
-                    )
-                else:
-                    bar = ""
-                level_up = f"Leveled up {new_level[0]-level[0]:,} time{'s' if new_level[0]-level[0]  != 1 else ''}!\n"
-                embed = embeds.embed(
-                    title="Level Up!",
-                    description=f"{user.mention} {level_up}Level {new_level[0]:,} - {bar}({new_level[1]:,}/{new_level[2]:,} XP)",
-                    color=discord.Color.green(),
-                )
-
-                if intage.guild:
-                    perms = intage.channel.permissions_for(intage.guild.me)
-                    correct_perms = (
-                        perms.send_messages
-                        and (
-                            not isinstance(intage.channel, discord.Thread)
-                            or perms.send_messages_in_threads
-                        )
-                        and perms.embed_links
-                    )
-                else:
-                    correct_perms = True
-                if hasattr(intage, "reply") and correct_perms:
-                    await intage.reply(embed=embed)
-                elif hasattr(intage, "followup"):
-                    await intage.followup.send(embed=embed, ephemeral=ephemeral)
-                elif hasattr(intage, "channel") and correct_perms:
-                    await intage.channel.send(embed=embed)
 
     async def add_achievement(
         self,
@@ -176,8 +117,6 @@ class Achievements(commands.Cog):
 
         reward_field = []
 
-        new_xp = None
-        old_xp = None
         for reward in rewards:
             amount = reward["amount"]
             reward_type = reward["type"]
@@ -186,10 +125,6 @@ class Achievements(commands.Cog):
                     f"- Earned {amount:,} {discord_emojis.emojis.sbugacoin}!"
                 )
                 await self.bot.grant_reward(user, reward_type, amount)
-            elif reward["type"] == "xp":
-                reward_field.append(f"- Earned {amount:,} XP!")
-                new_xp = await self.bot.grant_reward(user, reward_type, amount)
-                old_xp = new_xp - amount
             elif reward["type"] == "money":
                 reward_field.append(
                     f"- Earned ${amount:,}! Congratulations, you earned real money as a prize. Please join our support server to claim.\n-# Prizes are subject to our TOS, and may be revoked at our discretion."
@@ -198,30 +133,6 @@ class Achievements(commands.Cog):
         if reward_field:
             reward_field = "\n".join(reward_field)
             embed.description += f"\n{reward_field}"
-
-        if new_xp is not None:
-            level = self.bot.user_data.discord.calculate_level(old_xp)
-            new_level = self.bot.user_data.discord.calculate_level(new_xp)
-
-            # tuple: level, exp to next level, xp needed
-            if level == new_level:
-                pass
-            else:
-                if level[0] == new_level[0]:
-                    bar = progress_bar.generate_progress_bar(
-                        level[1], new_level[1], new_level[2]
-                    )
-                    level_up = ""
-                else:
-                    bar = progress_bar.generate_progress_bar(
-                        0, new_level[1], new_level[2]
-                    )
-                    level_up = f"Leveled up {new_level[0]-level[0]:,} time{'s' if new_level[0]-level[0]  != 1 else ''}!\n"
-                embed.add_field(
-                    name="Level",
-                    value=f"{level_up}Level {new_level[0]:,} - {bar} ({new_level[1]:,}/{new_level[2]:,} XP)",
-                    inline=False,
-                )
 
         if hasattr(intage, "reply") and correct_perms:
             await intage.reply(embed=embed)

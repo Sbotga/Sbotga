@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "個人資料",
-        "desc": "查看用戶的個人資料。",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "查看該排名中某玩家的詳細資訊。",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "經驗需求",
-        "desc": "取得指定等級所需的經驗值。",
-        "describes": {
-            "level": "要計算經驗值的等級。"
         }
     }
 }

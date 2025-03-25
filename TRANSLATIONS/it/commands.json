@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profilo",
-        "desc": "Visualizza il profilo di un utente.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Visualizza i dettagli di un giocatore in questo rango.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_per",
-        "desc": "Ottieni l'XP richiesto per un determinato livello.",
-        "describes": {
-            "level": "Livello per cui calcolare l'XP."
         }
     }
 }

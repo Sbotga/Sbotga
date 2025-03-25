@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "프로필",
-        "desc": "사용자의 프로필을 봅니다.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "이 랭크의 특정 플레이어 정보를 봅니다.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "경험치대상",
-        "desc": "특정 레벨에 필요한 XP를 확인합니다.",
-        "describes": {
-            "level": "XP를 계산할 레벨입니다."
         }
     }
 }

@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profiel",
-        "desc": "Bekijk het profiel van een gebruiker.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Bekijk details van een specifieke speler op deze rang.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_voor",
-        "desc": "Bekijk de vereiste XP voor een bepaald level.",
-        "describes": {
-            "level": "Level waarvoor XP moet worden berekend."
         }
     }
 }

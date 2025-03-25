@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Vezi profilul unui utilizator.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Vezi detalii despre un jucător la acest rang.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_pentru",
-        "desc": "Obține XP necesare pentru un anumit nivel.",
-        "describes": {
-            "level": "Nivelul pentru care să calculezi XP-ul."
         }
     }
 }

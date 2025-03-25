@@ -185,7 +185,7 @@
             }
         }
     },
-    "profile": {
+    "balance": {
         "name": "",
         "desc": "",
         "describes": {}
@@ -209,13 +209,6 @@
                 "desc": "",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "",
-        "desc": "",
-        "describes": {
-            "level": ""
         }
     }
 }

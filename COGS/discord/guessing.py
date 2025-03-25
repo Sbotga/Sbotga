@@ -804,13 +804,10 @@ class GuessCog(commands.Cog):
                             random.randint(3, 8)
                             * data["data"].get("success_modifier", 1)
                         )
-                        am_experience = int(
-                            random.randint(50, 200)
-                            * data["data"].get("success_modifier", 1)
-                        )
+
                         embed.add_field(
                             name="Rewards",
-                            value=f"- Earned {am_currency:,} {emojis.sbugacoin} and {am_experience:,} XP!",
+                            value=f"- Earned {am_currency:,} {emojis.sbugacoin}!",
                             inline=False,
                         )
                         msg = await message.reply(embed=embed, view=view, files=files)
@@ -825,10 +822,6 @@ class GuessCog(commands.Cog):
                         if view:
                             view.message = msg
                         await self.bot.add_currency(message, am_currency)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
                         return
                     else:
                         embed = embeds.error_embed(
@@ -861,9 +854,7 @@ class GuessCog(commands.Cog):
                             )
                         songaliasview = views.SongAliasesButton(song.id)
                         songaliasview.timeout = 10
-                        am_experience = random.randint(5, 10)
-                        embed.set_footer(text=f"✨ +{am_experience} XP")
-                        tip = random.randint(1, 20) == 7
+                        tip = random.randint(1, 30) == 7
                         if tip:
                             reply_embeds.append(random.choice(self.tip_embeds))
                         msg = await message.reply(
@@ -878,10 +869,7 @@ class GuessCog(commands.Cog):
                                 return_all=True,
                             )
                             await self.handle_guess_achievement(message, g_data)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
+
                         return
                 if data["guessType"] == "character":
                     char = converters.CharFromPJSK(self.bot.pjsk, content)
@@ -938,13 +926,10 @@ class GuessCog(commands.Cog):
                             random.randint(3, 8)
                             * data["data"].get("success_modifier", 1)
                         )
-                        am_experience = int(
-                            random.randint(50, 200)
-                            * data["data"].get("success_modifier", 1)
-                        )
+
                         embed.add_field(
                             name="Rewards",
-                            value=f"- Earned {am_currency:,} {emojis.sbugacoin} and {am_experience:,} XP!",
+                            value=f"- Earned {am_currency:,} {emojis.sbugacoin}!",
                             inline=False,
                         )
                         msg = await message.reply(embed=embed, view=view, files=files)
@@ -959,10 +944,6 @@ class GuessCog(commands.Cog):
                         if view:
                             view.message = msg
                         await self.bot.add_currency(message, am_currency)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
                         return
                     else:
                         char_name = (
@@ -995,9 +976,8 @@ class GuessCog(commands.Cog):
                                     f"Please stop pinging the bot to guess! We are transitioning to prefix-based guessing.\n\nUse `{self.guess_prefix}your guess here` to guess."
                                 )
                             )
-                        am_experience = random.randint(5, 10)
-                        embed.set_footer(text=f"✨ +{am_experience} XP")
-                        tip = random.randint(1, 20) == 7
+
+                        tip = random.randint(1, 30) == 7
                         if tip:
                             reply_embeds.append(random.choice(self.tip_embeds))
                         await message.reply(embeds=reply_embeds, files=files)
@@ -1009,10 +989,6 @@ class GuessCog(commands.Cog):
                                 return_all=True,
                             )
                             await self.handle_guess_achievement(message, g_data)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
                         return
                 if data["guessType"] == "event":
                     event = converters.EventFromPJSK(self.bot.pjsk, content)
@@ -1069,13 +1045,10 @@ class GuessCog(commands.Cog):
                             random.randint(3, 8)
                             * data["data"].get("success_modifier", 1)
                         )
-                        am_experience = int(
-                            random.randint(50, 200)
-                            * data["data"].get("success_modifier", 1)
-                        )
+
                         embed.add_field(
                             name="Rewards",
-                            value=f"- Earned {am_currency:,} {emojis.sbugacoin} and {am_experience:,} XP!",
+                            value=f"- Earned {am_currency:,} {emojis.sbugacoin}!",
                             inline=False,
                         )
                         msg = await message.reply(embed=embed, view=view, files=files)
@@ -1090,10 +1063,6 @@ class GuessCog(commands.Cog):
                         if view:
                             view.message = msg
                         await self.bot.add_currency(message, am_currency)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
                         return
                     else:
                         embed = embeds.error_embed(
@@ -1108,15 +1077,14 @@ class GuessCog(commands.Cog):
                         files.append(file)
                         embed.set_thumbnail(url="attachment://image.png")
                         reply_embeds = [embed]
-                        tip = random.randint(1, 20) == 7
+                        tip = random.randint(1, 30) == 7
                         if guess_method == "ping" and deprecate_old:
                             reply_embeds.append(
                                 embeds.warn_embed(
                                     f"Please stop pinging the bot to guess! We are transitioning to prefix-based guessing.\n\nUse `{self.guess_prefix}your guess here` to guess."
                                 )
                             )
-                        am_experience = random.randint(5, 10)
-                        embed.set_footer(text=f"✨ +{am_experience} XP")
+
                         if tip:
                             reply_embeds.append(random.choice(self.tip_embeds))
                         await message.reply(embeds=reply_embeds, files=files)
@@ -1128,10 +1096,6 @@ class GuessCog(commands.Cog):
                                 return_all=True,
                             )
                             await self.handle_guess_achievement(message, g_data)
-                        # await self.bot.add_experience(
-                        #     message, am_experience, prog_bar=False
-                        # )
-                        await self.bot.grant_reward(message.author, "xp", am_experience)
                         return
         except Exception as e:
             self.bot.traceback(e)

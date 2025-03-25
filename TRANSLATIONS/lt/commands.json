@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profilis",
-        "desc": "Peržiūrėkite naudotojo profilį.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Peržiūrėkite konkretaus žaidėjo detales šiame reitinge.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_uz",
-        "desc": "Gauti reikiamą XP tam tikram lygiui.",
-        "describes": {
-            "level": "Lygis, kuriam apskaičiuoti XP."
         }
     }
 }

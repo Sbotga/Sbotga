@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "pwofiwe",
-        "desc": "View a usew's pwofiwe, nya.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "View detaiws of a specific pwayew at dis wank, nya.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_fow",
-        "desc": "Get XP wequiwed fow a cewtain wevew, nya.",
-        "describes": {
-            "level": "Wevew tu cawcuwate XP fow, nya."
         }
     }
 }

@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Se en brukers profil.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Vis spillerdetaljer for denne rangen.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "erf_for",
-        "desc": "Hent XP som kreves for et bestemt nivå.",
-        "describes": {
-            "level": "Nivået du vil beregne XP for."
         }
     }
 }

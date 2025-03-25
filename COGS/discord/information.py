@@ -235,71 +235,19 @@ class InfoCog(commands.Cog):
 
     @app_commands.command(
         auto_locale_strings=False,
-        name=locale_str("xp_for", key="xp_for.name", file="commands"),
-        description=locale_str("xp_for.desc", file="commands"),
-    )
-    @app_commands.allowed_installs(guilds=True, users=True)
-    @app_commands.describe(
-        level=locale_str("xp_for.describes.level", file="commands"),
-    )
-    async def xp_for_cmd(self, interaction: discord.Interaction, level: int):
-        if level < 1 or level > 3939:
-            return await interaction.response.send_message(
-                embed=embeds.error_embed("Invalid level.")
-            )
-
-        await interaction.response.defer(thinking=True)
-        xp_needed = self.bot.user_data.discord.xp_for_level(level)
-        current_xp = await self.bot.user_data.discord.get_experience(
-            interaction.user.id
-        )
-
-        if current_xp == 0:
-            faked_xp = 1
-        else:
-            faked_xp = current_xp
-        bar = progress_bar.generate_progress_bar(
-            min(faked_xp, max(1, xp_needed)),
-            min(faked_xp, max(1, xp_needed)),
-            max(1, xp_needed),
-            bar_length=20,
-        )
-
-        embed = embeds.embed(
-            title=f"XP For Level {level:,}.",
-            description=f"{xp_needed:,} XP is needed for level {level:,}. You have {current_xp:,} XP.",
-            color=discord.Color.blue(),
-        )
-        embed.add_field(
-            name=f"Your Progress ({current_xp:,}/{xp_needed:,})",
-            value=bar,
-            inline=False,
-        )
-
-        await interaction.followup.send(embed=embed)
-
-    @app_commands.command(
-        auto_locale_strings=False,
-        name=locale_str("profile", key="profile.name", file="commands"),
-        description=locale_str("profile.desc", file="commands"),
+        name=locale_str("balance", key="balance.name", file="commands"),
+        description=locale_str("balance.desc", file="commands"),
     )
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.describe(user=locale_str("general.discord_user"))
-    async def profile(
+    async def balance(
         self, interaction: discord.Interaction, user: discord.User = None
     ):
         if user == None:
             user = interaction.user
         await interaction.response.defer(thinking=True)
 
-        level, current_xp, xp_needed = self.bot.user_data.discord.calculate_level(
-            await self.bot.user_data.discord.get_experience(user.id)
-        )
         currency = await self.bot.user_data.discord.get_currency(user.id)
-
-        bar = progress_bar.generate_progress_bar(
-            current_xp, current_xp, xp_needed, bar_length=20
-        )
 
         guild = self.bot.get_guild(1238684904804319243)
         if not guild:
@@ -341,11 +289,6 @@ class InfoCog(commands.Cog):
             color=discord.Color.blue(),
         )
         embed.set_thumbnail(url=user.avatar.url)
-        embed.add_field(
-            name=f"Level {level}",
-            value=f"{bar}\nXP: {current_xp:,}/{xp_needed:,}",
-            inline=False,
-        )
         embed.add_field(
             name="Sbugacoin", value=f"**{currency:,}** {emojis.sbugacoin}", inline=False
         )

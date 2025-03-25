@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Bir kullanıcının profilini görüntüle.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Bu derecedeki belirli bir oyuncunun detaylarını göster.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_gerekli",
-        "desc": "Belirli bir seviye için gereken XP miktarını al.",
-        "describes": {
-            "level": "Hangi seviye için XP hesaplanacağını seç."
         }
     }
 }

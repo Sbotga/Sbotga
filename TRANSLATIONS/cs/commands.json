@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Zobrazit profil uživatele.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Zobrazí detaily konkrétního hráče v tomto hodnocení.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_for",
-        "desc": "Získat XP potřebné pro určitý level.",
-        "describes": {
-            "level": "Úroveň, pro kterou spočítat XP."
         }
     }
 }

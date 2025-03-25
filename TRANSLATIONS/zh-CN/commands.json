@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "资料",
-        "desc": "查看用户的个人资料。",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "查看该排名下特定玩家的详细信息。",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "经验_获取",
-        "desc": "获取某等级所需的 XP。",
-        "describes": {
-            "level": "要计算 XP 的等级。"
         }
     }
 }

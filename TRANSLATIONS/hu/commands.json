@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profil",
-        "desc": "Nézd meg egy felhasználó profilját.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Nézd meg egy adott játékos részleteit ezen a rangon.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_nek",
-        "desc": "Szerezd meg a szükséges XP-t egy adott szinthez.",
-        "describes": {
-            "level": "A szint, amelyhez az XP-t számolod."
         }
     }
 }

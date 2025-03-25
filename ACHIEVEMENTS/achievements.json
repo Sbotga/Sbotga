@@ -7,71 +7,81 @@
             "1": {
                 "name": "Did I Get It?",
                 "description": "You've made your first guess!",
-                "rewards": [
-                    {"type": "xp", "amount": 50}
-                ]
+                "rewards": []
             },
             "2": {
                 "name": "Hey, this is fun!",
                 "description": "Guess 39 times.",
-                "rewards": [
-                    {"type": "xp", "amount": 100}
-                ]
+                "rewards": []
             },
             "3": {
                 "name": "Guess Addict",
                 "description": "Guess 250 times.",
                 "rewards": [
-                    {"type": "currency", "amount": 300},
-                    {"type": "xp", "amount": 1600}
+                    {
+                        "type": "currency",
+                        "amount": 300
+                    }
                 ]
             },
             "4": {
                 "name": "Guess Addict II",
                 "description": "Guess 1000 times??",
                 "rewards": [
-                    {"type": "currency", "amount": 750},
-                    {"type": "xp", "amount": 2000}
+                    {
+                        "type": "currency",
+                        "amount": 750
+                    }
                 ]
             },
             "5": {
                 "name": "Quit Now",
                 "description": "Guess 3939 times...",
                 "rewards": [
-                    {"type": "currency", "amount": 3939},
-                    {"type": "xp", "amount": 3939}
+                    {
+                        "type": "currency",
+                        "amount": 3939
+                    }
                 ]
             },
             "6": {
                 "name": "Guess Guess Guess Guess",
                 "description": "5000 times you have guessed.",
                 "rewards": [
-                    {"type": "currency", "amount": 3500},
-                    {"type": "xp", "amount": 7500}
+                    {
+                        "type": "currency",
+                        "amount": 3500
+                    }
                 ]
             },
             "7": {
                 "name": "Natural Born Guesser",
                 "description": "That's 10,000. Touch some grass!",
                 "rewards": [
-                    {"type": "currency", "amount": 12500},
-                    {"type": "xp", "amount": 17500}
+                    {
+                        "type": "currency",
+                        "amount": 12500
+                    }
                 ]
             },
             "8": {
                 "name": "I Only Know PJSK",
                 "description": "You must know everything here by now... with 20,000 guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 25000},
-                    {"type": "xp", "amount": 35000}
+                    {
+                        "type": "currency",
+                        "amount": 25000
+                    }
                 ]
             },
             "9": {
                 "name": "God of NEETs",
                 "description": "Congrats. That's 50,000! You are truly the god of NEETs.",
                 "rewards": [
-                    {"type": "currency", "amount": 100000},
-                    {"type": "xp", "amount": 100000}
+                    {
+                        "type": "currency",
+                        "amount": 100000
+                    }
                 ]
             }
         }
@@ -85,8 +95,10 @@
                 "name": "Never Give Up!",
                 "description": "Fail 50 guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 200},
-                    {"type": "xp", "amount": 600}
+                    {
+                        "type": "currency",
+                        "amount": 200
+                    }
                 ]
             }
         }
@@ -100,88 +112,105 @@
             "1": {
                 "name": "I",
                 "description": "You've made 5 correct guesses!",
-                "rewards": [
-                    {"type": "xp", "amount": 50}
-                ]
+                "rewards": []
             },
             "2": {
                 "name": "II",
                 "description": "Woah, that's 39 correct guesses! <a:Leek_Miku:1335822100748963890>",
-                "rewards": [
-                    {"type": "xp", "amount": 100}
-                ]
+                "rewards": []
             },
             "3": {
                 "name": "III",
                 "description": "10 x 10 makes 100 correct guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 50},
-                    {"type": "xp", "amount": 300}
+                    {
+                        "type": "currency",
+                        "amount": 50
+                    }
                 ]
             },
             "4": {
                 "name": "IV",
                 "description": "390 correct guesses! Is that you, Miku? <a:Leek_Miku:1335822100748963890>",
                 "rewards": [
-                    {"type": "currency", "amount": 200},
-                    {"type": "xp", "amount": 450}
+                    {
+                        "type": "currency",
+                        "amount": 200
+                    }
                 ]
             },
             "5": {
                 "name": "V",
                 "description": "6̸̙6̶̩6̶̗ g̴̫u̶̹e̶̢s̴̞s̵̮e̷̼s̴͉ u̶᷊h̵̦ o̵͎h̵͚",
                 "rewards": [
-                    {"type": "currency", "amount": 666},
-                    {"type": "xp", "amount": 666}
+                    {
+                        "type": "currency",
+                        "amount": 666
+                    }
                 ]
             },
             "6": {
                 "name": "VI",
                 "description": "You are very rilla at guessing! How does one even hit 1000 correct guesses...",
                 "rewards": [
-                    {"type": "currency", "amount": 750},
-                    {"type": "xp", "amount": 1500}
+                    {
+                        "type": "currency",
+                        "amount": 750
+                    }
                 ]
             },
             "7": {
                 "name": "VII",
                 "description": "3939 correct guesses? Oh, welcome back, Miku! <a:Leek_Miku:1335822100748963890>",
                 "rewards": [
-                    {"type": "currency", "amount": 900},
-                    {"type": "xp", "amount": 2500}
+                    {
+                        "type": "currency",
+                        "amount": 900
+                    }
                 ]
             },
             "8": {
                 "name": "VIII",
                 "description": "...five thousand.",
                 "rewards": [
-                    {"type": "currency", "amount": 1300},
-                    {"type": "xp", "amount": 4000}
+                    {
+                        "type": "currency",
+                        "amount": 1300
+                    }
                 ]
             },
             "9": {
                 "name": "IX",
                 "description": "Have you heard of grass? No? I figured, with 7,500 correct guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 7500},
-                    {"type": "xp", "amount": 9000}
+                    {
+                        "type": "currency",
+                        "amount": 7500
+                    }
                 ]
             },
             "10": {
                 "name": "X",
                 "description": "This is the end... or is it? Hit 15,000 correct guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 39000},
-                    {"type": "xp", "amount": 39000}
+                    {
+                        "type": "currency",
+                        "amount": 39000
+                    }
                 ]
             },
             "11": {
                 "name": "???",
                 "description": "Welcome to rank 11 of perfectionist guessing. You've hit 39,039 correct guesses.",
                 "rewards": [
-                    {"type": "currency", "amount": 100000},
-                    {"type": "xp", "amount": 100000},
-                    {"type": "money", "amount": 5}
+                    {
+                        "type": "currency",
+                        "amount": 100000
+                    },
+                    {
+                        "type": "money",
+                        "amount": 5
+                    }
                 ]
             }
         }
@@ -197,8 +226,10 @@
                 "name": null,
                 "description": null,
                 "rewards": [
-                    {"type": "currency", "amount": 50},
-                    {"type": "xp", "amount": 50}
+                    {
+                        "type": "currency",
+                        "amount": 50
+                    }
                 ]
             }
         }
@@ -214,7 +245,10 @@
                 "name": null,
                 "description": null,
                 "rewards": [
-                    {"type": "currency", "amount": 69}
+                    {
+                        "type": "currency",
+                        "amount": 69
+                    }
                 ]
             }
         }

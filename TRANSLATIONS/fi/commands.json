@@ -185,9 +185,9 @@
             }
         }
     },
-    "profile": {
-        "name": "profiili",
-        "desc": "Näytä käyttäjän profiili.",
+    "balance": {
+        "name": "",
+        "desc": "",
         "describes": {}
     },
     "progress": {
@@ -209,13 +209,6 @@
                 "desc": "Näytä tiedot tietystä pelaajasta tällä sijoituksella.",
                 "describes": {}
             }
-        }
-    },
-    "xp_for": {
-        "name": "xp_tarve",
-        "desc": "Hanki XP: tietylle tasolle.",
-        "describes": {
-            "level": "Taso, jolle lasketaan XP."
         }
     }
 }
