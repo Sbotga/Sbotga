@@ -60,7 +60,11 @@ def generate_general_progress(data: list):
     NOT_CLEAR_COLOR = "#38383a"
 
     ALL_AP_ICON = "DATA/data/ASSETS/normal_ap.png"
+    ALL_AP_APPEND_ICON = "DATA/data/ASSETS/append_ap.png"
     ALL_FC_ICON = "DATA/data/ASSETS/normal_fc.png"
+    ALL_FC_APPEND_ICON = "DATA/data/ASSETS/append_fc.png"
+    ALL_CLEAR_ICON = "DATA/data/ASSETS/normal_clear.png"
+    ALL_CLEAR_APPEND_ICON = "DATA/data/ASSETS/append_clear.png"
     ICON_PADDING = 20
 
     BACKGROUND_IMG = "DATA/data/ASSETS/hug.png"
@@ -256,12 +260,31 @@ def generate_general_progress(data: list):
             icon_size = DONUT_SIZE - (DONUT_THICKNESS * 2) - (ICON_PADDING * 2)
             icon_x = (DONUT_SIZE - icon_size) // 2
             icon_y = (DONUT_SIZE - icon_size) // 2
+
             if diff.ap_count == diff.all_count:
-                all_ap_img = Image.open(ALL_AP_ICON).resize((icon_size, icon_size))
+                all_ap_img = Image.open(
+                    ALL_AP_ICON
+                    if diff.difficulty.lower() != "append"
+                    else ALL_AP_APPEND_ICON
+                )
+                all_ap_img = all_ap_img.resize((icon_size, icon_size))
                 donut_img.paste(all_ap_img, (icon_x, icon_y), all_ap_img)
             elif diff.fc_count == diff.all_count:
-                all_fc_img = Image.open(ALL_FC_ICON).resize((icon_size, icon_size))
+                all_fc_img = Image.open(
+                    ALL_FC_ICON
+                    if diff.difficulty.lower() != "append"
+                    else ALL_FC_APPEND_ICON
+                )
+                all_fc_img = all_fc_img.resize((icon_size, icon_size))
                 donut_img.paste(all_fc_img, (icon_x, icon_y), all_fc_img)
+            elif diff.clear_count == diff.all_count:
+                all_clear_img = Image.open(
+                    ALL_CLEAR_ICON
+                    if diff.difficulty.lower() != "append"
+                    else ALL_CLEAR_APPEND_ICON
+                )
+                all_clear_img = all_clear_img.resize((icon_size, icon_size))
+                donut_img.paste(all_clear_img, (icon_x, icon_y), all_clear_img)
 
             card_container.paste(donut_img, (donut_x, donut_y), donut_img)
 
@@ -392,7 +415,11 @@ def generate_progress(data: list, difficulty: str):
     NOT_CLEAR_COLOR = "#38383a"
 
     ALL_AP_ICON = "DATA/data/ASSETS/normal_ap.png"
+    ALL_AP_APPEND_ICON = "DATA/data/ASSETS/append_ap.png"
     ALL_FC_ICON = "DATA/data/ASSETS/normal_fc.png"
+    ALL_FC_APPEND_ICON = "DATA/data/ASSETS/append_fc.png"
+    ALL_CLEAR_ICON = "DATA/data/ASSETS/normal_clear.png"
+    ALL_CLEAR_APPEND_ICON = "DATA/data/ASSETS/append_clear.png"
     ICON_PADDING = 20
 
     BACKGROUND_IMG = "DATA/data/ASSETS/hug.png"
@@ -604,13 +631,23 @@ def generate_progress(data: list, difficulty: str):
             icon_x = (donut_width - icon_size) // 2
             icon_y = (donut_width - icon_size) // 2
             if diff.ap_count == diff.all_count:
-                all_ap_img = Image.open(ALL_AP_ICON)
+                all_ap_img = Image.open(
+                    ALL_AP_ICON if difficulty != "append" else ALL_AP_APPEND_ICON
+                )
                 all_ap_img = all_ap_img.resize((icon_size, icon_size))
                 donut_img.paste(all_ap_img, (icon_x, icon_y), all_ap_img)
             elif diff.fc_count == diff.all_count:
-                all_fc_img = Image.open(ALL_FC_ICON)
+                all_fc_img = Image.open(
+                    ALL_FC_ICON if difficulty != "append" else ALL_FC_APPEND_ICON
+                )
                 all_fc_img = all_fc_img.resize((icon_size, icon_size))
                 donut_img.paste(all_fc_img, (icon_x, icon_y), all_fc_img)
+            elif diff.clear_count == diff.all_count:
+                all_clear_img = Image.open(
+                    ALL_CLEAR_ICON if difficulty != "append" else ALL_CLEAR_APPEND_ICON
+                )
+                all_clear_img = all_clear_img.resize((icon_size, icon_size))
+                donut_img.paste(all_clear_img, (icon_x, icon_y), all_clear_img)
 
             data_img.paste(
                 donut_img,
