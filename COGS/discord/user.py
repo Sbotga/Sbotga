@@ -110,7 +110,7 @@ class UserCog(commands.Cog):
             except:
                 file = discord.utils.MISSING
             return await interaction.followup.edit_message(
-                self.message.id, embed=embed, file=file, view=self
+                self.message.id, embed=embed, attachments=[file], view=self
             )
 
     class UserIDModal(discord.ui.Modal):
@@ -205,7 +205,7 @@ class UserCog(commands.Cog):
                 embed.set_thumbnail(url="attachment://image.png")
             except:
                 file = discord.utils.MISSING
-            await msg.edit(embed=embed, file=file, view=view)
+            await msg.edit(embed=embed, attachments=[file], view=view)
             view.message = msg
 
     class TransferCheckView(views.SbotgaView):
