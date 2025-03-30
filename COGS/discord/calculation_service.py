@@ -129,9 +129,7 @@ class CalculationService(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
             return
-        leak = methods.pjsk_game_api_jp.isleak(
-            song.id
-        ) and methods.pjsk_game_api.isleak(song.id)
+        leak = methods.Tools.isleak(song.id)
         if leak:
             await interaction.followup.send(embed=embeds.leak_embed())
             return

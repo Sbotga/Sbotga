@@ -57,7 +57,7 @@ class Autocompletes:
 
         return _range
 
-    def pjsk_region(self, allowed_regions: list[str]):
+    def pjsk_region(self, allowed_regions: list[str], temp_allow_cn: bool = False):
         invalid_regions = [
             region for region in allowed_regions if region not in ALLOWED_REGIONS
         ]
@@ -65,7 +65,10 @@ class Autocompletes:
             raise ValueError(f"Invalid regions provided: {', '.join(invalid_regions)}")
 
         # TODO: remove cn as they become supported
-        allowed_regions = [region for region in allowed_regions if region not in ["cn"]]
+        if not temp_allow_cn:
+            allowed_regions = [
+                region for region in allowed_regions if region not in ["cn"]
+            ]
 
         async def _region(interaction: discord.Interaction, current: str):
             """Autocomplete function for region selection with validation."""

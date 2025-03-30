@@ -31,7 +31,9 @@ class ComicsCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.describe(region=locale_str("general.region"))
     @app_commands.autocomplete(
-        region=autocompletes.autocompletes.pjsk_region(["en", "jp", "tw", "kr", "cn"])
+        region=autocompletes.autocompletes.pjsk_region(
+            ["en", "jp", "tw", "kr", "cn"], temp_allow_cn=True
+        )
     )
     async def comics(self, interaction: discord.Interaction, region: str = "default"):
         region = region.lower().strip()
