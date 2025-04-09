@@ -7,7 +7,7 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, asyncio, importlib, io
+import time, asyncio, importlib, io, traceback
 
 from DATA.game_api import methods
 
@@ -18,6 +18,7 @@ from DATA.helpers import embeds
 from DATA.helpers.unblock import to_process_with_timeout
 
 from DATA.game_api import proxy_service  # start the proxy service.
+from DATA.game_api import owo_service  # start the owo prank proxy.
 
 
 class DevCog(commands.Cog):
@@ -29,6 +30,47 @@ class DevCog(commands.Cog):
             return ctx.author.id in ctx.bot.owner_ids
 
         return commands.check(predicate)
+
+    @commands.command()
+    @is_owner()
+    async def eval(self, ctx: commands.Context):
+        # very old code that i copied from my old bot, maybe i'll optimize later
+        message = ctx.message
+        cmd = message.content.split("\n")
+        del cmd[0]
+        if cmd[-1] == "```":
+            del cmd[-1]
+        del cmd[0]
+        cmd = "\n".join(cmd)
+        try:
+
+            async def aexec(code, ctx: commands.Context):
+                # warnings.simplefilter('error', RuntimeWarning)
+                exec(
+                    f"async def __ex(ctx):\n    "
+                    + ("".join(f"\n    {l}" for l in code.split("\n"))).strip()
+                )
+                return await locals()["__ex"](ctx)
+
+            await aexec(cmd, ctx)
+        except Warning as e:
+            result = (
+                "".join(traceback.format_exception(e, e, e.__traceback__))
+            ).replace("`", "\`")
+            await message.reply(
+                f"**Eval ran with an warning:**\n\n```python\n{result}\n```"
+            )
+            await message.add_reaction("⚠️")
+        except Exception as e:
+            result = (
+                "".join(traceback.format_exception(e, e, e.__traceback__))
+            ).replace("`", "\`")
+            await message.reply(
+                f"**Eval failed with Exception:**\n\n```python\n{result}\n```"
+            )
+            await message.add_reaction("❌")
+        else:
+            await message.add_reaction("✅")
 
     @commands.command()
     @is_owner()
@@ -63,8 +105,18 @@ class DevCog(commands.Cog):
                 await asyncio.sleep(2)
         except:
             pass
+        try:
+            if self.bot.owo_proxy_running:
+                self.bot.owo_proxy_running.terminate()
+                await asyncio.sleep(3)
+                self.bot.owo_proxy_running.kill()
+                await asyncio.sleep(2)
+        except:
+            pass
         importlib.reload(proxy_service)  # Ensure the latest code is used
+        importlib.reload(owo_service)
         self.bot.proxy_running = proxy_service.run_proxy()
+        self.bot.owo_proxy_running = owo_service.run_proxy()
 
     @commands.command()
     @is_owner()

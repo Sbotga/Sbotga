@@ -10,7 +10,7 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, csv, math
+import time, csv, math, asyncio, random
 from datetime import datetime, timezone
 from io import BytesIO, StringIO
 
