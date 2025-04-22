@@ -72,7 +72,7 @@ class ReportBrokenChartButton(SbotgaView):
         self.music_id = music_id
         self.diff = diff
 
-        self.allowed = [1131568595369996379]
+        self.allowed = [1230999759213563927]
 
     @discord.ui.button(label="Report Broken Chart", style=discord.ButtonStyle.danger)
     async def _ReportBrokenChartButtonCallback(
@@ -80,14 +80,14 @@ class ReportBrokenChartButton(SbotgaView):
     ):
         button.disabled = True
         await interaction.response.edit_message(view=button._view)
-        channel = interaction.client.get_channel(1332839802323603477)
+        channel = interaction.client.get_channel(1361715494289277137)
         if not channel:
-            channel = interaction.client.fetch_channel(1332839802323603477)
+            channel = interaction.client.fetch_channel(1361715494289277137)
         embed = embeds.warn_embed(title="Broken Chart?", description="")
         chart = await methods.Tools.get_chart(self.diff, self.music_id, self.region)
         file = discord.File(chart, "image.png")
         embed.set_image(url="attachment://image.png")
-        embed.description = f"**Difficulty:** {emojis.difficulty_colors[self.diff]} {self.diff.title()}\n**Region:** `{self.region.upper()}`"
+        embed.description = f"**Difficulty:** {emojis.difficulty_colors[self.diff]} {self.diff.title()}\n**Region:** `{self.region.upper()}`\n**ID:** `{self.music_id}`"
 
         class FixView(SbotgaView):
             def __init__(self, allowed: list, region: str, music_id: int, diff: str):

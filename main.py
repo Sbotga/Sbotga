@@ -25,6 +25,7 @@ from DATA.helpers.logging import LOGGING
 from DATA.helpers.user_cache import getch_user_id, getch_user_name
 from DATA.helpers.discord_autocompletes import autocompletes
 from DATA.helpers import embeds
+from DATA.helpers import discord_emojis
 from DATA.helpers.cache import CACHE
 
 from DATA.data.pjsk import pjsk, pjsk_data
@@ -382,6 +383,7 @@ class DiscordBot(discord_commands.Bot):
 
     async def setup_hook(self):
         await discord_bot.tree.set_translator(SbotgaTranslator())
+        await discord_emojis.emojis.load(self)
 
 
 class DiscordBotTree(app_commands.CommandTree):

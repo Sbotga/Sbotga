@@ -21,6 +21,10 @@ from DATA.game_api import proxy_service  # start the proxy service.
 from DATA.game_api import owo_service  # start the owo prank proxy.
 
 
+class Temp:  # very insane rilla pjsk player :)
+    def __init__(self):
+        pass
+
 class DevCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
         self.bot = bot
@@ -193,8 +197,23 @@ class DevCog(commands.Cog):
             else:
                 cmds = await self.bot.tree.sync()
                 self.bot.app_commands = cmds
+            command_ids = []
+            for command in self.bot.app_commands:
+                temp = Temp()
+                for attr in dir(command):
+                    if attr.startswith("_"):
+                        continue  # Skip private/internal attributes
+                    try:
+                        value = getattr(command, attr)
+                        # Make sure it's picklable
+                        pickle.dumps(value)
+                        setattr(temp, attr, value)
+                    except Exception:
+                        continue  # Skip unpicklable attributes
+                command_ids.append(temp)
+
             with open("synced_commands.data", "wb+") as f:
-                pickle.dump(self.bot.app_commands, f)
+                pickle.dump(command_ids, f)
             embed = discord.Embed(
                 title="Synced!",
                 description=f"Wowwww more commands omg\n**Global**: `{', '.join([cmd.name for cmd in self.bot.tree._get_all_commands()])}`\n**This Guild**:`{(', '.join([cmd.name for cmd in self.bot.tree._get_all_commands(guild=ctx.guild)]) or 'None') if ctx.guild else 'Not In Guild'}`",
