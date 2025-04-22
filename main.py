@@ -1,4 +1,4 @@
-import time, asyncio, os, glob, re, shutil
+import time, asyncio, os, glob, re, shutil, pickle
 from collections import deque
 
 from typing import Dict, List, Union, Any
@@ -284,7 +284,7 @@ class DiscordBot(discord_commands.Bot):
         self.send_image_update = lambda *args: None
         self.user_data = user_data
 
-        self.alias_adders = [1322836332065718282]  # alias adder roles
+        self.alias_adders = [1361715493467328752]  # alias adder roles
 
         self.autocompletes = autocompletes
 
@@ -300,6 +300,11 @@ class DiscordBot(discord_commands.Bot):
         )  #: Dict[int, Dict[str, Union[[int, str, Dict[str, str]]]] = {}
         self.cache.existing_guess_ids = []  #: List[str] = []
         self.cache.executed_commands = deque()
+
+        self.app_commands: list[discord.app_commands.AppCommand] = []
+        if os.path.exists("synced_commands.data"):
+            with open("synced_commands.data", "rb") as f:
+                self.app_commands = pickle.load(f)
 
     async def get_constant(
         self,
@@ -357,16 +362,16 @@ class DiscordBot(discord_commands.Bot):
         3 - Currently subscribed (monthly)
 
         """
-        guild = self.get_guild(1238684904804319243)
+        guild = self.get_guild(self.CONFIGS.support_id)
         if not guild:
-            guild = await self.fetch_guild(1238684904804319243)
+            guild = await self.fetch_guild(self.CONFIGS.support_id)
         try:
             member = await guild.fetch_member(user.id)
         except discord.NotFound:
             return 0
         roles = {
-            "donator": [1326315299003437066, 2],
-            "subscriber": [1326314167770157177, 3],
+            "donator": [1361715493446226028, 2],
+            "subscriber": [1361715493446226029, 3],
         }
         c_l = 1
         for role, data in roles.items():
@@ -524,7 +529,7 @@ async def on_tree_error(
                     # Censor subdomains, domains, and tlds
                     domain_parts = parts[2].split(".")
                     for i in range(len(domain_parts)):
-                        domain_parts[i] = "[private]"
+                        domain_parts[i] = "<private>"
                     parts[2] = ".".join(domain_parts)
 
                     # Censor the path

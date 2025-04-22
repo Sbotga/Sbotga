@@ -262,7 +262,7 @@ class UserCog(commands.Cog):
             self.cancel.disabled = True
             embed = embeds.embed(
                 title="Transferring...",
-                description=f"We are transferring your account.\n\nIf this message does not update within a minute, assume something went wrong and contact support at </help:1326325488939040808>.\n\nYou can try your old transfer settings in that case.\n**Transfer ID:** `{self.transfer_id}`\n**Transfer Password:** `{self.transfer_password}`",
+                description=f"We are transferring your account.\n\nIf this message does not update within a minute, assume something went wrong and contact support at {tools.command_mention(self.bot, 'help')}.\n\nYou can try your old transfer settings in that case.\n**Transfer ID:** `{self.transfer_id}`\n**Transfer Password:** `{self.transfer_password}`",
                 color=discord.Color.dark_gray(),
             )
             await interaction.response.edit_message(view=self, embed=embed)
@@ -275,7 +275,7 @@ class UserCog(commands.Cog):
                 self.bot.traceback(e)
                 return await interaction.edit_original_response(
                     embed=embeds.error_embed(
-                        f"SOMETHING WENT WRONG!\nTry using your original transfer credentials if you were already locked out of your account.\n\n**Transfer ID:** `{self.transfer_id}`\n**Transfer Password:** `{self.transfer_password}`\n\nIf this didn't work, CONTACT SUPPORT IMMEDIATELY (see: </help:1326325488939040808>).\n-# We do not take any responsibility for lost data. If we are unable to recover your account, contacting SEGA support may work."
+                        f"SOMETHING WENT WRONG!\nTry using your original transfer credentials if you were already locked out of your account.\n\n**Transfer ID:** `{self.transfer_id}`\n**Transfer Password:** `{self.transfer_password}`\n\nIf this didn't work, CONTACT SUPPORT IMMEDIATELY (see: {tools.command_mention(self.bot, 'help')}).\n-# We do not take any responsibility for lost data. If we are unable to recover your account, contacting SEGA support may work."
                     ),
                     view=self,
                 )
@@ -449,7 +449,7 @@ class UserCog(commands.Cog):
                         embed = embeds.error_embed(
                             (
                                 f"You recently transferred your account already. Try again <t:{int(cooldown_end)}:R>.\n"
-                                f"-# 4 hours cooldown. Donate to shorten the cooldown to 30 minutes. See </donate:1326321351417528442>"
+                                f"-# 4 hours cooldown. Donate to shorten the cooldown to 30 minutes. See {tools.command_mention(self.bot, 'donate')}"
                             ),
                         )
                         return await interaction.response.send_message(

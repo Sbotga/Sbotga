@@ -1326,13 +1326,13 @@ class DataAnalysis(commands.Cog):
                     data[region] = acc_data
                 if not data:
                     embed = embeds.error_embed(
-                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        f"I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                     )
                     return await ctx.reply(embed=embed)
 
             if not data:
                 embed = embeds.error_embed(
-                    "I don't have access to your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>",
+                    f"I don't have access to your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}",
                 )
                 return await ctx.reply(embed=embed)
 
@@ -1396,13 +1396,13 @@ class DataAnalysis(commands.Cog):
                     data[region] = acc_data
                 if not data:
                     embed = embeds.error_embed(
-                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        f"I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                     )
                     return await ctx.reply(embed=embed)
 
             if not data:
                 embed = embeds.error_embed(
-                    "I don't have access to your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                    f"I don't have access to your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                 )
                 return await ctx.reply(embed=embed)
 
@@ -1485,7 +1485,7 @@ class DataAnalysis(commands.Cog):
                 embed = embeds.error_embed(
                     (
                         f"You recently ran b30. Try again <t:{int(cooldown_end)}:R>.\n"
-                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See </donate:1326321351417528442>"
+                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
                 return await interaction.response.send_message(
@@ -1507,7 +1507,7 @@ class DataAnalysis(commands.Cog):
                 embed = embeds.error_embed(
                     (
                         f"Changing the song count is a premium-only feature.\n"
-                        f"-# Donate to use. See </donate:1326321351417528442>"
+                        f"-# Donate to use. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
                 return await interaction.response.send_message(embed=embed)
@@ -1538,7 +1538,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_b30[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        f"I don't have access to your {region.upper()} account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        f"I don't have access to your {region.upper()} account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
             else:
@@ -1556,7 +1556,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_b30[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        description="I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        description=f"I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
 
@@ -1656,7 +1656,7 @@ class DataAnalysis(commands.Cog):
                 embed = embeds.error_embed(
                     (
                         f"You recently ran progress. Try again <t:{int(cooldown_end)}:R>.\n"
-                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See </donate:1326321351417528442>"
+                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
                 return await interaction.response.send_message(
@@ -1694,7 +1694,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_progress[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        f"I don't have access to your {region.upper()} account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>"
+                        f"I don't have access to your {region.upper()} account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}"
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
                 data = {region: data}
@@ -1713,7 +1713,7 @@ class DataAnalysis(commands.Cog):
                 if not data:
                     self.cooldown_progress[interaction.user.id] = old_cooldown
                     embed = embeds.error_embed(
-                        "I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. </user pjsk update_data:1325347278805929994>",
+                        f"I don't have access to **any** of your account data.\n\nThis requires a temporary data transfer. {tools.command_mention(self.bot, 'user pjsk update_data')}",
                     ).set_footer(text="Your cooldown was reset.")
                     return await interaction.followup.send(embed=embed)
 
@@ -1785,7 +1785,7 @@ class DataAnalysis(commands.Cog):
                 embed = embeds.error_embed(
                     (
                         f"You recently ran summary. Try again <t:{int(cooldown_end)}:R>.\n"
-                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See </donate:1326321351417528442>"
+                        f"-# 90 second cooldown. Subscribe (monthly) to shorten the cooldown to 20 seconds. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
                 return await interaction.response.send_message(

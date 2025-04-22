@@ -14,6 +14,7 @@ from PIL import Image
 
 from DATA.helpers import discord_autocompletes as autocompletes
 from DATA.helpers import embeds
+from DATA.helpers import tools
 
 from DATA.game_api import methods
 
@@ -320,7 +321,7 @@ class GachaCog(commands.Cog):
                 embed = embeds.error_embed(
                     (
                         f"You recently ran a gacha. Try again <t:{int(cooldown_end)}:R>.\n"
-                        f"-# 20 second cooldown. Donate to remove the cooldown. See </donate:1326321351417528442>"
+                        f"-# 20 second cooldown. Donate to remove the cooldown. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
                 return await interaction.response.send_message(

@@ -336,7 +336,7 @@ class GuessCog(commands.Cog):
             if isinstance(interaction.channel, discord.channel.DMChannel):
                 if await self.bot.subscribed(interaction.user) < 1:
                     embed = embeds.error_embed(
-                        f"To guess in the bot's DMs, you must join the support server. See </help:1326325488939040808> for links.",
+                        f"To guess in the bot's DMs, you must join the support server. See {tools.command_mention(self.bot, 'help')} for links.",
                     )
                     await interaction.followup.send(embed=embed)
                     return False
@@ -731,7 +731,7 @@ class GuessCog(commands.Cog):
                 if banned:
                     await message.reply(
                         embed=embeds.error_embed(
-                            "You're banned from the bot. Run </help:1326325488939040808> for links to the support server to appeal."
+                            f"You're banned from the bot. Run {tools.command_mention(self.bot, 'help')} for links to the support server to appeal."
                         )
                     )
                     return

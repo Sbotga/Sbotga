@@ -214,7 +214,7 @@ class InfoCog(commands.Cog):
         cost = 25
         embed = embeds.embed(
             title="Donations",
-            description=f"<:sbuga:1293557990397448285> sbugacoin??\n-# Donations are strictly OPTIONAL.\n\nWe need donations to pay the approximately **${cost:,} USD** hosting cost every month, and this number will grow as the bot expands.\n\n**LINK:** https://ko-fi.com/uselessyum\n\nTo claim benefits, join the Discord server via Ko-Fi (also located at </help:1326325488939040808>). You must login on Ko-Fi!",
+            description=f"<:sbuga:1293557990397448285> sbugacoin??\n-# Donations are strictly OPTIONAL.\n\nWe need donations to pay the approximately **${cost:,} USD** hosting cost every month, and this number will grow as the bot expands.\n\n**LINK:** https://ko-fi.com/uselessyum\n\nTo claim benefits, join the Discord server via Ko-Fi (also located at {tools.command_mention(self.bot, 'help')}). You must login on Ko-Fi!",
             color=discord.Color.green(),
         )
         await interaction.followup.send(embed=embed)
@@ -229,7 +229,7 @@ class InfoCog(commands.Cog):
         await interaction.response.defer(ephemeral=False, thinking=True)
         embed = embeds.embed(
             title=f"{self.bot.user.name}",
-            description=f"Sbuga <:sbuga:1293557990397448285>\n\n**Invite:** https://discord.com/oauth2/authorize?client_id=1322253224799109281\n**Support:** https://discord.gg/JKANSRGPNW\n\n**Commands:** https://github.com/Sbotga/info/blob/main/en/COMMANDS.md\n\nTOS: https://github.com/Sbotga/info/blob/main/legal/TOS.md\nPrivacy Policy: https://github.com/Sbotga/info/blob/main/legal/PRIVACY.md\nSource Code: https://github.com/Sbotga/Sbotga\n\n-# {self.bot.user.mention} is in no way affiliated with SEGA, Colorful Palette, or Project Sekai.",
+            description=f"Sbuga <:sbuga:1293557990397448285>\n\n**Invite:** https://discord.com/oauth2/authorize?client_id={self.bot.user.id}\n**Support:** {self.bot.CONFIGS.support}\n\n**Commands:** https://github.com/Sbotga/info/blob/main/en/COMMANDS.md\n\nTOS: https://github.com/Sbotga/info/blob/main/legal/TOS.md\nPrivacy Policy: https://github.com/Sbotga/info/blob/main/legal/PRIVACY.md\nSource Code: https://github.com/Sbotga/Sbotga\n\n-# {self.bot.user.mention} is in no way affiliated with SEGA, Colorful Palette, or Project Sekai.",
         )
         await interaction.followup.send(embed=embed)
 
@@ -254,9 +254,9 @@ class InfoCog(commands.Cog):
             guild = await self.bot.fetch_guild(1238684904804319243)
         try:
             member = await guild.fetch_member(user.id)
-            developer = 1329628642036154494
-            strat_mod = 1338521073448255508
-            translator = 1330694049799082085
+            developer = 1361715493467328758
+            strat_mod = 1361715493467328753
+            translator = 1361715493446226030
             staff_roles = [
                 developer,  # developer
                 strat_mod,  # strategy moderator

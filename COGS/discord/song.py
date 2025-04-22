@@ -22,6 +22,7 @@ from DATA.helpers import views
 from DATA.helpers import embeds
 from DATA.helpers.unblock import to_process_with_timeout
 from DATA.helpers import pjsk_chart
+from DATA.helpers import tools
 
 from DATA.data.pjsk import Song, pjsk as pjsk_data_obj
 
@@ -1086,7 +1087,7 @@ class SongInfo(commands.Cog):
             if not isinstance(final_view, discord.utils._MissingSentinel):
                 final_view.message = await interaction.original_response()
         else:
-            embed.description = f"We do not have a strategy for **{emojis.difficulty_colors[difficulty]} {difficulty.title()}** on this song.\n\n-# Contribute? Join our support server using </help:1326325488939040808>. Must be usable for AP, and neat."
+            embed.description = f"We do not have a strategy for **{emojis.difficulty_colors[difficulty]} {difficulty.title()}** on this song.\n\n-# Contribute? Join our support server using {tools.command_mention(self.bot, 'help')}. Must be usable for AP, and neat."
             embed.color = discord.Color.red()
             await interaction.followup.send(embed=embed)
 

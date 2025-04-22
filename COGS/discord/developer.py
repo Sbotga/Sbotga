@@ -7,7 +7,7 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, asyncio, importlib, io, traceback
+import time, asyncio, importlib, io, traceback, pickle
 
 from DATA.game_api import methods
 
@@ -56,7 +56,7 @@ class DevCog(commands.Cog):
         except Warning as e:
             result = (
                 "".join(traceback.format_exception(e, e, e.__traceback__))
-            ).replace("`", "\`")
+            ).replace("`", "\\`")
             await message.reply(
                 f"**Eval ran with an warning:**\n\n```python\n{result}\n```"
             )
@@ -64,7 +64,7 @@ class DevCog(commands.Cog):
         except Exception as e:
             result = (
                 "".join(traceback.format_exception(e, e, e.__traceback__))
-            ).replace("`", "\`")
+            ).replace("`", "\\`")
             await message.reply(
                 f"**Eval failed with Exception:**\n\n```python\n{result}\n```"
             )
@@ -188,14 +188,19 @@ class DevCog(commands.Cog):
         try:
             msg = await ctx.reply("Hold on...")
             if guild:
-                await self.bot.tree.sync(guild=discord.Object(id=guild))
+                guild_cmds = await self.bot.tree.sync(guild=discord.Object(id=guild))
+                self.bot.app_commands.extend(guild_cmds)
             else:
-                await self.bot.tree.sync()
+                cmds = await self.bot.tree.sync()
+                self.bot.app_commands = cmds
+            with open("synced_commands.data", "wb+") as f:
+                pickle.dump(self.bot.app_commands, f)
             embed = discord.Embed(
                 title="Synced!",
                 description=f"Wowwww more commands omg\n**Global**: `{', '.join([cmd.name for cmd in self.bot.tree._get_all_commands()])}`\n**This Guild**:`{(', '.join([cmd.name for cmd in self.bot.tree._get_all_commands(guild=ctx.guild)]) or 'None') if ctx.guild else 'Not In Guild'}`",
             )
             await msg.edit(content=None, embed=embed)
+
         except Exception as e:
             self.bot.traceback(e)
 

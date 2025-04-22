@@ -15,6 +15,8 @@ class _CONFIGS:
         with open(f"config.json", "r", encoding="utf-8") as config:
             configdata = json.load(config)
         self.database_url: str = configdata["database"]
+        self.support: str = configdata["support"]
+        self.support_id: int = configdata["support_id"]
         self.tokens: dict = configdata["tokens"]
         self.defaultprefix: str = configdata["default_prefix"]
         self.owners: list = configdata["owners"]
