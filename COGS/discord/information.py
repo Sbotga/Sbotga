@@ -249,9 +249,9 @@ class InfoCog(commands.Cog):
 
         currency = await self.bot.user_data.discord.get_currency(user.id)
 
-        guild = self.bot.get_guild(1238684904804319243)
+        guild = self.bot.get_guild(1361715493416730675)
         if not guild:
-            guild = await self.bot.fetch_guild(1238684904804319243)
+            guild = await self.bot.fetch_guild(1361715493416730675)
         try:
             member = await guild.fetch_member(user.id)
             developer = 1361715493467328758
@@ -367,6 +367,10 @@ class InfoCog(commands.Cog):
         if pjsk_id == user_id:
             is_self = True
         # id: 7459900032591108917, joined 1736898921322
+        cheating = str(user_id) in self.bot.CONFIGS.cheaters[region]
+        cheat = ""
+        if cheating:
+            cheat += "\n```diff\n- 🚩 THIS USER IS A CONFIRMED CHEATER 🚩\n```\n"
         joined = (
             f"**Joined:** <t:{(int(format(data['user']['userId'], '064b')[:42], 2) + 1600218000000) // 1000}:R>\n"
             if region in ["en", "jp"]
@@ -376,6 +380,7 @@ class InfoCog(commands.Cog):
             title=data["user"]["name"],
             description=("✅ This is your PJSK account!\n\n" if is_self else "")
             + (
+                f"{cheat}"
                 f"**User ID:** `{data['user']['userId']}`\n"
                 f"{joined}"
                 f"**Rank:** **`🎵 {data['user']['rank']}`**\n\n"
@@ -422,7 +427,7 @@ class InfoCog(commands.Cog):
     alias = app_commands.Group(
         name="alias",
         description="Add or remove aliases for songs.",
-        guild_ids=[1238684904804319243],
+        guild_ids=[1361715493416730675],
         allowed_installs=app_commands.AppInstallationType(guild=True, user=False),
     )
 

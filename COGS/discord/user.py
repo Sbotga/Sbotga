@@ -20,7 +20,6 @@ from DATA.game_api import methods
 from DATA.helpers import views
 
 from DATA.game_api import proxy_service  # start the proxy service.
-from DATA.game_api import owo_service  # owo prank service
 
 from DATA.helpers import views
 
@@ -33,13 +32,6 @@ class UserCog(commands.Cog):
             self.bot.proxy_running = False
         if not self.bot.proxy_running:
             self.bot.proxy_running = proxy_service.run_proxy()
-
-        if not hasattr(
-            self.bot, "owo_proxy_running"
-        ):  # owo.sbuga.com, owoifies messages through a variety of platforms :) fun prank
-            self.bot.owo_proxy_running = False
-        if not self.bot.owo_proxy_running:
-            self.bot.owo_proxy_running = owo_service.run_proxy()
 
     class LinkCheckView(views.SbotgaView):
         def __init__(

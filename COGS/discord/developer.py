@@ -5,7 +5,7 @@ from discord import app_commands
 from discord.app_commands import locale_str
 from COGS.discord_translations import translations
 
-from main import DiscordBot
+from main import DiscordBot, Temp
 
 import time, asyncio, importlib, io, traceback, pickle
 
@@ -18,12 +18,7 @@ from DATA.helpers import embeds
 from DATA.helpers.unblock import to_process_with_timeout
 
 from DATA.game_api import proxy_service  # start the proxy service.
-from DATA.game_api import owo_service  # start the owo prank proxy.
 
-
-class Temp:  # very insane rilla pjsk player :)
-    def __init__(self):
-        pass
 
 class DevCog(commands.Cog):
     def __init__(self, bot: DiscordBot):
@@ -31,6 +26,7 @@ class DevCog(commands.Cog):
 
     def is_owner():
         async def predicate(ctx: commands.Context):
+            return ctx.author.id in ctx.bot.CONFIGS.discord_owners
             return ctx.author.id in ctx.bot.owner_ids
 
         return commands.check(predicate)
@@ -109,18 +105,8 @@ class DevCog(commands.Cog):
                 await asyncio.sleep(2)
         except:
             pass
-        try:
-            if self.bot.owo_proxy_running:
-                self.bot.owo_proxy_running.terminate()
-                await asyncio.sleep(3)
-                self.bot.owo_proxy_running.kill()
-                await asyncio.sleep(2)
-        except:
-            pass
         importlib.reload(proxy_service)  # Ensure the latest code is used
-        importlib.reload(owo_service)
         self.bot.proxy_running = proxy_service.run_proxy()
-        self.bot.owo_proxy_running = owo_service.run_proxy()
 
     @commands.command()
     @is_owner()
@@ -351,21 +337,22 @@ class DevCog(commands.Cog):
     @commands.command(name="refresh")
     @is_owner()
     async def refresh(self, ctx: commands.Context):
-        """Refresh an asset."""
-        await ctx.reply("This may take a while, updating all master data.")
+        """Refresh all data."""
+        await ctx.reply(
+            "This may take a while, attempting to update all master data and assets."
+        )
         try:
 
             def _run():
+                # methods.Tools.update_everything(False)
                 for api in methods.all_apis:
-                    api.get_bundle_metadata(force=True)
-                for api in methods.all_apis:
-                    api.update_master_data(force=True)
-                for api in methods.all_apis:
-                    api.master_data_cache = {}
+                    api.update_master_data(force=True, no_thread=True)
                 self.bot.pjsk.refresh_data()
                 self.bot.cache.constants_updated = 0  # force refresh when available
 
-            await to_process_with_timeout(_run, timeout=600)  # 10 minutes
+            await to_process_with_timeout(
+                _run, timeout=3500
+            )  # 60 minutes - 100 seconds
             await self.bot.pjsk.get_custom_title_defs()
             self.bot.pjsk.reload_song_aliases()
             embed = discord.Embed(

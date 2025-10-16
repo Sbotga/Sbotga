@@ -610,15 +610,20 @@ class ProfileButton(SbotgaView):
             )
             if pjsk_id == user_id:
                 is_self = True
+            cheat = ""
+            cheating = str(user_id) in interaction.client.CONFIGS.cheaters[region]
+            if cheating:
+                cheat += "\n```diff\n- 🚩 THIS USER IS A CONFIRMED CHEATER 🚩\n```\n"
             joined = (
                 f"**Joined:** <t:{(int(format(data['user']['userId'], '064b')[:42], 2) + 1600218000000) // 1000}:R>\n"
                 if region in ["en", "jp"]
-                else ""
+                else ""  #  f"**Joined:** <t:{(int(format(data['user']['userId'], '064b')[:42], 2) - 41679844688) // 1000}:R>\n" # THIS IS NOT ACCURATE.
             )
             embed = embeds.embed(
                 title=data["user"]["name"],
                 description=("✅ This is your PJSK account!\n\n" if is_self else "")
                 + (
+                    f"{cheat}"
                     f"**User ID:** `{data['user']['userId']}`\n"
                     f"{joined}"
                     f"**Rank:** **`🎵 {data['user']['rank']}`**\n\n"

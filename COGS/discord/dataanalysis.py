@@ -1267,7 +1267,7 @@ class DataAnalysis(commands.Cog):
             output.seek(0)
             return output
 
-        output = await to_process_with_timeout(_make, region, timeout=40)
+        output = await to_process_with_timeout(_make, region, timeout=80)
 
         return output
 
@@ -1502,11 +1502,11 @@ class DataAnalysis(commands.Cog):
                 return await interaction.response.send_message(
                     embed=embed, ephemeral=True
                 )
-        if count != 30:
+        if count not in [10, 30, 50]:
             if sub_level < 2:
                 embed = embeds.error_embed(
                     (
-                        f"Changing the song count is a premium-only feature.\n"
+                        f"Changing the song count is a premium-only feature. (Free: `10, 30, 50`)\n"
                         f"-# Donate to use. See {tools.command_mention(self.bot, 'donate')}"
                     )
                 )
@@ -1576,7 +1576,7 @@ class DataAnalysis(commands.Cog):
                 song_count=count,
             )
             filtered = " - FCs Only" if fc_only else " - APs Only" if ap_only else ""
-            desc = f"""**Best {count} Chart{'s' if count != 1 else ''} - Rating Info**\n-# Constants are more specific difficulties, eg. `31` -> `31.4`. These are community rated.\n1. Constants exist for Expert, Master, and Append. For Hard, Normal, and Easy, it'll default to `xx.0`\n2. Constants will default to `xx.0` if not rated.\n3. FC will take `-1` off of the constant. AP to get the full constant rating."""
+            desc = f"""**Best {count} Chart{'s' if count != 1 else ''} - Rating Info**\n-# Constants are more specific difficulties, eg. `31` -> `31.4`. These are community rated.\n1. Constants exist for Expert, Master, and Append. For Hard, Normal, and Easy, it'll default to `xx.0`\n2. Constants will default to `xx.0` if not rated.\n3. FC will take `-1` off of the constant. AP to get the full constant rating.\n\n-# Constants are opinionated. Do not take seriously. Constants WILL be different for different people, they are community rated with a 'general' agreement.\b-# Constants are rated based on AP difficulty, not FC difficulty."""
             embed = embeds.embed(
                 title=f"Your B{count}" + filtered,
                 description=desc,

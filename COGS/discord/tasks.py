@@ -7,7 +7,7 @@ from COGS.discord_translations import translations
 
 from main import DiscordBot
 
-import time, csv
+import time, csv, asyncio, datetime
 from io import StringIO
 
 import aiohttp
@@ -17,6 +17,7 @@ from DATA.game_api import methods
 from DATA.helpers import discord_autocompletes as autocompletes
 from DATA.helpers import converters
 from DATA.helpers import embeds
+from DATA.helpers import unblock
 
 from DATA.data.pjsk import Song
 
@@ -29,10 +30,31 @@ class TasksAndUpdates(commands.Cog):
         self.bot.get_constant_sync = self.get_constant_sync
 
         self.cog_tasks.start()
+        self.hourly_task.start()
+
+    @tasks.loop(hours=1)
+    async def hourly_task(self):
+        # runs hourly at :00 and 20 seconds (to allow the game to update)
+        # timeout set to 3600 - 100 seconds, so 1 hour - 100 seconds.
+        pass
+        # need more ram for below code, maybe even spawn a subprocess (methods.py update can be run separately)
+        # await unblock.to_process_with_timeout(methods.Tools.update_everything, False, timeout=3500) # updates master data and all relevant assets
+        # for api in methods.all_apis:
+        #     api.master_data_cache = {}
+
+    @hourly_task.before_loop
+    async def before_hourly(self):
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        next_hour = (now + datetime.timedelta(hours=1)).replace(
+            minute=0, second=20, microsecond=0
+        )
+        wait_seconds = (next_hour - now).total_seconds()
+        await asyncio.sleep(wait_seconds)
 
     def cog_unload(self):
         """Cancel the task to prevent orphaned tasks."""
         self.cog_tasks.cancel()
+        self.hourly_task.cancel()
 
     @tasks.loop(seconds=60)
     async def cog_tasks(self):
@@ -83,7 +105,7 @@ class TasksAndUpdates(commands.Cog):
             return diff - 1 if diff and not ap else diff if diff and ap else diff
 
     async def update_constants(self):
-        url = "https://docs.google.com/spreadsheets/d/1B8tX9VL2PcSJKyuHFVd2UT_8kYlY4ZdwHwg9MfWOPug/export?format=csv&gid=610789839"
+        url = "https://docs.google.com/spreadsheets/d/1B8tX9VL2PcSJKyuHFVd2UT_8kYlY4ZdwHwg9MfWOPug/export?format=csv&gid=1855810409"
         url2 = "https://docs.google.com/spreadsheets/d/1Yv3GXnCIgEIbHL72EuZ-d5q_l-auPgddWi4Efa14jq0/export?format=csv&gid=182216"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:

@@ -22,6 +22,10 @@ class _CONFIGS:
         self.owners: list = configdata["owners"]
         self.discord_owners: list = configdata["discord_owners"]
 
+        with open(f"cheaters.json", "r", encoding="utf-8") as cheaters:
+            cheaterdata = json.load(cheaters)
+        self.cheaters = cheaterdata
+
         class api:
             def __init__(self, configdata):
                 self._data: dict = configdata["api"]

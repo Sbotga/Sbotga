@@ -33,6 +33,13 @@ from DATA.data.pjsk import pjsk, pjsk_data
 from DATA.CONFIGS import CONFIGS
 from DATA.user_data import user_data
 
+
+class Temp:  # very insane rilla pjsk player :)
+    # useful for temporary classes
+    def __init__(self):
+        pass
+
+
 twitch_token = CONFIGS.tokens["twitch"]
 discord_token = CONFIGS.tokens["discord"]
 
@@ -303,6 +310,7 @@ class DiscordBot(discord_commands.Bot):
         self.cache.executed_commands = deque()
 
         self.app_commands: list[discord.app_commands.AppCommand] = []
+
         if os.path.exists("synced_commands.data"):
             with open("synced_commands.data", "rb") as f:
                 self.app_commands = pickle.load(f)

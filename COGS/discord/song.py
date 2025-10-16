@@ -367,10 +367,10 @@ class SongInfo(commands.Cog):
             file = discord.File(methods.Tools.get_music_jacket(song.id), "jacket.png")
             constant = f"{math.ceil(the_constant * 10) / 10:.1f}"
             actual = f"{int(math.ceil(methods.Tools.get_music_diff(song.id, difficulty) * 10) / 10)}"
-            embed.description = f"**Difficulty:** {emojis.difficulty_colors[difficulty]} {difficulty.title()}\n\n**Level:** `{actual}`\n**Constant:** `{constant}`\n**Source:** `{source}`\n\n-# Constants are opinionated. Do not take seriously. Constants WILL be different for different people, they are community rated with a 'general' agreement."
+            embed.description = f"**Difficulty:** {emojis.difficulty_colors[difficulty]} {difficulty.title()}\n\n**Level:** `{actual}`\n**Constant:** `{constant}`\n**Source:** `{source}`\n\n-# Constants are opinionated. Do not take seriously. Constants WILL be different for different people, they are community rated with a 'general' agreement.\b-# Constants are rated based on AP difficulty, not FC difficulty."
             await interaction.followup.send(embed=embed, file=file)
         except IndexError:
-            embed.description = f"Difficulty **{emojis.difficulty_colors[difficulty]} {difficulty.title()}** does not exist, or does not have a community-rated constant."
+            embed.description = f"Difficulty **{emojis.difficulty_colors[difficulty]} {difficulty.title()}** does not have a community-rated constant. (or the difficulty doesn't exist)"
             embed.color = discord.Color.red()
             await interaction.followup.send(embed=embed)
 

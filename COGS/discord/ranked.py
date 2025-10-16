@@ -118,6 +118,7 @@ class RankedCog(commands.Cog):
             total_pages: int,
             region: str,
             ranked_data: dict,
+            cheaters: dict,
             last_updated: dict,
             season_name: str,
             pjsk_id: int,
@@ -127,6 +128,7 @@ class RankedCog(commands.Cog):
             self.total_pages = total_pages
             self.current_region = region
             self.ranked_data = ranked_data
+            self.cheaters = cheaters
             self.ranked_last_updated = last_updated
             self.season_name = season_name
             self.pjsk_id = pjsk_id
@@ -139,6 +141,7 @@ class RankedCog(commands.Cog):
         async def update_message(self, interaction: discord.Interaction):
             embed = RankedCog.create_leaderboard_embed(
                 self.ranked_data,
+                self.cheaters,
                 self.ranked_last_updated,
                 self.current_page,
                 self.current_region,
@@ -205,10 +208,12 @@ class RankedCog(commands.Cog):
         else:
             return f"**{grade_name}** Class {kurasu}\n{tier_point}/5", [grade, kurasu]
 
-    def create_rank_embed(self, rank: int, region: str, is_self: bool):
+    def create_rank_embed(self, rank: int, region: str, is_self: bool, cheaters: dict):
         ranking = self.bot.cache.ranked_data[region]["rankings"][rank - 1]
         season = ranking["userRankMatchSeason"]
         grade_details, grade = RankedCog.calculate_rank_details(ranking, region)
+
+        cheating = str(ranking["userId"]) in cheaters[region]
 
         embed = embeds.embed(
             title=f"Rank #{ranking['rank']} - {tools.escape_md(ranking['name'] if len(ranking['name']) < 50 else (ranking['name'][:43] + '... ⚠️ (I will not display your very long name)'))}",
@@ -222,7 +227,9 @@ class RankedCog(commands.Cog):
         gd1 = grade_details.split("\n")[1]
         desc_text = ""
         if is_self:
-            desc_text = "✅ This is you!\n"
+            desc_text += "✅ This is you!\n"
+        if cheating:
+            desc_text += "\n```diff\n- 🚩 THIS USER IS A CONFIRMED CHEATER 🚩\n```\n"
         desc_text += f"## {gd0 + ' (`' + gd1 + '`)'}\n\n**Total Games:** `{season['playCount']}`\n**Win Rate:** `{(season['winCount']/(season['playCount']-season['drawCount']))*100:.2f}`%\n-# Win rate does not include draws.\n\n**Current Winstreak:** `{season['consecutiveWinCount']}`\n**Max Winstreak:** `{season['maxConsecutiveWinCount']}`\n\n-# Ranked losses are added for disconnects, but doesn't add to the total playcount. Win rate may be off."
         desc_text += (
             f"\n\n### Web View: <https://sbuga.com/{region}/ranked/{ranking['userId']}>"
@@ -256,6 +263,7 @@ class RankedCog(commands.Cog):
     @staticmethod
     def create_leaderboard_embed(
         ranked_data: dict,
+        cheaters: dict,
         last_updated: dict,
         page: int,
         region: str,
@@ -277,7 +285,12 @@ class RankedCog(commands.Cog):
             grade_details, grade = RankedCog.calculate_rank_details(ranking, region)
             gd0 = grade_details.split("\n")[0]
             gd1 = grade_details.split("\n")[1]
-            desc += f"{'✅ ' if ranking['userId'] == pjsk_id else ''}**#{ranking['rank']} - {tools.escape_md(ranking['name'].replace(newline, ' '))}** - {gd0.replace('**', '') + ' (`' + gd1 + '`)'}\n"
+            line = f"{'✅ ' if ranking['userId'] == pjsk_id else ''}**#{ranking['rank']} - {tools.escape_md(ranking['name'].replace(newline, ' '))}** - {gd0.replace('**', '') + ' (`' + gd1 + '`)'}\n"
+
+            if str(ranking["userId"]) in cheaters[region]:
+                line = f"```diff\n- CHEATER 🚩 {line.strip().replace('**', '').replace('`', '')}\n```"
+
+            desc += line
         desc += f"\n\n### Web View: <https://sbuga.com/{region}/ranked>"
         embed.description = desc.strip()
         f_rank = ""
@@ -379,7 +392,9 @@ class RankedCog(commands.Cog):
             == self.bot.cache.ranked_data[region]["rankings"][rank - 1]["userId"]
         ):
             is_self = True
-        embed, file, view = self.create_rank_embed(rank, region=region, is_self=is_self)
+        embed, file, view = self.create_rank_embed(
+            rank, region=region, is_self=is_self, cheaters=self.bot.CONFIGS.cheaters
+        )
         await interaction.followup.send(embed=embed, file=file, view=view)
         view.message = await interaction.original_response()
 
@@ -426,6 +441,7 @@ class RankedCog(commands.Cog):
         )
         embed = self.create_leaderboard_embed(
             self.bot.cache.ranked_data,
+            self.bot.CONFIGS.cheaters,
             self.bot.cache.ranked_last_updated,
             page=1,
             region=region,
@@ -438,6 +454,7 @@ class RankedCog(commands.Cog):
             region=region,
             ranked_data=self.bot.cache.ranked_data,
             last_updated=self.bot.cache.ranked_last_updated,
+            cheaters=self.bot.CONFIGS.cheaters,
             season_name=season_name,
             pjsk_id=pjsk_id,
         )
