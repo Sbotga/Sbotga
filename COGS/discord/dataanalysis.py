@@ -8,6 +8,7 @@ from COGS.discord_translations import translations
 from main import DiscordBot
 
 import time, csv, math, asyncio
+from collections import defaultdict
 from datetime import datetime, timezone
 from io import BytesIO, StringIO
 import typing
@@ -239,9 +240,6 @@ class DataAnalysis(commands.Cog):
         self, data: dict, difficulty: str, private: bool, user: discord.User
     ) -> BytesIO:
         def _make():
-            diffs = {}
-            added = []
-            current = {}
             RESULT_PRIORITY = {
                 "full_perfect": 4,
                 "full_combo": 3,
@@ -250,103 +248,125 @@ class DataAnalysis(commands.Cog):
                 None: 0,
             }
 
-            for music_id, ds in self.bot.pjsk.difficulties.items():
-                if ds.get(difficulty):
-                    check_regions = list(data.keys())
-                    leak, song_available_regions = methods.Tools.get_music_regions(
-                        music_id
-                    )
-                    song_has_append_regions = methods.Tools.get_music_append_regions(
-                        music_id
-                    )
-                    if leak:  # Leak on all regions
-                        continue
-                    if not any(
-                        m_ar in check_regions for m_ar in song_available_regions
-                    ):  # It's not found in any of the check regions.
-                        continue
-                    if difficulty == "append" and (
-                        not any(
-                            m_ar in check_regions for m_ar in song_has_append_regions
-                        )
-                    ):  # It's append and append was not found in any of the check regions.
+            diffs = defaultdict(int)
+            current = {}
+            added = set()
+
+            check_regions = set(data.keys())
+            pjsk_diffs = self.bot.pjsk.difficulties
+
+            # --- First pass: all available difficulties ---
+            for music_id, ds in pjsk_diffs.items():
+                diff_data = ds.get(difficulty)
+                if not diff_data:
+                    continue
+
+                leak, song_regions = methods.Tools.get_music_regions(music_id)
+                if leak:
+                    continue
+                if not (check_regions & set(song_regions)):
+                    continue
+
+                if difficulty == "append":
+                    _, append_regions = methods.Tools.get_music_append_regions(music_id)
+                    if not (check_regions & set(append_regions)):
                         continue
 
-                    playlevel = ds[difficulty]["playLevel"]
-                    if type(playlevel) == list:
-                        playlevel = playlevel[1]  # rerated
-                    if f"{music_id}{difficulty}" in added:
-                        continue
-                    else:
-                        added.append(f"{music_id}{difficulty}")
-                        if not diffs.get(playlevel):
-                            diffs[playlevel] = 1
-                        else:
+                playlevel = diff_data["playLevel"]
+                if isinstance(playlevel, list):
+                    playlevel = playlevel[1]
+
+                key = (music_id, difficulty)
+                if key not in added:
+                    added.add(key)
+                    diffs[playlevel] += 1
+
+            # --- Second pass: player progress ---
+            for region, region_data in data.items():
+                # detect new data structure (flat list under userMusicResults)
+                if "userMusicResults" in region_data:
+                    results_list = region_data["userMusicResults"]
+                    for result in results_list:
+                        if result["musicDifficultyType"] != difficulty:
+                            continue
+
+                        music_id = result["musicId"]
+                        key = (music_id, difficulty)
+                        diff_entry = pjsk_diffs.get(music_id, {}).get(difficulty)
+                        if not diff_entry:
+                            continue
+
+                        playlevel = diff_entry["playLevel"]
+                        if isinstance(playlevel, list):
+                            playlevel = playlevel[1]
+
+                        if key not in added:
+                            added.add(key)
                             diffs[playlevel] += 1
 
-            for r, d in data.items():
-                song_progress_info = {}
-                for song_data in d["userMusics"]:
-                    for song_progress_info in song_data["userMusicDifficultyStatuses"]:
-                        if song_progress_info["musicDifficulty"] != difficulty:
-                            continue
-                        playlevel = self.bot.pjsk.difficulties[
-                            song_progress_info["musicId"]
-                        ][difficulty]["playLevel"]
-                        if type(playlevel) == list:
-                            playlevel = playlevel[1]  # rerated
+                        best_result = current.get(key, [playlevel, None])[1]
+                        res = result["playResult"]
 
-                        # In case Master Data wasn't correctly updated
-                        # Prevent broken donuts.
-                        # Especially since adding Appends doesn't have a "release date", meaning any updates are done directly to master data and may not reflect until the next update
-                        if f"{song_progress_info['musicId']}{difficulty}" in added:
-                            pass
-                        else:
-                            added.append(f"{song_progress_info['musicId']}{difficulty}")
-                            if not diffs.get(playlevel):
-                                diffs[playlevel] = 1
-                            else:
+                        if (
+                            best_result is None
+                            or RESULT_PRIORITY[res] > RESULT_PRIORITY[best_result]
+                        ):
+                            best_result = res
+
+                        current[key] = [playlevel, best_result]
+
+                # old data structure (nested userMusics)
+                elif "userMusics" in region_data:
+                    for song_data in region_data["userMusics"]:
+                        for s_info in song_data.get("userMusicDifficultyStatuses", []):
+                            if s_info["musicDifficulty"] != difficulty:
+                                continue
+
+                            music_id = s_info["musicId"]
+                            key = (music_id, difficulty)
+                            diff_entry = pjsk_diffs.get(music_id, {}).get(difficulty)
+                            if not diff_entry:
+                                continue
+
+                            playlevel = diff_entry["playLevel"]
+                            if isinstance(playlevel, list):
+                                playlevel = playlevel[1]
+
+                            if key not in added:
+                                added.add(key)
                                 diffs[playlevel] += 1
-                        # End diff added check.
 
-                        c_d = current.get(
-                            f"{song_progress_info['musicId']}{difficulty}",
-                            [playlevel, None],
-                        )
-                        for result in song_progress_info["userMusicResults"]:
-                            res = result["playResult"]
+                            best_result = current.get(key, [playlevel, None])[1]
+                            for result in s_info["userMusicResults"]:
+                                res = result["playResult"]
+                                if (
+                                    best_result is None
+                                    or RESULT_PRIORITY[res]
+                                    > RESULT_PRIORITY[best_result]
+                                ):
+                                    best_result = res
 
-                            # Compare current result with existing one based on priority
-                            if (
-                                c_d[1] is None
-                                or RESULT_PRIORITY[res] > RESULT_PRIORITY[c_d[1]]
-                            ):
-                                c_d[1] = res
+                            current[key] = [playlevel, best_result]
 
-                        current[f"{song_progress_info['musicId']}{difficulty}"] = c_d
-
+            # --- Third pass: aggregate results ---
             difficulties = {
-                playlevel: {"all": count, "ap": 0, "fc": 0, "clear": 0}
-                for playlevel, count in diffs.items()
+                pl: {"all": count, "ap": 0, "fc": 0, "clear": 0}
+                for pl, count in diffs.items()
             }
-            for _, result in current.items():
-                if result[1] in [None, "not_clear"]:
+
+            for (music_id, diff), (pl, res) in current.items():
+                if not res or res == "not_clear":
                     continue
-                elif result[1] in ["clear"]:
-                    difficulties[result[0]]["clear"] += 1
-                elif result[1] in ["full_combo"]:
-                    difficulties[result[0]]["clear"] += 1
-                    difficulties[result[0]]["fc"] += 1
-                elif result[1] in ["full_perfect"]:
-                    difficulties[result[0]]["clear"] += 1
-                    difficulties[result[0]]["fc"] += 1
-                    difficulties[result[0]]["ap"] += 1
+                entry = difficulties[pl]
+                entry["clear"] += 1
+                if res in ("full_combo", "full_perfect"):
+                    entry["fc"] += 1
+                if res == "full_perfect":
+                    entry["ap"] += 1
 
             final_results = [
-                DifficultyCategory(
-                    diff, value["ap"], value["fc"], value["clear"], value["all"]
-                )
-                for diff, value in sorted(difficulties.items())
+                DifficultyCategory(pl, v["ap"], v["fc"], v["clear"], v["all"])
+                for pl, v in sorted(difficulties.items())
             ]
 
             img = generate_progress(final_results, difficulty)
@@ -437,24 +457,41 @@ class DataAnalysis(commands.Cog):
         ]
         """
 
-        def text_wrap(text, font, writing, max_width, max_height):
-            def textsize_from_bbox(
-                text_left, text_top, text_right, text_bottom
-            ) -> tuple:
-                return (text_right - text_left, text_bottom - text_top)
+        # Local helper that uses horizontal lines (fast) to paint an RGBA gradient
+        def _create_gradient_rgba(start_color, end_color, width, height):
+            grad = Image.new("RGBA", (width, height))
+            draw_grad = ImageDraw.Draw(grad)
+            # support both RGB and RGBA tuples
+            sc = list(start_color) + [255] * (4 - len(start_color))
+            ec = list(end_color) + [255] * (4 - len(end_color))
+            r0, g0, b0, a0 = sc[:4]
+            r1, g1, b1, a1 = ec[:4]
+            h = height or 1
+            for y in range(h):
+                t = y / h
+                r = int(r0 + (r1 - r0) * t)
+                g = int(g0 + (g1 - g0) * t)
+                b = int(b0 + (b1 - b0) * t)
+                a = int(a0 + (a1 - a0) * t)
+                # draw a horizontal line with RGBA fill
+                draw_grad.line([(0, y), (width, y)], fill=(r, g, b, a))
+            return grad
+
+        # text_wrap preserved but micro-optimized: local alias for multiline_textbbox
+        def text_wrap(text, font, drawing: ImageDraw.ImageDraw, max_width, max_height):
+            def textsize_from_bbox(bbox):
+                return (bbox[2] - bbox[0], bbox[3] - bbox[1])
 
             lines = [[]]
             words = text.split(" ")
+            mttb = drawing.multiline_textbbox
 
             for i, word in enumerate(words):
                 test_line = lines[-1] + ([word] if i == len(words) - 1 else [word, " "])
                 test_text = "\n".join(
                     ["".join(line) for line in lines[:-1]] + ["".join(test_line)]
                 )
-
-                w, h = textsize_from_bbox(
-                    *writing.multiline_textbbox((0, 0), test_text, font=font)
-                )
+                w, h = textsize_from_bbox(mttb((0, 0), test_text, font=font))
 
                 if w <= max_width:
                     lines[-1].append(word)
@@ -468,19 +505,20 @@ class DataAnalysis(commands.Cog):
                         lines[-1].append(" ")
 
                     w, h = textsize_from_bbox(
-                        *writing.multiline_textbbox(
+                        mttb(
                             (0, 0),
                             "\n".join(["".join(line) for line in lines]),
                             font=font,
                         )
                     )
-                    if w > max_width:  # Word still doesn't fit; split by character
+                    if w > max_width:
+                        # Word still doesn't fit; split by character
                         lines.pop()
                         current_line = []
                         for char in word:
                             current_line.append(char)
                             w, h = textsize_from_bbox(
-                                *writing.multiline_textbbox(
+                                mttb(
                                     (0, 0),
                                     "\n".join(["".join(current_line)]),
                                     font=font,
@@ -490,7 +528,7 @@ class DataAnalysis(commands.Cog):
                                 lines.append(current_line[:-1])
                                 current_line = [current_line[-1]]
                                 w, h = textsize_from_bbox(
-                                    *writing.multiline_textbbox(
+                                    mttb(
                                         (0, 0),
                                         "\n".join(["".join(line) for line in lines]),
                                         font=font,
@@ -505,16 +543,14 @@ class DataAnalysis(commands.Cog):
             lines = [line for line in lines if "".join(line).strip()]
 
             trimmed = False
-            while (
-                textsize_from_bbox(
-                    *writing.multiline_textbbox(
-                        (0, 0),
-                        "\n".join(["".join(line).rstrip() for line in lines]),
-                        font=font,
-                    )
-                )[1]
-                > max_height
-            ):
+            while True:
+                bbox = mttb(
+                    (0, 0),
+                    "\n".join(["".join(line).rstrip() for line in lines]),
+                    font=font,
+                )
+                if textsize_from_bbox(bbox)[1] <= max_height:
+                    break
                 trimmed = True
                 if len(lines) > 1:
                     lines.pop()
@@ -529,11 +565,7 @@ class DataAnalysis(commands.Cog):
             if trimmed and lines:
                 last_line = "".join(lines[-1]).rstrip()
                 while (
-                    textsize_from_bbox(
-                        *writing.multiline_textbbox(
-                            (0, 0), last_line + "...", font=font
-                        )
-                    )[0]
+                    textsize_from_bbox(mttb((0, 0), last_line + "...", font=font))[0]
                     > max_width
                 ):
                     if len(last_line) > 1:
@@ -545,6 +577,7 @@ class DataAnalysis(commands.Cog):
 
             return "\n".join(["".join(line).rstrip() for line in lines])
 
+        # Grid determination kept unchanged
         def determine_grid(song_count: int):
             column_options = [3, 4, 5, 2]
             best_fit = None
@@ -557,7 +590,6 @@ class DataAnalysis(commands.Cog):
                 if gaps == 0:  # Perfect fit
                     return rows, columns
 
-                # Select the configuration with the fewest gaps
                 if gaps < min_gaps:
                     min_gaps = gaps
                     best_fit = (rows, columns)
@@ -579,47 +611,46 @@ class DataAnalysis(commands.Cog):
         HEADER_HEIGHT *= SCALE
 
         FONT_PATH = "DATA/data/ASSETS/rodinntlg_eb.otf"
-
         KITTY_PATH = "DATA/data/ASSETS/kitty.png"
 
-        # Create base image with 2x resolution
+        # Create base image
         image = Image.new("RGBA", (WIDTH, HEIGHT), "#FFFFFF")
         draw = ImageDraw.Draw(image)
 
-        # Open and resize the kitty.png image to match the base image dimensions
+        # background kitty
         kitty_image = Image.open(KITTY_PATH).resize((WIDTH, HEIGHT), Image.LANCZOS)
-
-        # Paste the resized kitty image onto the base image
         image.paste(kitty_image, (0, 0))
 
-        # Top bar
+        # Top bar and text
+        header_font = ImageFont.truetype(FONT_PATH, int(48 * SCALE))
+        watermark_font = ImageFont.truetype(FONT_PATH, int(30 * SCALE))
+        filtered = " - FCs Only" if fc_only else " - APs Only" if ap_only else ""
         draw.rectangle(
             [(0, 0), (WIDTH, HEADER_HEIGHT)], fill="#b4ccfa", outline="#00194a"
         )
-
-        # Top-left text
-        font = ImageFont.truetype(FONT_PATH, 48 * SCALE)
-        filtered = " - FCs Only" if fc_only else " - APs Only" if ap_only else ""
         draw.text(
-            (10, 14 * SCALE),
+            (10, int(14 * SCALE)),
             f"Your best {song_count} chart{'s' if song_count != 1 else ''}" + filtered,
             fill="black",
-            font=font,
+            font=header_font,
         )
-        watermark = ImageFont.truetype(FONT_PATH, 30 * SCALE)
-        draw.text((10, 65 * SCALE), "Generated by Sbotga", fill="black", font=watermark)
+        draw.text(
+            (10, int(65 * SCALE)),
+            "Generated by Sbotga",
+            fill="black",
+            font=watermark_font,
+        )
 
-        GUTTER_WIDTH = 60 * SCALE
-        GUTTER_HEIGHT = 70 * SCALE
+        GUTTER_WIDTH = int(60 * SCALE)
+        GUTTER_HEIGHT = int(70 * SCALE)
         CARD_WIDTH = int(
             (WIDTH - (GUTTER_WIDTH * (amount_columns + 1))) / amount_columns
         )
         CARD_HEIGHT = int(
             (HEIGHT - HEADER_HEIGHT - (GUTTER_HEIGHT * (amount_rows + 1))) / amount_rows
         )
-        JACKET_SIZE = (CARD_HEIGHT - 20 * SCALE, CARD_HEIGHT - 20 * SCALE)
+        JACKET_SIZE = (CARD_HEIGHT - int(20 * SCALE), CARD_HEIGHT - int(20 * SCALE))
 
-        # Difficulty Assets (JPG backgrounds)
         difficulty_colors = {
             "append": "DATA/data/ASSETS/append_color.jpg",
             "hard": "DATA/data/ASSETS/hard_color.jpg",
@@ -628,8 +659,6 @@ class DataAnalysis(commands.Cog):
             "master": "DATA/data/ASSETS/master_color.jpg",
             "expert": "DATA/data/ASSETS/expert_color.jpg",
         }
-
-        # Indicator Assets (PNG for transparency)
         indicator_images = {
             "append_ap": "DATA/data/ASSETS/append_ap.png",
             "append_fc": "DATA/data/ASSETS/append_fc.png",
@@ -637,15 +666,16 @@ class DataAnalysis(commands.Cog):
             "normal_fc": "DATA/data/ASSETS/normal_fc.png",
         }
 
-        # Jackets (Default Path set to 001 for now)
+        # Jackets / paths
         jackets = [song["path"] for song in songs]
 
-        # Preload assets
+        # Preload indicators once (resized)
         indicators = {
-            key: Image.open(path).resize((72, 72), Image.LANCZOS)
+            key: Image.open(path).resize((72, 72), Image.LANCZOS).convert("RGBA")
             for key, path in indicator_images.items()
         }
 
+        # Preload difficulty images sized to CARD_WIDTH x CARD_HEIGHT
         difficulty_images = {
             key: Image.open(path)
             .resize((CARD_WIDTH, CARD_HEIGHT), Image.LANCZOS)
@@ -653,17 +683,22 @@ class DataAnalysis(commands.Cog):
             for key, path in difficulty_colors.items()
         }
 
+        # Resize jacket images once (or None)
         jacket_images = [
             Image.open(path).resize(JACKET_SIZE, Image.LANCZOS) if path else None
             for path in jackets
         ]
 
-        # Initialize total difficulty for ranking calculation
-        total_difficulty = 0
+        # Precreate some fonts used inside loop with scale-aware sizes
+        difficulty_font_small = ImageFont.truetype(FONT_PATH, int(22 * SCALE))
+        difficulty_font_label = ImageFont.truetype(FONT_PATH, int(20 * SCALE))
+        song_title_font = ImageFont.truetype(FONT_PATH, int(35 * SCALE))
+        big_header_font = header_font  # alias for ranking draw
 
-        # Draw cards
-        idx = 0
-        for song in songs:
+        total_difficulty = 0.0
+
+        # iterate once (idx used for jacket_images indexing)
+        for idx, song in enumerate(songs):
             gridX = idx % amount_columns
             gridY = idx // amount_columns
 
@@ -672,116 +707,77 @@ class DataAnalysis(commands.Cog):
 
             difficulty_number = song["constant"]
             badge_type = song["difficulty"]
-
-            # Randomize AP/FC status
             ap_fc = song["ap_or_fc"].upper()
 
-            # Extract Color from Difficulty Image
+            # Difficulty background (use preloaded image)
             difficulty_img = difficulty_images[badge_type]
+            # Slightly larger copy for stroke/background to preserve original visual
             difficulty_img_resized = difficulty_img.resize(
                 (CARD_WIDTH + 12 * SCALE, CARD_HEIGHT + 12 * SCALE), Image.LANCZOS
             )
-            image.paste(difficulty_img_resized, (xPos - 6 * SCALE, yPos - 6 * SCALE))
-
-            # Sample the top-left and bottom-right corner colors for the gradient
-            top_left_color = difficulty_img.getpixel((5, 5))
-            bottom_right_color = difficulty_img.getpixel(
-                (CARD_WIDTH - 5, CARD_HEIGHT - 5)
+            image.paste(
+                difficulty_img_resized, (xPos - int(6 * SCALE), yPos - int(6 * SCALE))
             )
 
-            # Generate the gradient for the stroke
-            def create_gradient(start_color, end_color, width, height):
-                gradient = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-                for y in range(height):
-                    # Calculate the blend factor for each pixel along the y-axis
-                    blend_factor = y / height
-                    r = int(
-                        start_color[0] * (1 - blend_factor)
-                        + end_color[0] * blend_factor
-                    )
-                    g = int(
-                        start_color[1] * (1 - blend_factor)
-                        + end_color[1] * blend_factor
-                    )
-                    b = int(
-                        start_color[2] * (1 - blend_factor)
-                        + end_color[2] * blend_factor
-                    )
-                    a = int(
-                        start_color[3] * (1 - blend_factor)
-                        + end_color[3] * blend_factor
-                    )
-
-                    for x in range(width):
-                        gradient.putpixel((x, y), (r, g, b, a))
-
-                return gradient
-
-            # Create the gradient based on sampled colors
-            STROKE_SIZE = 20 * SCALE
-            gradient = create_gradient(
-                top_left_color,
-                bottom_right_color,
-                CARD_WIDTH + STROKE_SIZE,
-                CARD_HEIGHT + STROKE_SIZE,
+            # sample safe pixel positions
+            w_s, h_s = difficulty_img.size
+            sample_x = min(5, max(0, w_s - 1))
+            sample_y = min(5, max(0, h_s - 1))
+            tl_color = difficulty_img.getpixel((sample_x, sample_y))
+            br_color = difficulty_img.getpixel(
+                (max(0, CARD_WIDTH - 5), max(0, CARD_HEIGHT - 5))
             )
 
-            # Create a rounded rectangle mask for the gradient
-            mask = Image.new(
-                "L", (CARD_WIDTH + STROKE_SIZE, CARD_HEIGHT + STROKE_SIZE), 0
-            )
+            # Create gradient stroke around card (fast)
+            STROKE_SIZE = int(20 * SCALE)
+            grad_w = CARD_WIDTH + STROKE_SIZE
+            grad_h = CARD_HEIGHT + STROKE_SIZE
+            gradient = _create_gradient_rgba(tl_color, br_color, grad_w, grad_h)
+
+            # rounded mask for stroke
+            mask = Image.new("L", (grad_w, grad_h), 0)
             draw_mask = ImageDraw.Draw(mask)
             draw_mask.rounded_rectangle(
-                [(0, 0), (CARD_WIDTH + STROKE_SIZE, CARD_HEIGHT + STROKE_SIZE)],
-                radius=12 * SCALE,  # Radius of the rounded corners
-                fill=255,  # White to keep the gradient within the rounded area
+                [(0, 0), (grad_w, grad_h)], radius=int(12 * SCALE), fill=255
             )
 
-            # Paste the gradient onto the image as the stroke, using the mask to keep it rounded
-            image.paste(gradient, (xPos - 9 * SCALE, yPos - 9 * SCALE), mask)
+            image.paste(gradient, (xPos - int(9 * SCALE), yPos - int(9 * SCALE)), mask)
 
-            # Draw the base card (no stroke, just rounded corners)
+            # base card
             draw.rounded_rectangle(
                 [(xPos, yPos), (xPos + CARD_WIDTH, yPos + CARD_HEIGHT)],
-                radius=8 * SCALE,
+                radius=int(8 * SCALE),
                 fill="white",
-                outline=None,
             )
 
-            # Jacket vertical centering
-            jacket_x = xPos + 20 * SCALE
-            jacket_y = yPos + (CARD_HEIGHT - JACKET_SIZE[1]) // 2  # Center vertically
-
+            # jacket placement
+            jacket_x = xPos + int(20 * SCALE)
+            jacket_y = yPos + (CARD_HEIGHT - JACKET_SIZE[1]) // 2
             if jacket_images[idx]:
                 image.paste(jacket_images[idx], (jacket_x, jacket_y))
 
-            # Top-Left Difficulty Badge
-            difficulty_badge_x = xPos - 10 * SCALE
-            difficulty_badge_y = yPos - 30 * SCALE
-            difficulty_badge_width = 120 * SCALE
-            difficulty_badge_height = 50 * SCALE
-
-            # Create the gradient based on sampled colors
-            gradient = create_gradient(
-                top_left_color,
-                bottom_right_color,
-                difficulty_badge_width,
-                difficulty_badge_height,
+            # difficulty badge (top-left)
+            difficulty_badge_x = xPos - int(10 * SCALE)
+            difficulty_badge_y = yPos - int(30 * SCALE)
+            difficulty_badge_width = int(120 * SCALE)
+            difficulty_badge_height = int(50 * SCALE)
+            badge_grad = _create_gradient_rgba(
+                tl_color, br_color, difficulty_badge_width, difficulty_badge_height
             )
-
-            # Create a rounded rectangle mask for the gradient
-            mask = Image.new("L", (difficulty_badge_width, difficulty_badge_height), 0)
-            draw_mask = ImageDraw.Draw(mask)
-            draw_mask.rounded_rectangle(
+            badge_mask = Image.new(
+                "L", (difficulty_badge_width, difficulty_badge_height), 0
+            )
+            dm = ImageDraw.Draw(badge_mask)
+            dm.rounded_rectangle(
                 [(0, 0), (difficulty_badge_width, difficulty_badge_height)],
-                radius=12 * SCALE,  # Radius of the rounded corners
-                fill=255,  # White to keep the gradient within the rounded area
+                radius=int(12 * SCALE),
+                fill=255,
+            )
+            image.paste(
+                badge_grad, (difficulty_badge_x, difficulty_badge_y), badge_mask
             )
 
-            # Paste the gradient onto the image as the badge fill, using the mask to keep it rounded
-            image.paste(gradient, (difficulty_badge_x, difficulty_badge_y), mask)
-
-            # Stroke (black outline) with rounded corners
+            # stroke around badge
             draw.rounded_rectangle(
                 [
                     (difficulty_badge_x, difficulty_badge_y),
@@ -790,103 +786,86 @@ class DataAnalysis(commands.Cog):
                         difficulty_badge_y + difficulty_badge_height,
                     ),
                 ],
-                radius=12 * SCALE,
-                outline="#222222",  # Black stroke
-                width=3 * SCALE,
+                radius=int(12 * SCALE),
+                outline="#222222",
+                width=int(3 * SCALE),
             )
 
-            # Difficulty Text (Random difficulty number inside the rectangle)
+            # difficulty number text on badge
             difficulty_text = f"{math.ceil(difficulty_number * 10) / 10:.1f}"
-            difficulty_font = ImageFont.truetype(
-                FONT_PATH, 22 * SCALE
-            )  # Slightly smaller font
-            text_bbox = draw.textbbox((0, 0), difficulty_text, font=difficulty_font)
-            text_width = text_bbox[2] - text_bbox[0]
-            text_height = text_bbox[3] - text_bbox[1]
+            tb = draw.textbbox((0, 0), difficulty_text, font=difficulty_font_small)
+            text_width = tb[2] - tb[0]
+            text_height = tb[3] - tb[1]
             text_x = difficulty_badge_x + (difficulty_badge_width - text_width) / 2
             text_y = difficulty_badge_y + (difficulty_badge_height - text_height) / 2
-
             draw.text(
-                (text_x, text_y), difficulty_text, fill="white", font=difficulty_font
+                (text_x, text_y),
+                difficulty_text,
+                fill="white",
+                font=difficulty_font_small,
             )
 
-            song_title_font = ImageFont.truetype(FONT_PATH, 35 * SCALE)
+            # Title wrapping & drawing
             song_title = song["name"]
-            max_length_px = CARD_WIDTH - JACKET_SIZE[0] - 28 * SCALE
-
-            # Wrap the song title text
-            text = text_wrap(
+            max_length_px = CARD_WIDTH - JACKET_SIZE[0] - int(28 * SCALE)
+            wrapped_title = text_wrap(
                 song_title,
                 song_title_font,
                 draw,
                 max_length_px,
-                CARD_HEIGHT - 50 * SCALE,
+                CARD_HEIGHT - int(50 * SCALE),
             )
-            song_title = text
 
-            # Difficulty text height
-            difficulty_text = f"{badge_type.upper()}"
-            difficulty_font = ImageFont.truetype(FONT_PATH, 20 * SCALE)
-            difficulty_bbox = draw.textbbox(
-                (0, 0), difficulty_text, font=difficulty_font
+            # difficulty label below title
+            difficulty_label = badge_type.upper()
+            tb_label = draw.textbbox(
+                (0, 0), difficulty_label, font=difficulty_font_label
             )
-            difficulty_height = difficulty_bbox[3] - difficulty_bbox[1]
+            difficulty_height = tb_label[3] - tb_label[1]
 
-            # Song title height (using the same font as the title)
-            song_title_bbox = draw.textbbox((0, 0), song_title, font=song_title_font)
-            title_height = song_title_bbox[3] - song_title_bbox[1]
+            tb_title = draw.textbbox((0, 0), wrapped_title, font=song_title_font)
+            title_height = tb_title[3] - tb_title[1]
 
-            # Calculate the total height of the title and difficulty text block
-            total_text_height = (
-                title_height + difficulty_height + 10 * SCALE
-            )  # Add space between title and difficulty
-
-            # Center the text block vertically in the available space
+            total_text_height = title_height + difficulty_height + int(10 * SCALE)
             title_y_position = yPos + (CARD_HEIGHT - total_text_height) // 2
+            title_x = xPos + JACKET_SIZE[0] + int(20 * SCALE)
 
-            # Draw the song title
-            title_x = xPos + JACKET_SIZE[0] + 20 * SCALE
             draw.text(
-                (title_x + 10 * SCALE, title_y_position),
-                song_title,
+                (title_x + int(10 * SCALE), title_y_position),
+                wrapped_title,
                 fill="black",
                 font=song_title_font,
             )
-
-            # Draw the difficulty text below the title
-            difficulty_x = xPos + JACKET_SIZE[0] + 20 * SCALE
-            difficulty_y = (
-                title_y_position + title_height + 10 * SCALE
-            )  # Offset from the title text
+            difficulty_y = title_y_position + title_height + int(10 * SCALE)
             draw.text(
-                (difficulty_x + 10 * SCALE, difficulty_y),
-                difficulty_text,
+                (title_x + int(10 * SCALE), difficulty_y),
+                difficulty_label,
                 fill="black",
-                font=difficulty_font,
+                font=difficulty_font_label,
             )
 
-            # Update total difficulty for ranking calculation
-            total_difficulty += difficulty_number
+            # accumulate difficulty for ranking
+            total_difficulty += float(difficulty_number)
 
-            indicator = indicators[
+            # indicator icon bottom-right
+            indicator_key = (
                 f"{'normal' if badge_type != 'append' else 'append'}_{ap_fc.lower()}"
-            ]
-            indicator_x = xPos + CARD_WIDTH - 40 * SCALE
-            indicator_y = yPos + CARD_HEIGHT - 40 * SCALE
+            )
+            indicator = indicators[indicator_key]
+            indicator_x = xPos + CARD_WIDTH - int(40 * SCALE)
+            indicator_y = yPos + CARD_HEIGHT - int(40 * SCALE)
             image.paste(indicator, (indicator_x, indicator_y), indicator)
 
-            idx += 1
-
-        overall_ranking = total_difficulty / song_count
-
+        # final ranking text
+        overall_ranking = total_difficulty / (song_count or 1)
         ranking_text = f"Ranking: {overall_ranking:.2f}"
-        ranking_bbox = draw.textbbox((0, 0), ranking_text, font=font)
+        ranking_bbox = draw.textbbox((0, 0), ranking_text, font=big_header_font)
         ranking_width = ranking_bbox[2] - ranking_bbox[0]
         draw.text(
-            (WIDTH - ranking_width - 10 * SCALE, 24 * SCALE),
+            (WIDTH - ranking_width - int(10 * SCALE), int(24 * SCALE)),
             ranking_text,
             fill="black",
-            font=font,
+            font=big_header_font,
         )
 
         obj = BytesIO()
@@ -904,315 +883,238 @@ class DataAnalysis(commands.Cog):
         ap_only: bool = False,
         song_count: int = 30,
     ):
+        """
+        Builds a Best-30 image for the given user data.
+        - Supports both old nested format (userMusics -> userMusicDifficultyStatuses -> userMusicResults)
+        and the new flat per-region format (userMusicResults list with musicDifficultyType).
+        - Preserves original selection logic (effective_level = playLevel + ap(+1) + append(+2)),
+        AP preferred over FC when deduping, sliding threshold down until song_count satisfied.
+        - Respects `private` to hide usernames/IDs.
+        """
+
+        from io import BytesIO
+        from collections import defaultdict
+        from PIL import Image, ImageDraw, ImageFont
+        from datetime import datetime, timezone
+
         assert not (fc_only and ap_only)
 
         def _make(region: str):
-            if region == "all":
-                # If region is 'all', iterate over each region in data
-                query_params = []
-                region_height_offset = 0  # Keep track of height offset for each region
-                for reg, d in data.items():
-                    music_data = d["userMusics"]
-                    user_data = d["userGamedata"]
-                    user_id = user_data["userId"]
-                    user_name = user_data["name"]
-                    timestamp = d["now"] / 1000
+            # helpers -----------------------------------------------------------------
+            def _build_diff_map(diffs_list):
+                """Build a map (musicId, musicDifficulty) -> base_playlevel (with rerate handling)."""
+                m = {}
+                for d in diffs_list:
+                    key = (d.get("musicId"), d.get("musicDifficulty"))
+                    pl = d.get("playLevel")
+                    if isinstance(pl, list):
+                        pl = pl[1]
+                    m[key] = pl
+                return m
 
-                    api = methods.Tools.get_api(reg)
-
-                    diffs = api.get_master_data("musicDifficulties.json")
-
-                    for entry in music_data:
-                        for diff in entry["userMusicDifficultyStatuses"]:
-                            difficulty = diff["musicDifficulty"]
-                            temp_queries = []
-                            for result in diff["userMusicResults"]:
-                                if result["fullComboFlg"] or result["fullPerfectFlg"]:
-                                    if result["fullPerfectFlg"]:
-                                        if fc_only:
-                                            break
-                                    if ap_only and not result["fullPerfectFlg"]:
-                                        continue
-
-                                    music_id = entry["musicId"]
-                                    diff_entry = next(
-                                        (
-                                            d
-                                            for d in diffs
-                                            if d["musicId"] == music_id
-                                            and d["musicDifficulty"] == difficulty
-                                        ),
-                                        None,
-                                    )
-                                    if diff_entry:
-                                        effective_level = diff_entry["playLevel"]
-                                        if type(effective_level) == list:
-                                            effective_level = effective_level[
-                                                1
-                                            ]  # rerated
-                                        if result["fullPerfectFlg"]:
-                                            effective_level += 1
-                                        if difficulty == "append":
-                                            effective_level += 2
-                                        temp_queries.append(
-                                            (
-                                                effective_level,
-                                                music_id,
-                                                difficulty,
-                                                result["fullPerfectFlg"],
-                                            )
-                                        )
-                                query_params += temp_queries
-
-                query_params.sort(reverse=True, key=lambda x: (x[0], x[3]))
-                highest_fc = query_params[0][0] if query_params else 0
-
-                if query_params and query_params[0][2] == "append":
-                    highest_fc -= 2
-
-                append_entries = [
-                    entry
-                    for entry in query_params
-                    if entry[2] == "append" and entry[0] >= highest_fc - 2
-                ]
-                filtered_query_params = list(
-                    set(
-                        [
-                            entry
-                            for entry in query_params
-                            if entry[2] != "append" and entry[0] >= highest_fc - 2
-                        ]
-                    )
-                )
-
-                while len(filtered_query_params) < song_count and highest_fc > 0:
-                    filtered_query_params = list(
-                        set(
-                            [
-                                entry
-                                for entry in query_params
-                                if entry[2] != "append" and entry[0] >= highest_fc - 2
-                            ]
-                        )
-                    )
-                    append_entries = [
-                        entry
-                        for entry in query_params
-                        if entry[2] == "append" and entry[0] >= highest_fc - 2
-                    ]
-                    highest_fc -= 1
-            else:
-                # If region is not 'all', process the specific region's data
-                music_data = data["userMusics"]
-                user_data = data["userGamedata"]
-                user_id = user_data["userId"]
-                user_name = user_data["name"]
-
-                api = methods.Tools.get_api(region)
-
+            def _process_region_entries(region_key, region_data):
+                """
+                Return list of candidate tuples:
+                (effective_level, music_id, difficulty, is_ap_flag)
+                Handles both old nested userMusics -> userMusicDifficultyStatuses -> userMusicResults
+                and new flat userMusicResults list (with musicDifficultyType).
+                """
+                candidates = []
+                api = methods.Tools.get_api(region_key)
                 diffs = api.get_master_data("musicDifficulties.json")
+                diff_map = _build_diff_map(diffs)
 
-                # Step 1: Build the Query
-                query_params = []
-                for entry in music_data:
-                    for diff in entry["userMusicDifficultyStatuses"]:
-                        difficulty = diff["musicDifficulty"]
-                        temp_queries = []
-                        for result in diff["userMusicResults"]:
-                            if result["fullComboFlg"] or result["fullPerfectFlg"]:
-                                if result["fullPerfectFlg"]:
-                                    if fc_only:
-                                        break
-                                if ap_only and not result["fullPerfectFlg"]:
-                                    continue
+                def maybe_append_candidate(music_id, difficulty, result_dict):
+                    fc_flag = bool(result_dict.get("fullComboFlg"))
+                    ap_flag = bool(result_dict.get("fullPerfectFlg"))
 
-                                music_id = entry["musicId"]
-                                diff_entry = next(
-                                    (
-                                        d
-                                        for d in diffs
-                                        if d["musicId"] == music_id
-                                        and d["musicDifficulty"] == difficulty
-                                    ),
-                                    None,
-                                )
-                                if diff_entry:
-                                    effective_level = diff_entry["playLevel"]
-                                    if type(effective_level) == list:
-                                        effective_level = effective_level[1]  # rerated
-                                    if result["fullPerfectFlg"]:
-                                        effective_level += 1
-                                    if difficulty == "append":
-                                        effective_level += 2
-                                    temp_queries.append(
-                                        (
-                                            effective_level,
-                                            music_id,
-                                            difficulty,
-                                            result["fullPerfectFlg"],
-                                        )
-                                    )
-                            query_params += temp_queries
-                query_params.sort(reverse=True, key=lambda x: (x[0], x[3]))
-                highest_fc = query_params[0][0] if query_params else 0
+                    if not (fc_flag or ap_flag):
+                        return
 
-                if query_params and query_params[0][2] == "append":
-                    highest_fc -= 2
+                    # Respect filters
+                    if ap_flag and fc_only:
+                        return
+                    if ap_only and not ap_flag:
+                        return
 
-                append_entries = [
-                    entry
-                    for entry in query_params
-                    if entry[2] == "append" and entry[0] >= highest_fc - 2
-                ]
-                filtered_query_params = list(
-                    set(
-                        [
-                            entry
-                            for entry in query_params
-                            if entry[2] != "append" and entry[0] >= highest_fc - 2
-                        ]
-                    )
-                )
+                    key = (music_id, difficulty)
+                    base_level = diff_map.get(key)
+                    if base_level is None:
+                        return
 
-                while len(filtered_query_params) < song_count and highest_fc > 0:
-                    filtered_query_params = list(
-                        set(
-                            [
-                                entry
-                                for entry in query_params
-                                if entry[2] != "append" and entry[0] >= highest_fc - 2
-                            ]
+                    eff = base_level
+                    if ap_flag:
+                        eff += 1
+                    if difficulty == "append":
+                        eff += 2
+
+                    candidates.append((eff, music_id, difficulty, ap_flag))
+
+                # New flat format
+                if isinstance(region_data, dict) and "userMusicResults" in region_data:
+                    for res in region_data.get("userMusicResults", ()):
+                        difficulty = res.get("musicDifficultyType") or res.get(
+                            "musicDifficulty"
                         )
-                    )
-                    append_entries = [
-                        entry
-                        for entry in query_params
-                        if entry[2] == "append" and entry[0] >= highest_fc - 2
-                    ]
-                    highest_fc -= 1
+                        if difficulty is None:
+                            continue
+                        maybe_append_candidate(res.get("musicId"), difficulty, res)
 
-            songs = []
-            entries = filtered_query_params + append_entries
+                # Old nested format
+                elif isinstance(region_data, dict) and "userMusics" in region_data:
+                    for entry in region_data.get("userMusics", ()):
+                        music_id = entry.get("musicId")
+                        for diff in entry.get("userMusicDifficultyStatuses", ()):
+                            difficulty = diff.get("musicDifficulty")
+                            for res in diff.get("userMusicResults", ()):
+                                maybe_append_candidate(music_id, difficulty, res)
 
-            # Adding songs with overwriting logic
-            for level, music_id, difficulty, ap in entries:
-                song = {
-                    "music_id": music_id,
-                    "path": methods.Tools.get_music_jacket(music_id),
-                    "difficulty": difficulty,
-                    "name": methods.Tools.get_music_name(music_id),
-                    "constant": (self.bot.get_constant_sync(music_id, difficulty, ap)),
-                    "ap_or_fc": "ap" if ap else "fc",
-                }
+                return candidates
 
-                existing_song = next(
-                    (
-                        s
-                        for s in songs
-                        if s["music_id"] == music_id and s["difficulty"] == difficulty
-                    ),
-                    None,
-                )
+            # ---------------------------------------------------------------------
+            # 1) Collect candidates (either for single region or across all regions)
+            # ---------------------------------------------------------------------
+            query_params = []
+            if region == "all":
+                for reg_key, reg_data in data.items():
+                    if not isinstance(reg_data, dict):
+                        continue
+                    query_params.extend(_process_region_entries(reg_key, reg_data))
+            else:
+                # caller may pass whole data dict or a single-region object
+                region_data = data
+                if region in data and isinstance(data[region], dict):
+                    region_data = data[region]
+                query_params = _process_region_entries(region, region_data)
 
-                if existing_song:
-                    if song["ap_or_fc"] == "ap" and existing_song["ap_or_fc"] == "fc":
-                        songs.remove(existing_song)
+            if not query_params:
+                # no candidates => return empty image bytes (or an empty BytesIO)
+                return BytesIO()
+
+            # ---------------------------------------------------------------------
+            # 2) Sort candidates (level desc, prefer ap when tie)
+            # ---------------------------------------------------------------------
+            query_params.sort(key=lambda t: (t[0], t[3]), reverse=True)
+
+            # Compute baseline highest_fc and adjust if top entry is append
+            highest_fc = query_params[0][0]
+            if query_params and query_params[0][2] == "append":
+                highest_fc -= 2
+
+            # ---------------------------------------------------------------------
+            # 3) Threshold expansion efficiently (group by level)
+            # ---------------------------------------------------------------------
+            non_append_by_level = defaultdict(list)
+            append_by_level = defaultdict(list)
+            for eff, mid, diff_name, ap_flag in query_params:
+                if diff_name == "append":
+                    append_by_level[eff].append((eff, mid, diff_name, ap_flag))
+                else:
+                    non_append_by_level[eff].append((eff, mid, diff_name, ap_flag))
+
+            sorted_non_append_levels = sorted(non_append_by_level.keys(), reverse=True)
+            final_hf = highest_fc
+            selected_non_append = []
+            # Decrease final_hf until we get enough non-append entries or reach 0
+            while final_hf >= 0:
+                threshold = final_hf - 2
+                selected_non_append = []
+                for lvl in sorted_non_append_levels:
+                    if lvl >= threshold:
+                        selected_non_append.extend(non_append_by_level[lvl])
                     else:
-                        continue  # Skip adding this song as the existing one is better or equal
+                        break
+                if len(selected_non_append) >= song_count or final_hf == 0:
+                    break
+                final_hf -= 1
 
-                songs.append(song)
+            append_threshold = final_hf - 2
+            selected_append = []
+            for lvl, entries in append_by_level.items():
+                if lvl >= append_threshold:
+                    selected_append.extend(entries)
+
+            # ---------------------------------------------------------------------
+            # 4) Deduplicate preserving AP-over-FC preference
+            # ---------------------------------------------------------------------
+            chosen_map = {}
+
+            def consider_entry(entry):
+                eff, mid, diff_name, ap_flag = entry
+                key = (mid, diff_name)
+                existing = chosen_map.get(key)
+                if existing is None:
+                    chosen_map[key] = entry
+                    return
+                # prefer AP over FC (replace if new is AP and existing is FC)
+                if not existing[3] and ap_flag:
+                    chosen_map[key] = entry
+
+            # Non-append first, then append (mimics original logic)
+            for e in selected_non_append:
+                consider_entry(e)
+            for e in selected_append:
+                consider_entry(e)
+
+            # ---------------------------------------------------------------------
+            # 5) Build songs list (call external helpers once per chosen entry)
+            # ---------------------------------------------------------------------
+            songs = []
+            for eff, mid, diff_name, ap_flag in chosen_map.values():
+                songs.append(
+                    {
+                        "music_id": mid,
+                        "path": methods.Tools.get_music_jacket(mid),
+                        "difficulty": diff_name,
+                        "name": methods.Tools.get_music_name(mid),
+                        "constant": self.bot.get_constant_sync(mid, diff_name, ap_flag),
+                        "ap_or_fc": "ap" if ap_flag else "fc",
+                    }
+                )
 
             songs = sorted(songs, key=lambda s: s["constant"], reverse=True)[
                 :song_count
             ]
 
+            # ---------------------------------------------------------------------
+            # 6) Build image with header area for region(s) and user info
+            # ---------------------------------------------------------------------
             img = self.draw_b30(
                 songs, fc_only=fc_only, ap_only=ap_only, song_count=song_count
             )
             img = Image.open(img)
 
             SCALE = 2
-
             if region == "all":
-                # Step 3: Modify the Image
-                new_height = img.height + (
-                    len(data) * 100 * SCALE
-                )  # Adjusting for multiple regions
-                new_img = Image.new(
-                    "RGBA", (img.width, new_height), (50, 50, 50, 255)
-                )  # Dark gray bar
-                new_img.paste(img, (0, (len(data) * 100 * SCALE)))
-
-                draw = ImageDraw.Draw(new_img)
-                font = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_eb.otf", 30 * SCALE
-                )
-                font_2 = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_m.otf", 30 * SCALE
-                )
-                font_3 = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_m.otf", 20 * SCALE
-                )
-
-                # Draw user information for each region
-                for region, d in data.items():
-                    timestamp = d["now"] / 1000
-
-                    data_date = datetime.fromtimestamp(
-                        timestamp, tz=timezone.utc
-                    ).strftime("%Y-%m-%d")
-                    data_time = datetime.fromtimestamp(
-                        timestamp, tz=timezone.utc
-                    ).strftime("%H:%M")
-                    # Apply font styles
-                    draw.text(
-                        (10, region_height_offset + 15 * SCALE),
-                        (
-                            f"{d['userGamedata']['name']}"
-                            if not private
-                            else f"{user.name}"
-                        ),
-                        font=font,
-                        fill="white",
-                    )
-                    draw.text(
-                        (10, region_height_offset + 60 * SCALE),
-                        (
-                            f"{region.upper()} ID: {d['userGamedata']['userId']}"
-                            if not private
-                            else f"{region.upper()} Account"
-                        ),
-                        font=font_3,
-                        fill="white",
-                    )
-                    draw.text(
-                        (img.width - 215 * SCALE, region_height_offset + 15 * SCALE),
-                        f"{data_date}",
-                        font=font_2,
-                        fill="white",
-                    )
-                    draw.text(
-                        (img.width - 200 * SCALE, region_height_offset + 50 * SCALE),
-                        f"{data_time} UTC",
-                        font=font_2,
-                        fill="white",
-                    )
-
-                    # Add a white line separator after each region's section
-                    line_y = region_height_offset + 100 * SCALE
-                    draw.line((0, line_y, img.width, line_y), fill="white", width=2)
-                    region_height_offset += (
-                        100 * SCALE  # Move the offset down by 100px for each region
-                    )
+                num_regions = len(data)
+                header_height = num_regions * 100 * SCALE
+                new_height = img.height + header_height
+                new_img = Image.new("RGBA", (img.width, new_height), (50, 50, 50, 255))
+                new_img.paste(img, (0, header_height))
             else:
-                # Step 3: Modify the Image
-                new_height = img.height + 100 * SCALE  # Adjusting for one region
-                new_img = Image.new(
-                    "RGBA", (img.width, new_height), (50, 50, 50, 255)
-                )  # Dark gray bar
-                new_img.paste(img, (0, 100 * SCALE))
+                num_regions = 1
+                header_height = 100 * SCALE
+                new_height = img.height + header_height
+                new_img = Image.new("RGBA", (img.width, new_height), (50, 50, 50, 255))
+                new_img.paste(img, (0, header_height))
 
-                timestamp = data["now"] / 1000
+            draw = ImageDraw.Draw(new_img)
+            font_bold = ImageFont.truetype(
+                "DATA/data/ASSETS/rodinntlg_eb.otf", 30 * SCALE
+            )
+            font_med = ImageFont.truetype(
+                "DATA/data/ASSETS/rodinntlg_m.otf", 30 * SCALE
+            )
+            font_small = ImageFont.truetype(
+                "DATA/data/ASSETS/rodinntlg_m.otf", 20 * SCALE
+            )
+
+            region_height_offset = 0
+
+            def draw_user_info_for_region(region_key, region_obj):
+                nonlocal region_height_offset
+                # region_obj should contain 'now' and 'userGamedata' normally
+                timestamp = region_obj.get("now", 0) / 1000
                 data_date = datetime.fromtimestamp(timestamp, tz=timezone.utc).strftime(
                     "%Y-%m-%d"
                 )
@@ -1220,55 +1122,76 @@ class DataAnalysis(commands.Cog):
                     "%H:%M"
                 )
 
-                draw = ImageDraw.Draw(new_img)
-                font = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_eb.otf", 30 * SCALE
+                user_gamedata = (
+                    region_obj.get("userGamedata", {})
+                    if isinstance(region_obj, dict)
+                    else {}
                 )
-                font_2 = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_m.otf", 30 * SCALE
+                # When not private prefer the region's reported user name/id; otherwise show discord user
+                name_to_display = (
+                    user_gamedata.get("name")
+                    if (not private and user_gamedata.get("name"))
+                    else user.name
                 )
-                font_3 = ImageFont.truetype(
-                    "DATA/data/ASSETS/rodinntlg_m.otf", 20 * SCALE
+                id_to_display = (
+                    user_gamedata.get("userId")
+                    if (not private and user_gamedata.get("userId"))
+                    else f"{region_key.upper()} Account"
                 )
 
-                # Draw user information
                 draw.text(
-                    (10, 15 * SCALE),
-                    f"{user_name}" if not private else f"{user.name}",
-                    font=font,
+                    (10, region_height_offset + 15 * SCALE),
+                    str(name_to_display),
+                    font=font_bold,
                     fill="white",
                 )
                 draw.text(
-                    (10, 60 * SCALE),
-                    (
-                        f"{region.upper()} ID: {user_id}"
-                        if not private
-                        else f"{region.upper()} Account"
-                    ),
-                    font=font_3,
+                    (10, region_height_offset + 60 * SCALE),
+                    f"{region_key.upper()} ID: {id_to_display}",
+                    font=font_small,
                     fill="white",
                 )
                 draw.text(
-                    (img.width - 215 * SCALE, 10 * SCALE),
+                    (img.width - 215 * SCALE, region_height_offset + 15 * SCALE),
                     f"{data_date}",
-                    font=font_2,
+                    font=font_med,
                     fill="white",
                 )
                 draw.text(
-                    (img.width - 200 * SCALE, 50 * SCALE),
+                    (img.width - 200 * SCALE, region_height_offset + 50 * SCALE),
                     f"{data_time} UTC",
-                    font=font_2,
+                    font=font_med,
                     fill="white",
                 )
 
-            # Step 4: Return as BytesIO
+                # separator
+                line_y = region_height_offset + 100 * SCALE
+                draw.line((0, line_y, img.width, line_y), fill="white", width=2)
+                region_height_offset += 100 * SCALE
+
+            if region == "all":
+                # iterate regions in data order
+                for reg_key, reg_obj in data.items():
+                    draw_user_info_for_region(reg_key, reg_obj)
+            else:
+                # single region: caller may have passed whole data mapping or the single region object
+                region_obj = (
+                    data[region]
+                    if (region in data and isinstance(data[region], dict))
+                    else data
+                )
+                draw_user_info_for_region(region, region_obj)
+
+            # ---------------------------------------------------------------------
+            # 7) Return image BytesIO
+            # ---------------------------------------------------------------------
             output = BytesIO()
             new_img.save(output, format="PNG")
             output.seek(0)
             return output
 
+        # Run _make in executor/worker (original used to_process_with_timeout wrapper)
         output = await to_process_with_timeout(_make, region, timeout=80)
-
         return output
 
     def is_owner():

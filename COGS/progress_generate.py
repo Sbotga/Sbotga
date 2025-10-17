@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 from dataclasses import dataclass
 from math import ceil
 from io import BytesIO
+from typing import List
 
 
 @dataclass
@@ -22,7 +23,25 @@ class StrDifficultyCategory:
     all_count: int
 
 
-def generate_general_progress(data: list):
+def _draw_gradient(img: Image.Image, start: tuple, end: tuple) -> None:
+    """Paint a vertical gradient from start RGB to end RGB on img (in-place)."""
+    draw = ImageDraw.Draw(img)
+    h = img.height
+    w = img.width
+    # Pre-calc float steps
+    r0, g0, b0 = start
+    r1, g1, b1 = end
+    for y in range(h):
+        t = y / h
+        color = (
+            int(r0 + (r1 - r0) * t),
+            int(g0 + (g1 - g0) * t),
+            int(b0 + (b1 - b0) * t),
+        )
+        draw.line([(0, y), (w, y)], fill=color)
+
+
+def generate_general_progress(data: List[StrDifficultyCategory]):
     # fonts
     FONTPATH = "DATA/data/ASSETS/rodinntlg_eb.otf"
     FONTPATH_LIGHT = "DATA/data/ASSETS/rodinntlg_m.otf"
@@ -79,6 +98,7 @@ def generate_general_progress(data: list):
         "expert": "DATA/data/ASSETS/expert_color.jpg",
     }
 
+    # Preload difficulty images (resized) once
     difficulty_images = {
         key: Image.open(path)
         .resize((CARD_WIDTH, DONUT_SIZE), Image.LANCZOS)
@@ -86,17 +106,17 @@ def generate_general_progress(data: list):
         for key, path in difficulty_colors.items()
     }
 
-    # Helper: draw a vertical gradient on an image.
-    def draw_gradient(img, start, end):
-        px = img.load()
-        for y in range(img.height):
-            color = tuple(
-                int(start[i] + (end[i] - start[i]) * y / img.height) for i in range(3)
-            )
-            for x in range(img.width):
-                px[x, y] = color
+    # Preload icon samples once (we'll resize copies when needed)
+    _ICON_CACHE = {
+        "ap": Image.open(ALL_AP_ICON).convert("RGBA"),
+        "ap_append": Image.open(ALL_AP_APPEND_ICON).convert("RGBA"),
+        "fc": Image.open(ALL_FC_ICON).convert("RGBA"),
+        "fc_append": Image.open(ALL_FC_APPEND_ICON).convert("RGBA"),
+        "clear": Image.open(ALL_CLEAR_ICON).convert("RGBA"),
+        "clear_append": Image.open(ALL_CLEAR_APPEND_ICON).convert("RGBA"),
+    }
 
-    def main(data: list[StrDifficultyCategory]):
+    def main(data: List[StrDifficultyCategory]):
         # --- Compute maximum badge dimensions (all badges will use the largest size (we add 2 characters for padding)) ---
         max_text_width = 0
         max_text_height = 0
@@ -214,10 +234,12 @@ def generate_general_progress(data: list):
             cleared = diff.clear_count - diff.fc_count
             not_cleared = diff.all_count - diff.clear_count
 
-            percentage_ap = aped / diff.all_count
-            percentage_fc = fced / diff.all_count
-            percentage_clear = cleared / diff.all_count
-            percentage_not_clear = not_cleared / diff.all_count
+            # protect against division by zero (keeps original intent)
+            total = diff.all_count or 1
+            percentage_ap = aped / total
+            percentage_fc = fced / total
+            percentage_clear = cleared / total
+            percentage_not_clear = not_cleared / total
 
             angle_ap = percentage_ap * 360
             angle_fc = angle_ap + (percentage_fc * 360)
@@ -228,13 +250,16 @@ def generate_general_progress(data: list):
             donut_draw.pieslice(pie_location, 0, 360, fill="white")
 
             # For ALL PERFECT portion, use a gradient from the ALL_AP_ICON sample.
-            ap_color_sample = Image.open(ALL_AP_ICON)
-            color_top = ap_color_sample.getpixel((ap_color_sample.size[0] // 2, 60))
-            color_bottom = ap_color_sample.getpixel(
-                (ap_color_sample.size[0] // 2, ap_color_sample.size[1] - 60)
-            )
+            # Use preloaded sample
+            ap_color_sample = _ICON_CACHE["ap"]
+            # sample positions (guard within bounds)
+            w_s, h_s = ap_color_sample.size
+            top_y = min(60, h_s - 1)
+            bottom_y = max(h_s - 60, 0)
+            color_top = ap_color_sample.getpixel((w_s // 2, top_y))
+            color_bottom = ap_color_sample.getpixel((w_s // 2, bottom_y))
             gradient = Image.new("RGB", (DONUT_SIZE, DONUT_SIZE))
-            draw_gradient(gradient, color_top, color_bottom)
+            _draw_gradient(gradient, color_top, color_bottom)
             im_mask = Image.new("L", (DONUT_SIZE, DONUT_SIZE), 0)
             d_mask = ImageDraw.Draw(im_mask)
             d_mask.pieslice((0, 0, DONUT_SIZE, DONUT_SIZE), 0, angle_ap, fill=255)
@@ -262,28 +287,16 @@ def generate_general_progress(data: list):
             icon_y = (DONUT_SIZE - icon_size) // 2
 
             if diff.ap_count == diff.all_count:
-                all_ap_img = Image.open(
-                    ALL_AP_ICON
-                    if diff.difficulty.lower() != "append"
-                    else ALL_AP_APPEND_ICON
-                )
-                all_ap_img = all_ap_img.resize((icon_size, icon_size))
+                key = "ap_append" if diff.difficulty.lower() == "append" else "ap"
+                all_ap_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_ap_img, (icon_x, icon_y), all_ap_img)
             elif diff.fc_count == diff.all_count:
-                all_fc_img = Image.open(
-                    ALL_FC_ICON
-                    if diff.difficulty.lower() != "append"
-                    else ALL_FC_APPEND_ICON
-                )
-                all_fc_img = all_fc_img.resize((icon_size, icon_size))
+                key = "fc_append" if diff.difficulty.lower() == "append" else "fc"
+                all_fc_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_fc_img, (icon_x, icon_y), all_fc_img)
             elif diff.clear_count == diff.all_count:
-                all_clear_img = Image.open(
-                    ALL_CLEAR_ICON
-                    if diff.difficulty.lower() != "append"
-                    else ALL_CLEAR_APPEND_ICON
-                )
-                all_clear_img = all_clear_img.resize((icon_size, icon_size))
+                key = "clear_append" if diff.difficulty.lower() == "append" else "clear"
+                all_clear_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_clear_img, (icon_x, icon_y), all_clear_img)
 
             card_container.paste(donut_img, (donut_x, donut_y), donut_img)
@@ -322,7 +335,7 @@ def generate_general_progress(data: list):
                     value = str(diff.fc_count)
                 elif label == "CLEAR":
                     value = str(diff.clear_count)
-                elif label == "ALL":
+                else:
                     value = str(diff.all_count)
                 count_draw.text(
                     (count_panel_width - COUNT_PADDING_X, y_pos),
@@ -345,7 +358,7 @@ def generate_general_progress(data: list):
                     top_color = base_img.getpixel((1, 1))
                     bottom_color = base_img.getpixel((CARD_WIDTH - 1, DONUT_SIZE - 1))
                     badge_bg = Image.new("RGB", (max_badge_width, max_badge_height))
-                    draw_gradient(badge_bg, top_color, bottom_color)
+                    _draw_gradient(badge_bg, top_color, bottom_color)
                 else:
                     base_color = base_img.getpixel((1, 1))
                     badge_bg = Image.new(
@@ -381,7 +394,7 @@ def generate_general_progress(data: list):
     return main(data)
 
 
-def generate_progress(data: list, difficulty: str):
+def generate_progress(data: List[DifficultyCategory], difficulty: str):
     FONTPATH = "DATA/data/ASSETS/rodinntlg_eb.otf"
     FONTPATH_LIGHT = "DATA/data/ASSETS/rodinntlg_m.otf"
 
@@ -443,6 +456,7 @@ def generate_progress(data: list, difficulty: str):
         "expert": "DATA/data/ASSETS/expert_color.jpg",
     }
 
+    # Preload difficulty images (resized) once
     difficulty_images = {
         key: Image.open(path)
         .resize((CARD_WIDTH, CARD_HEIGHT), Image.LANCZOS)
@@ -450,7 +464,17 @@ def generate_progress(data: list, difficulty: str):
         for key, path in difficulty_colors.items()
     }
 
-    def main(data: list[DifficultyCategory]):
+    # Preload icon samples once
+    _ICON_CACHE = {
+        "ap": Image.open(ALL_AP_ICON).convert("RGBA"),
+        "ap_append": Image.open(ALL_AP_APPEND_ICON).convert("RGBA"),
+        "fc": Image.open(ALL_FC_ICON).convert("RGBA"),
+        "fc_append": Image.open(ALL_FC_APPEND_ICON).convert("RGBA"),
+        "clear": Image.open(ALL_CLEAR_ICON).convert("RGBA"),
+        "clear_append": Image.open(ALL_CLEAR_APPEND_ICON).convert("RGBA"),
+    }
+
+    def main(data: List[DifficultyCategory]):
         number_of_cards = len(data)
         # two cards per row
         number_of_rows = ceil(number_of_cards / 2)
@@ -493,22 +517,13 @@ def generate_progress(data: list, difficulty: str):
         image_width, image_height = im_draw.im.size
         x_position = int(image_width - right_text_width - 20)
 
-        def draw_gradient(img, start, end):
-            px = img.load()
-            for y in range(0, img.height):
-                color = tuple(
-                    int(start[i] + (end[i] - start[i]) * y / img.height)
-                    for i in range(3)
-                )
-                for x in range(0, img.width):
-                    px[x, y] = color
-
+        # gradient for title text using the selected difficulty image
         difficulty_img = difficulty_images[difficulty]
         top_left_color = difficulty_img.getpixel((1, 1))
         bottom_right_color = difficulty_img.getpixel((CARD_WIDTH - 1, CARD_HEIGHT - 1))
         w, h = font.getbbox(right_text)[2:]
         gradient = Image.new("RGB", (w, h))
-        draw_gradient(gradient, top_left_color, bottom_right_color)
+        _draw_gradient(gradient, top_left_color, bottom_right_color)
         im_text = Image.new("RGBA", (w, h))
         d = ImageDraw.Draw(im_text)
         d.text((0, 0), right_text, font=font)
@@ -525,15 +540,15 @@ def generate_progress(data: list, difficulty: str):
                 (CIRCLE_RADIUS, 0, CARD_WIDTH, CARD_HEIGHT), radius=25, fill="white"
             )
 
-            # circle with text in the middle
-            gradient = Image.new("RGB", (CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2))
-            draw_gradient(gradient, top_left_color, bottom_right_color)
+            # circle with text in the middle - create gradient ellipse
+            gradient_circle = Image.new("RGB", (CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2))
+            _draw_gradient(gradient_circle, top_left_color, bottom_right_color)
             im_mask = Image.new("L", (CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2), 0)
             d_mask = ImageDraw.Draw(im_mask)
             d_mask.ellipse((0, 0, CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2), fill=255)
 
             ellipse_gradient = Image.composite(
-                gradient,
+                gradient_circle,
                 Image.new("RGB", (CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2), (0, 0, 0)),
                 im_mask,
             )
@@ -544,6 +559,7 @@ def generate_progress(data: list, difficulty: str):
                 im_mask,
             )
 
+            # Draw circle text. keep exact offsets from original logic.
             draw.text(
                 (
                     CIRCLE_X
@@ -568,10 +584,11 @@ def generate_progress(data: list, difficulty: str):
             cleared = diff.clear_count - diff.fc_count
             not_cleared = diff.all_count - diff.clear_count
 
-            percentage_ap = aped / diff.all_count
-            percentage_fc = fced / diff.all_count
-            percentage_clear = cleared / diff.all_count
-            percentage_not_clear = not_cleared / diff.all_count
+            total = diff.all_count or 1
+            percentage_ap = aped / total
+            percentage_fc = fced / total
+            percentage_clear = cleared / total
+            percentage_not_clear = not_cleared / total
 
             angle_ap = percentage_ap * 360
             angle_fc = angle_ap + (percentage_fc * 360)
@@ -582,27 +599,24 @@ def generate_progress(data: list, difficulty: str):
             pie_location = (0, 0, donut_width, donut_width)
             donut_draw.pieslice(pie_location, 0, 360, fill="white")
 
-            ap_color_sample = Image.open(ALL_AP_ICON)
+            ap_color_sample = _ICON_CACHE["ap"]
+            w_s, h_s = ap_color_sample.size
+            top_y = min(60, h_s - 1)
+            bottom_y = max(h_s - 60, 0)
+            color_top = ap_color_sample.getpixel((w_s // 2, top_y))
+            color_bottom = ap_color_sample.getpixel((w_s // 2, bottom_y))
 
-            # Get the top and bottom colors
-            color_top = ap_color_sample.getpixel((ap_color_sample.size[0] // 2, 60))
-            color_bottom = ap_color_sample.getpixel(
-                (ap_color_sample.size[0] // 2, ap_color_sample.size[1] - 60)
-            )
-
-            gradient = Image.new("RGB", (donut_width, donut_width))
-            draw_gradient(gradient, color_top, color_bottom)
+            gradient_slice = Image.new("RGB", (donut_width, donut_width))
+            _draw_gradient(gradient_slice, color_top, color_bottom)
 
             # Create the mask for the pie slice
-            im_mask = Image.new(
-                "L", (donut_width, donut_width), 0
-            )  # Single-channel (grayscale) mask
+            im_mask = Image.new("L", (donut_width, donut_width), 0)
             d_mask = ImageDraw.Draw(im_mask)
             d_mask.pieslice(
                 (0, 0, donut_width, donut_width), 0, angle_ap, fill=255
             )  # Fill the slice with white
             # Paste the gradient onto the donut image using the mask
-            donut_img.paste(gradient, pie_location[:2], im_mask)
+            donut_img.paste(gradient_slice, pie_location[:2], im_mask)
 
             donut_draw.pieslice(pie_location, angle_ap, angle_fc, fill=FC_COLOR)
             donut_draw.pieslice(pie_location, angle_fc, angle_clear, fill=CLEAR_COLOR)
@@ -631,22 +645,19 @@ def generate_progress(data: list, difficulty: str):
             icon_x = (donut_width - icon_size) // 2
             icon_y = (donut_width - icon_size) // 2
             if diff.ap_count == diff.all_count:
-                all_ap_img = Image.open(
-                    ALL_AP_ICON if difficulty != "append" else ALL_AP_APPEND_ICON
-                )
-                all_ap_img = all_ap_img.resize((icon_size, icon_size))
+                key = "ap_append" if difficulty != "append" and False else "ap"
+                # Note: original logic uses difficulty param to choose append icons;
+                # preserve that original logic here exactly:
+                key = "ap_append" if difficulty == "append" else "ap"
+                all_ap_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_ap_img, (icon_x, icon_y), all_ap_img)
             elif diff.fc_count == diff.all_count:
-                all_fc_img = Image.open(
-                    ALL_FC_ICON if difficulty != "append" else ALL_FC_APPEND_ICON
-                )
-                all_fc_img = all_fc_img.resize((icon_size, icon_size))
+                key = "fc_append" if difficulty == "append" else "fc"
+                all_fc_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_fc_img, (icon_x, icon_y), all_fc_img)
             elif diff.clear_count == diff.all_count:
-                all_clear_img = Image.open(
-                    ALL_CLEAR_ICON if difficulty != "append" else ALL_CLEAR_APPEND_ICON
-                )
-                all_clear_img = all_clear_img.resize((icon_size, icon_size))
+                key = "clear_append" if difficulty == "append" else "clear"
+                all_clear_img = _ICON_CACHE[key].resize((icon_size, icon_size))
                 donut_img.paste(all_clear_img, (icon_x, icon_y), all_clear_img)
 
             data_img.paste(
