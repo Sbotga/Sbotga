@@ -1,0 +1,22 @@
+# Audio Monitoring
+pyaudiowpatch
+
+# Copying
+pyperclip
+
+# GUI
+tkinter
+numpy
+
+# Shazam
+shazamio
+
+# Image Editing
+pillow
+
+# FastAPI Server
+fastapi
+uvicorn
+websockets
+
+requests

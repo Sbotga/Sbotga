@@ -8,9 +8,6 @@ DATA/data/cached_*.json
 data.json
 users.json
 
-# Potentially sensitive requirements
-requirements.txt
-
 # All game api file stuff (again, potentially sensitive).
 # Additionally, this is over 15gb so I don't see WHY you would push this.
 game_api/

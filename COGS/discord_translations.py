@@ -85,7 +85,7 @@ class Translations:
                 continue
             self.translations[locale.strip(" /\\")] = {}
             for file in os.listdir(f"{DIR}/{locale}"):
-                with open(f"{DIR}/{locale}/{file}", "r") as f:
+                with open(f"{DIR}/{locale}/{file}", "r", encoding="utf8") as f:
                     data = json.load(f)
                     # TODO: validation checks
                     self.translations[locale.strip(" /\\")][

@@ -1,0 +1,42 @@
+# JP handling
+cutlet
+unidic-lite
+
+# Database
+asyncpg
+
+# Console
+colorama
+
+# Twitch
+twitchio
+# refresh: uh49p1qjiwmzba87zjmwy3k8qmip26wcj5a7er7uqfogdnqw1p
+# client id: gp762nuuoqcoxypju8c569th9wz7q5
+
+# Discord
+discord.py
+
+# Network
+requests
+async-google-trans-new
+pyjwt
+mitmproxy
+aiohttp >= 3.11.0
+
+# Data Manip
+selenium
+rapidfuzz
+numpy
+git+https://github.com/Sbotga/pjsekai-scores
+
+# Images
+easy-pil
+pillow # technically part of easy-pil's requirements but
+
+# Webserver
+websockets
+fastapi
+uvicorn
+
+# Game API libraries
+sssekai
