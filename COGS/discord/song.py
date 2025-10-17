@@ -188,46 +188,67 @@ class SongInfo(commands.Cog):
 
         def _make():
             has_append = False
-
             last_updated = []
-            diffs = [None] * 6
+            diffs = [None] * 6  # easy -> master -> append
+            difficulty_labels = ["easy", "normal", "hard", "expert", "master", "append"]
 
             for r, d in data.items():
-                # Add last_updated entry
                 last_updated.append(
                     f"{r.upper()} - {int(time.time() - d['now'] / 1000)}s ago"
                 )
 
-                song_progress_info = {}
-                for song_data in d["userMusics"]:
-                    if song_data["musicId"] == song.id:
-                        song_progress_info = song_data["userMusicDifficultyStatuses"]
-                        break
+                # --- New flat format ---
+                if "userMusicResults" in d:
+                    for res in d["userMusicResults"]:
+                        if res.get("musicId") != song.id:
+                            continue
+                        diff_name = res.get(
+                            "musicDifficultyType", res.get("musicDifficulty")
+                        )
+                        if diff_name == "append":
+                            idx = 5
+                            has_append = True
+                        else:
+                            if diff_name not in difficulty_labels[:5]:
+                                continue
+                            idx = difficulty_labels.index(diff_name)
 
-                for i, difficulty in enumerate(song_progress_info):
-                    c_d = diffs[i]
+                        current = diffs[idx]
+                        res_play = res.get("playResult")
+                        if (
+                            current is None
+                            or RESULT_PRIORITY[res_play] > RESULT_PRIORITY[current]
+                        ):
+                            diffs[idx] = res_play
 
-                    if i == 5:
-                        has_append = True
+                # --- Old nested format ---
+                elif "userMusics" in d:
+                    for song_data in d.get("userMusics", []):
+                        if song_data["musicId"] != song.id:
+                            continue
+                        for i, diff in enumerate(
+                            song_data.get("userMusicDifficultyStatuses", [])
+                        ):
+                            if i == 5:
+                                has_append = True
+                            current = diffs[i]
+                            for result in diff.get("userMusicResults", []):
+                                res_play = result.get("playResult")
+                                if (
+                                    current is None
+                                    or RESULT_PRIORITY[res_play]
+                                    > RESULT_PRIORITY[current]
+                                ):
+                                    current = res_play
+                            diffs[i] = current
 
-                    for result in difficulty["userMusicResults"]:
-                        res = result["playResult"]
-
-                        # Compare current result with existing one based on priority
-                        if c_d is None or RESULT_PRIORITY[res] > RESULT_PRIORITY[c_d]:
-                            c_d = res
-
-                    diffs[i] = c_d
-
+            # --- Load jacket and prepare drawing ---
             jacket = methods.Tools.get_music_jacket(song.id)
             img = Image.open(jacket)
             img_width, img_height = img.size
 
-            # Indicator settings
-            difficulty_labels = ["easy", "normal", "hard", "expert", "master", "append"]
             indicator_size = (75, 75)
             padding = 15
-
             start_x = padding
             start_y = img_height - indicator_size[1] - padding
 
@@ -241,7 +262,7 @@ class SongInfo(commands.Cog):
 
             for i, difficulty in enumerate(difficulty_labels):
                 if i == 5 and not has_append:
-                    continue  # skip append
+                    continue  # skip append if user has no append data
 
                 status = diffs[i] if i < len(diffs) else "none"
                 indicator_path = (
@@ -252,28 +273,24 @@ class SongInfo(commands.Cog):
 
                 indicator = Image.open(indicator_path).resize(indicator_size)
 
-                padding = 15  # transparent padding to fit stroke
                 expanded_size = (
                     indicator_size[0] + padding * 2,
                     indicator_size[1] + padding * 2,
                 )
-
                 expanded_indicator = Image.new("RGBA", expanded_size, (0, 0, 0, 0))
                 expanded_indicator.paste(
                     indicator,
                     (padding, padding),
                     indicator if indicator.mode == "RGBA" else None,
                 )
+
                 mask = expanded_indicator.split()[3]
-
-                stroke_thickness = 9  # Adjust stroke thickness (odd numbers only)
+                stroke_thickness = 9
                 expanded_mask = mask.filter(ImageFilter.MaxFilter(stroke_thickness))
-
                 stroke = Image.new(
                     "RGBA", expanded_size, (255, 255, 255, int(255 * 0.7))
-                )  # white stroke with 70% opacity
+                )
                 expanded_indicator.paste(stroke, (0, 0), expanded_mask)
-
                 expanded_indicator.paste(
                     indicator,
                     (padding, padding),
@@ -285,7 +302,6 @@ class SongInfo(commands.Cog):
                     (start_x - padding, start_y - padding),
                     expanded_indicator,
                 )
-
                 start_x += indicator_size[0] + padding
 
             edited_img = BytesIO()
